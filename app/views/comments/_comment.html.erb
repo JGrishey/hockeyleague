@@ -1,0 +1,12 @@
+<div class="comment" id="comment_<%=comment.id%>">
+    <div class="info">
+        <% if comment.user == current_user %>
+            <%= link_to 'Delete', post_comment_path(post, comment), method: :delete, remote: true%>
+        <% end %>
+        <%= link_to comment.user.user_name, profile_path(comment.user.user_name) %>
+        <%= comment.created_at.strftime("%I:%M %p - %d %^b %Y") %>
+    </div>
+    <div class="content">
+        <%= comment.content %>
+    </div>
+</div>

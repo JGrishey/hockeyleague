@@ -1,0 +1,33 @@
+<div class="main-post">
+    <div class="title">
+        <%= post.title %>
+    </div>
+
+    <div class="info">
+        <%= link_to post.user.user_name, profile_path(post.user.user_name) %>
+        <%= post.created_at.strftime("%I:%M %p - %d %^b %Y") %>
+    </div>
+
+    <div class="content">
+        <%= post.content %>
+    </div>
+</div>
+
+<% if current_user == post.user %>
+    <%= link_to "Edit", edit_post_path(post) %>
+<% end %>
+
+<div class="comments" id="comments">
+    <%= render post.comments.order('created_at ASC'), post: post %>
+</div>
+
+<div class="comment-form">
+    <%= simple_form_for([post, post.comments.build], remote: true) do |f| %>
+        <label class="comment-label">
+            Content
+        </label>
+        <%= f.input_field :content, class: "content-input" %>
+        <%= f.button :submit, "Submit Comment", class: "submit-comment-btn" %>
+    <% end %>
+</div>
+

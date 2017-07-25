@@ -1,0 +1,3 @@
+$("#comments").prepend("<%= j(render "comments/comment", post: @post, comment: @comment) %>");
+$("#title").html("Comments (<%= j(@post.comments.count.to_s) %>)");
+$("#comment_content").val("");

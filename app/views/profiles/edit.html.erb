@@ -1,0 +1,12 @@
+<div class="edit-profile-container">
+    <%= simple_form_for(@user, url: {action: "update"}, html: {multipart: true}) do |f| %>
+        <label class="bio-label">
+            Bio 
+        </label>
+        <%= f.input_field :bio, class: "bio-input" %>
+
+        <%= f.input :avatar %>
+        
+        <%= f.button :submit, "Change profile", class: "edit-profile-btn" %>
+    <% end %>
+</div>

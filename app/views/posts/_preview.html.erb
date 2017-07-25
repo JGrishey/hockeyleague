@@ -1,0 +1,8 @@
+<div class="post-preview">
+    <div class="title">
+        <%= link_to post.title, post_path(post), method: :get %>
+    </div>
+    <div class="date">
+        <%= post.created_at.strftime("%I:%M %p - %d %^b %Y") %>
+    </div>
+</div>

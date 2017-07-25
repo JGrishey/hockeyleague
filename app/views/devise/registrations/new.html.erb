@@ -1,12 +1,39 @@
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= f.error_notification %>
+<div class="registration-container">
 
-    <%= f.input_field :email, required: true, autofocus: true %>
-    <%= f.input_field :user_name, required: true %>
-    <%= f.input_field :password, required: true %>
-    <%= f.input_field :password_confirmation, required: true %>
+    <div class="header">
+        Sign up
+    </div>
 
-    <%= f.button :submit, "Sign up" %>
-<% end %>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <div class="error">
+            <%= f.error_notification %>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <label class="text-label">
+            Email
+        </label>
+        <%= f.input_field :email, required: true, autofocus: true, class: "text-input" %>
+
+        <label class="text-label">
+            Username
+        </label>
+        <%= f.input_field :user_name, required: true, class: "text-input" %>
+
+        <label class="text-label">
+            Password
+        </label>
+        <%= f.input_field :password, required: true, class: "text-input" %>
+
+        <label class="text-label">
+            Confirm Password
+        </label>
+        <%= f.input_field :password_confirmation, required: true, class: "text-input" %>
+
+        <%= f.button :submit, "Sign up", class: "sign-up-btn" %>
+    <% end %>
+
+    <div class="help-links">
+        <%= render "devise/shared/links" %>
+    </div>
+
+</div>
