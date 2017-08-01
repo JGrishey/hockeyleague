@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725221344) do
+ActiveRecord::Schema.define(version: 20170730200931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(version: 20170725221344) do
     t.integer "post_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.integer "home_id"
+    t.integer "away_id"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "season_id"
+    t.index ["season_id"], name: "index_games_on_season_id"
+  end
+
+  create_table "leagues", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -51,10 +67,28 @@ ActiveRecord::Schema.define(version: 20170725221344) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "seasons", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "league_id"
+    t.index ["league_id"], name: "index_seasons_on_league_id"
+  end
+
   create_table "subforums", force: :cascade do |t|
     t.text "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "season_id"
+    t.bigint "user_id"
+    t.index ["season_id"], name: "index_teams_on_season_id"
+    t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -76,15 +110,22 @@ ActiveRecord::Schema.define(version: 20170725221344) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string "bio"
+    t.bigint "team_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["team_id"], name: "index_users_on_team_id"
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "games", "seasons"
   add_foreign_key "messages", "chat_boxes"
   add_foreign_key "messages", "users"
   add_foreign_key "posts", "subforums"
   add_foreign_key "posts", "users"
+  add_foreign_key "seasons", "leagues"
+  add_foreign_key "teams", "seasons"
+  add_foreign_key "teams", "users"
+  add_foreign_key "users", "teams"
 end

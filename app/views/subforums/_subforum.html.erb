@@ -1,0 +1,6 @@
+<%= link_to "New post", new_subforum_post_path(subforum), method: :get %>
+<%= link_to "Edit subforum", edit_subforum_path(subforum), method: :get %>
+
+<% subforum.posts.each do |post| %>
+    <%= render 'posts/preview', post: post, subforum: subforum %>
+<% end %>

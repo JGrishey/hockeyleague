@@ -1,0 +1,12 @@
+<%= simple_form_for([season.league, season, team]) do |f| %>
+    <label class="text-label">
+        Name
+    </label>
+    <%= f.input_field :name, required: true, class: "text-input" %>
+
+    <%= f.association :user, label_method: :user_name %>
+
+    <%= f.button :submit, "Edit team", class: "edit-team-btn" %>
+<% end %>
+
+<%= link_to "Delete team", league_season_team_path(season.league, season, team), method: :delete %>

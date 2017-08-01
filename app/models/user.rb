@@ -12,6 +12,9 @@ class User < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_many :messages, dependent: :destroy
 
+    has_many :teams
+    belongs_to :team
+
     has_attached_file :avatar
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 

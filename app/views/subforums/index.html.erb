@@ -1,0 +1,7 @@
+<div class="subforums-index-container">
+    <%= render 'chat_boxes/chatbox', chat_box: ChatBox.first(), message: Message.new %>
+
+    <% @subforums.each do |subforum| %>
+        <%= render 'preview', subforum: subforum %>
+    <% end %>
+<div>

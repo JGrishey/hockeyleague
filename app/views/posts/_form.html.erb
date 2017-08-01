@@ -1,4 +1,4 @@
-<%= simple_form_for(post) do |f| %>
+<%= simple_form_for([subforum, subforum.posts.build]) do |f| %>
     <label class="text-label">
         Title
     </label>
@@ -9,9 +9,5 @@
     </label>
     <%= f.input_field :content, as: :text, class: "textbox-input" %>
 
-    <%= f.button :submit, "#{params[:action] === "edit" ? "Edit" : "Submit"} post", class: "submit-post-btn" %>
-<% end %>
-
-<% if params[:action] === "edit" && current_user == post.user %>
-    <%= link_to "Delete post", post_path(post), method: :delete %>
+    <%= f.button :submit, "Submit post", class: "submit-post-btn" %>
 <% end %>

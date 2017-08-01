@@ -1,0 +1,5 @@
+<%= link_to "New season", new_league_season_path(league) %>
+
+<% league.seasons.each do |season| %>
+    <%= link_to season.title, league_season_path(league, season) %>
+<% end %>

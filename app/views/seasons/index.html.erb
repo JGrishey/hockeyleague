@@ -1,0 +1,7 @@
+<div class="index-season-container">
+    <%= link_to "New season", new_league_season_path(@league) %>
+
+    <% @seasons.each do |season| %>
+        <%= render 'preview', league: @league, season: season %>
+    <% end %>
+</div>

@@ -1,0 +1,3 @@
+<div class="season-preview">
+    <%= link_to season.title, league_season_path(league, season) %>: <%= pluralize(season.games.count, "game") %>
+</div>

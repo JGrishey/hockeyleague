@@ -1,0 +1,5 @@
+<div class="teams-index-container">
+    <% @teams.each do |team| %>
+        <%= render 'preview', team: team, season: @season %>
+    <% end %>
+</div>

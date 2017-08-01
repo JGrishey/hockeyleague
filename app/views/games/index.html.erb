@@ -1,0 +1,5 @@
+<div class="games-index">
+    <% @games.each do |game| %>
+        <%= render 'preview', game: game, season: @season %>
+    <% end %>
+</div>  

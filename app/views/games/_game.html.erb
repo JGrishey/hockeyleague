@@ -1,0 +1,19 @@
+<div class="home-team">
+    <%= game.home_team.name %>
+</div>
+<div class="away-team">
+    <%= game.away_team.name %>
+</div>
+<div class="enter-stats-link">
+    <% if game.away_team.captain == current_user %>
+        <%= link_to "Enter stats", enter_home_stats_league_season_game_path(season.league, season, game) %>
+    <% elsif game.home_team.captain == current_user %>
+        <%= link_to "Enter stats", enter_away_stats_league_season_game_path(season.league, season, game) %>
+    <% end %>
+</div>
+<div class="stats">
+    <div class="game-summary">
+    </div>
+    <div class="player-summary">
+    </div>
+</div>

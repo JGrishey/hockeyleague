@@ -1,0 +1,6 @@
+<%= simple_form_for(@season, :url => url_for(:action => "process_file", :controller => "seasons"), method: :post) do |f| %>
+    <%= f.file_field :schedule %>
+    <%= f.submit %>
+<% end %>
+
+WARNING: DO NOT USE THIS UNLESS YOU ARE INITIALIZING A NEW SEASON. THIS WILL ERASE ALL CURRENT TEAM AND GAME DATA

@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
 
     before_action :authenticate_user!
-    before_action :get_post, only: [:show, :edit, :update, :destroy]
+    before_action :get_post, only: [:show, :destroy]
+    before_action :set_subforum
 
     def index
         @posts = Post.all
@@ -11,15 +12,16 @@ class PostsController < ApplicationController
     end
 
     def new
-        @post = current_user.posts.build
+        @post = @subforum.posts.build
     end
 
     def create
-        @post = current_user.posts.build(post_params)
+        @post = @subforum.posts.build(post_params)
+        @post.user_id = current_user.id
 
         if @post.save
             flash[:success] = "Your post has been created."
-            redirect_to @post, method: :get
+            redirect_to subforum_post_path(@subforum, @post), method: :get
         else
             flash[:error] = "Something went wrong. Check the form."
             render :new
@@ -27,12 +29,14 @@ class PostsController < ApplicationController
     end
 
     def edit
+        @post = @subforum.posts.find_by(id: params[:id])
     end
 
     def update
+        @post = @subforum.posts.find_by(id: params[:id])
         if @post.update(post_params)
             flash[:success] = "Your post has been updated."
-            redirect_to @post, method: :get
+            redirect_to subforum_post_path(@subforum, @post), method: :get
         else
             flash[:error] = "Something went wrong. Check the form."
             render :edit
@@ -48,11 +52,15 @@ class PostsController < ApplicationController
     private
 
     def post_params
-        params.require(:post).permit(:title, :content)
+        params.require(:post).permit(:title, :content, :subforum_id)
     end
 
     def get_post
         @post = Post.find(params[:id])
+    end
+
+    def set_subforum
+        @subforum = Subforum.find(params[:subforum_id])
     end
 
 end

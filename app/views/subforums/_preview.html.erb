@@ -1,0 +1,3 @@
+<div class="subforum-preview">
+    <%= link_to subforum.title, subforum, method: :get %>: <%= pluralize(subforum.posts.count, "post") %>
+</div>

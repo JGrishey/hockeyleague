@@ -1,0 +1,10 @@
+<%= simple_form_for([league, season]) do |f| %>
+    <label class="title-label">
+        Title
+    </label>
+    <%= f.input_field :title, required: true, class: "title-input" %>
+
+    <%= f.button :submit, "Edit season", class: "edit-season-btn" %>
+<% end %>
+
+<%= link_to "Delete season", season, method: :delete %>

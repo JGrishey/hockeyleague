@@ -1,0 +1,13 @@
+<%= season.title %>: <%= pluralize(season.games.count, "game") %>
+
+<%= link_to "New team", new_league_season_team_path(league, season) %>
+
+<% season.teams.each do |team| %>
+    <%= render 'teams/preview', season: season, team: team %>
+<% end %>
+
+<% season.games.each do |game| %>
+    <%= render 'games/preview', season: season, game: game %>
+<% end %>
+
+<%= link_to "Upload schedule", upload_league_season_path(league, season) %>

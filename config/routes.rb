@@ -3,10 +3,29 @@ Rails.application.routes.draw do
 
     devise_for :users, :controllers => {registrations: 'registrations'}
     
-    root to: "posts#index"
+    root to: "subforums#index"
 
-    resources :posts do
-        resources :comments
+    resources :subforums do
+        resources :posts do
+            resources :comments
+        end
+    end
+
+    resources :leagues do
+        resources :seasons do
+            resources :teams
+            resources :games do
+                member do
+                    get 'enter_home_stats'
+                    get 'enter_away_stats'
+                    post 'process_stats'
+                end
+            end
+            member do
+                get 'upload'
+                post 'process_file'
+            end
+        end
     end
 
     mount ActionCable.server => '/cable'

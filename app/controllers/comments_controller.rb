@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
     before_action :set_post
+    before_action :set_subforum
 
     def index
         @comments = @post.comments.order('created_at ASC')
@@ -44,6 +45,10 @@ class CommentsController < ApplicationController
     
     def comment_params
         params.require(:comment).permit(:content)
+    end
+
+    def set_subforum
+        @subforum = Subforum.find(params[:subforum_id])
     end
 
 end
