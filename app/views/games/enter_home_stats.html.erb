@@ -1,7 +1,8 @@
 <%= simple_form_for(@game, :url => url_for(:action => "process_stats", :controller => "games"), method: :post) do |f| %>
     <div class="enter-stats">
         <div class="team">
-            <%= f.input_field :toa %>
+            <%= f.input_field :toa_minutes %>
+            <%= f.input_field :toa_seconds %>
             <%= f.input_field :ppg %>
             <%= f.input_field :ppo %>
         </div>

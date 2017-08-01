@@ -1,0 +1,2 @@
+class Penalty < ApplicationRecord
+end

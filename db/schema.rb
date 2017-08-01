@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170730200931) do
+ActiveRecord::Schema.define(version: 20170801180514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,22 @@ ActiveRecord::Schema.define(version: 20170730200931) do
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
+  create_table "goals", force: :cascade do |t|
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "scorer_id"
+    t.integer "primary_id"
+    t.integer "secondary_id"
+    t.bigint "game_id"
+    t.bigint "team_id"
+    t.index ["game_id"], name: "index_goals_on_game_id"
+    t.index ["primary_id"], name: "index_goals_on_primary_id"
+    t.index ["scorer_id"], name: "index_goals_on_scorer_id"
+    t.index ["secondary_id"], name: "index_goals_on_secondary_id"
+    t.index ["team_id"], name: "index_goals_on_team_id"
+  end
+
   create_table "leagues", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -54,6 +70,18 @@ ActiveRecord::Schema.define(version: 20170730200931) do
     t.datetime "updated_at", null: false
     t.index ["chat_box_id"], name: "index_messages_on_chat_box_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "penalties", force: :cascade do |t|
+    t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_penalties_on_game_id"
+    t.index ["team_id"], name: "index_penalties_on_team_id"
+    t.index ["user_id"], name: "index_penalties_on_user_id"
   end
 
   create_table "posts", id: :serial, force: :cascade do |t|
@@ -73,6 +101,25 @@ ActiveRecord::Schema.define(version: 20170730200931) do
     t.datetime "updated_at", null: false
     t.bigint "league_id"
     t.index ["league_id"], name: "index_seasons_on_league_id"
+  end
+
+  create_table "stat_lines", force: :cascade do |t|
+    t.string "position"
+    t.integer "plus_minus"
+    t.integer "shots"
+    t.integer "fow"
+    t.integer "fot"
+    t.integer "hits"
+    t.integer "shots_against"
+    t.integer "goals_against"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "game_id"
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.index ["game_id"], name: "index_stat_lines_on_game_id"
+    t.index ["team_id"], name: "index_stat_lines_on_team_id"
+    t.index ["user_id"], name: "index_stat_lines_on_user_id"
   end
 
   create_table "subforums", force: :cascade do |t|
@@ -120,11 +167,19 @@ ActiveRecord::Schema.define(version: 20170730200931) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "games", "seasons"
+  add_foreign_key "goals", "games"
+  add_foreign_key "goals", "teams"
   add_foreign_key "messages", "chat_boxes"
   add_foreign_key "messages", "users"
+  add_foreign_key "penalties", "games"
+  add_foreign_key "penalties", "teams"
+  add_foreign_key "penalties", "users"
   add_foreign_key "posts", "subforums"
   add_foreign_key "posts", "users"
   add_foreign_key "seasons", "leagues"
+  add_foreign_key "stat_lines", "games"
+  add_foreign_key "stat_lines", "teams"
+  add_foreign_key "stat_lines", "users"
   add_foreign_key "teams", "seasons"
   add_foreign_key "teams", "users"
   add_foreign_key "users", "teams"

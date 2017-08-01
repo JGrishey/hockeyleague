@@ -1,0 +1,2 @@
+class StatLine < ApplicationRecord
+end
