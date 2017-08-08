@@ -1,8 +1,10 @@
-<div id="messages" data-chat-box-id="<%= chat_box.id %>">
-    <%= render chat_box.messages %>
-</div>
+<div class="chatbox">
+    <div class="messages" id="messages" data-chat-box-id="<%= chat_box.id %>">
+        <%= render chat_box.messages.last(20) %>
+    </div>
 
-<%= simple_form_for(message, url: "#") do |f| %>
-    <%= f.input_field :body, class: "message-input" %>
-    <%= f.button :submit, "Send", class: "send-message-btn" %>
-<% end %>
+    <%= simple_form_for(message, url: "#") do |f| %>
+        <%= f.input_field :body, class: "message-input" %>
+        <%= f.button :submit, "Send", class: "send-message-btn" %>
+    <% end %>
+</div>

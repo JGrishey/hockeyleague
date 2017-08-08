@@ -1,0 +1,4 @@
+<% @season.teams.each do |team| %>
+    <% record = team.record %>
+    <%= team.name %>: <%= record[:wins] %>-<%= record[:losses] %>-<%= record[:otl] %> <%= record[:wins] * 2 + record[:otl] %> PTS
+<% end %>

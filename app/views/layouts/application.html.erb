@@ -3,6 +3,7 @@
 
 <head>
     <title>Moose Hockey League</title>
+    <link rel="shortcut icon" href=<%= image_path("MooseLogo.png")%> type="image/png"/>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -11,10 +12,22 @@
 
 <body>
     <nav class="navigation-main">
-        <div class="nav-element">
-            <%= link_to "Moose", root_path %>
+        <div class="nav-container">
+            <div class="nav-element">
+                <%= link_to root_path do %>
+                    <img class="logo" src=<%= image_path("MooseLogo.svg") %>/>
+                <% end %>
+            </div>
+
+            <div class="nav-element title">
+                <%= link_to "MOOSE", root_path %>
+            </div>
         </div>
     </nav>
+
+    <% if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+    <% end %>
 
     <%= link_to "New Subforum", new_subforum_path %>
 

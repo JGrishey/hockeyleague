@@ -1,7 +1,7 @@
 class SeasonsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_league
-    before_action :set_season, only: [:show, :destroy, :upload, :process_file]
+    before_action :set_season, only: [:show, :destroy, :upload, :process_file, :standings]
     
 
     def index
@@ -65,7 +65,7 @@ class SeasonsController < ApplicationController
 
 
         data["teams"].each do |team|
-            temp_team = @season.teams.build(name: team, user_id: current_user.id)
+            temp_team = @season.teams.build(name: team, captain_id: current_user.id)
             temp_team.save
         end
 
@@ -75,6 +75,9 @@ class SeasonsController < ApplicationController
         end
 
         redirect_to league_season_path(@league, @season)
+    end
+
+    def standings
     end
     
     private

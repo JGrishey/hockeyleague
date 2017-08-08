@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801180514) do
+ActiveRecord::Schema.define(version: 20170807172408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 20170801180514) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "game_players", force: :cascade do |t|
+    t.string "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "game_id"
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.index ["game_id"], name: "index_game_players_on_game_id"
+    t.index ["team_id"], name: "index_game_players_on_team_id"
+    t.index ["user_id"], name: "index_game_players_on_user_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.integer "home_id"
     t.integer "away_id"
@@ -37,11 +49,21 @@ ActiveRecord::Schema.define(version: 20170801180514) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "season_id"
+    t.integer "home_toa_minutes", default: 0
+    t.integer "away_toa_minutes", default: 0
+    t.integer "home_toa_seconds", default: 0
+    t.integer "away_toa_seconds", default: 0
+    t.integer "home_ppg", default: 0
+    t.integer "away_ppg", default: 0
+    t.integer "home_ppo", default: 0
+    t.integer "away_ppo", default: 0
+    t.boolean "final", default: false
+    t.boolean "overtime", default: false
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
   create_table "goals", force: :cascade do |t|
-    t.string "type"
+    t.string "time_scored"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "scorer_id"
@@ -104,20 +126,22 @@ ActiveRecord::Schema.define(version: 20170801180514) do
   end
 
   create_table "stat_lines", force: :cascade do |t|
-    t.string "position"
-    t.integer "plus_minus"
-    t.integer "shots"
-    t.integer "fow"
-    t.integer "fot"
-    t.integer "hits"
-    t.integer "shots_against"
-    t.integer "goals_against"
+    t.string "position", default: ""
+    t.integer "plus_minus", default: 0
+    t.integer "shots", default: 0
+    t.integer "fow", default: 0
+    t.integer "fot", default: 0
+    t.integer "hits", default: 0
+    t.integer "shots_against", default: 0
+    t.integer "goals_against", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "game_id"
     t.bigint "user_id"
     t.bigint "team_id"
+    t.bigint "game_player_id"
     t.index ["game_id"], name: "index_stat_lines_on_game_id"
+    t.index ["game_player_id"], name: "index_stat_lines_on_game_player_id"
     t.index ["team_id"], name: "index_stat_lines_on_team_id"
     t.index ["user_id"], name: "index_stat_lines_on_user_id"
   end
@@ -128,14 +152,23 @@ ActiveRecord::Schema.define(version: 20170801180514) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "team_players", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.index ["team_id"], name: "index_team_players_on_team_id"
+    t.index ["user_id"], name: "index_team_players_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "season_id"
-    t.bigint "user_id"
+    t.integer "captain_id"
+    t.index ["captain_id"], name: "index_teams_on_captain_id"
     t.index ["season_id"], name: "index_teams_on_season_id"
-    t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -166,6 +199,7 @@ ActiveRecord::Schema.define(version: 20170801180514) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "game_players", "teams"
   add_foreign_key "games", "seasons"
   add_foreign_key "goals", "games"
   add_foreign_key "goals", "teams"
@@ -177,10 +211,12 @@ ActiveRecord::Schema.define(version: 20170801180514) do
   add_foreign_key "posts", "subforums"
   add_foreign_key "posts", "users"
   add_foreign_key "seasons", "leagues"
+  add_foreign_key "stat_lines", "game_players"
   add_foreign_key "stat_lines", "games"
   add_foreign_key "stat_lines", "teams"
   add_foreign_key "stat_lines", "users"
+  add_foreign_key "team_players", "teams"
+  add_foreign_key "team_players", "users"
   add_foreign_key "teams", "seasons"
-  add_foreign_key "teams", "users"
   add_foreign_key "users", "teams"
 end

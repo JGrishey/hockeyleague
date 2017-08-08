@@ -1,26 +1,79 @@
-<%= simple_form_for(@game, :url => url_for(:action => "process_stats", :controller => "games"), method: :post) do |f| %>
+<%= form_for(@game, :url => url_for(:action => "process_home_stats", :controller => "games"), method: :post) do |f| %>
     <div class="enter-stats">
         <div class="team">
-            <%= f.input_field :toa_minutes %>
-            <%= f.input_field :toa_seconds %>
-            <%= f.input_field :ppg %>
-            <%= f.input_field :ppo %>
+            <%= f.number_field :home_toa_minutes %>
+            <%= f.number_field :home_toa_seconds %>
+            <%= f.number_field :home_ppg %>
+            <%= f.number_field :home_ppo %>
         </div>
-        <div class="goals">
-            <div class="goal">
-                <%= f.input_field :scorer %>
-                <%= f.input_field :primary %>
-                <%= f.input_field :secondary %>
-                <%= f.input_field :type %>
-            </div>
+
+        <label>Overtime?</label>
+        <%= f.check_box :overtime %>
+
+        <% counter = 0 %>
+
+        <div class="goals" id="goals">
+            
+            <%= f.fields_for :goals, @game.home_goals do |builder| %>
+                <%= render "goalentry", f: builder, players: @game.home_players, counter: counter %>
+            <% end %>
+            
+
+            <%= link_to_add_goals "Add Goal", f, :goals, @game.home_players %>
         </div>
-        <div class="penalties">
-            <div class="penalty">
-                <%= f.input_field :length %>
-                <%= f.input_field :taker %>
-            </div>
+
+        <div class="penalties" id="penalties">
+            <%= f.fields_for :penalties, @game.home_penalties do |builder| %>
+                <%= render "penaltyentry", f: builder, players: @game.home_players %>
+            <% end %>
+
+            <%= link_to_add_penalties "Add Penalty", f, :penalties, @game.home_players %>
         </div>
+
         <div class="players">
+        <!--
+            <% @game.game_players.each do |gp| %>
+                <% if gp.id != nil && gp.player.teams.include?(@game.home_team) %>
+                    <%= f.fields_for :stat_lines, @game.stat_lines do |builder| %>
+                        <%= builder.hidden_field :team_id, :value => @game.home_team.id %>
+                        <%= builder.hidden_field :position, :value => gp.position %>
+                        <%= builder.hidden_field :user_id, :value => gp.player.id %>
+                        <% if gp.position != "G" %>
+                            <%= builder.number_field :plus_minus %>
+                            <%= builder.number_field :shots %>
+                            <%= builder.number_field :hits %>
+                            <%= builder.number_field :fow %>
+                            <%= builder.number_field :fot %>
+                        <% else %>
+                            <%= builder.number_field :shots_against %>
+                            <%= builder.number_field :goals_against %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        -->
+
+            <%= f.fields_for :game_players do |gpbuilder| %>
+                <%= gpbuilder.fields_for :stat_line_attributes, gpbuilder.object.stat_line do |builder| %>
+                    <%= builder.hidden_field :game_player_id, :value => gpbuilder.object.id %>
+                    <%= builder.hidden_field :game_id, :value => @game.id %>
+                    <%= builder.hidden_field :team_id, :value => @game.home_team.id %>
+                    <%= builder.hidden_field :position, :value => gpbuilder.object.position %>
+                    <%= builder.hidden_field :user_id, :value => gpbuilder.object.player.id %>
+                    <% if gpbuilder.object.position != "G" %>
+                        <%= builder.number_field :plus_minus %>
+                        <%= builder.number_field :shots %>
+                        <%= builder.number_field :hits %>
+                        <%= builder.number_field :fow %>
+                        <%= builder.number_field :fot %>
+                    <% else %>
+                        <%= builder.number_field :shots_against %>
+                        <%= builder.number_field :goals_against %>
+                    <% end %>
+                <% end %>
+            <% end %>
         </div>
     </div>
+
+    <%= f.submit %>
 <% end %>

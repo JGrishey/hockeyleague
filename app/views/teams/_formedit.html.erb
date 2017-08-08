@@ -1,12 +1,22 @@
-<%= simple_form_for([season.league, season, team]) do |f| %>
+<%= form_for(team, :url => url_for(:action => "update", :controller => "teams")) do |f| %>
     <label class="text-label">
         Name
     </label>
-    <%= f.input_field :name, required: true, class: "text-input" %>
+    <%= f.text_field :name, required: true, class: "text-input" %>
 
-    <%= f.association :user, label_method: :user_name %>
+    <%= f.select :captain_id, User.all.collect{|u| [u.user_name, u.id]} %>
 
-    <%= f.button :submit, "Edit team", class: "edit-team-btn" %>
+    <%= f.fields_for :team_players, team.team_players do |builder| %>
+        <%= render 'playerentry', f: builder, team: team %>
+    <% end %>
+
+    <%= link_to_add_players "Add player", f, :team_players %>
+
+    <div class="player-input" id="player-input">
+
+    </div>
+
+    <%= f.submit %>
 <% end %>
 
 <%= link_to "Delete team", league_season_team_path(season.league, season, team), method: :delete %>

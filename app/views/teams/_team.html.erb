@@ -3,14 +3,14 @@
     <div class="season"><%= season.title %></div>
 </div>
 <div class="players">
-    <% team.users.each do |player| %>
+    <% team.players.each do |player| %>
         <%= player.user_name %>
     <% end %>
 </div>
 <div class="games">
-    <% team.games.each do |game| %>
+    <% team.games.order('date ASC').each do |game| %>
         <%= render 'games/preview', game: game, season: season %>
     <% end %>
 </div>
 
-<%= link_to "Edit team", edit_league_season_team_path(season.league, season, team) %>
+<%= link_to "Edit team", edit_league_season_team_path(season.league, season, team), method: :get %>

@@ -1,0 +1,11 @@
+<%= form_for(@game, :url => url_for(:action => "add_players", :controller => "games"), method: :post) do |f| %>
+    <div class="select-team">
+        <%= f.fields_for :game_players, @game.game_players.where(team_id: @game.away_team) do |builder| %>
+            <%= render "away_playerentry", f: builder %>
+        <% end %>
+
+        <%= link_to_add_away_players "Add player", f, :game_players %>
+    </div>
+
+    <%= f.submit %>
+<% end %>

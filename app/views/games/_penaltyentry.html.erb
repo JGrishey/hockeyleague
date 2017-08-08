@@ -1,0 +1,7 @@
+<fieldset>
+    <%= f.hidden_field :team_id, :value => @game.home_team.id %>
+    <%= f.hidden_field :_destroy, class: "removable" %>
+    <%= f.select :user_id, players.collect{|p| [p.player.user_name, p.player.id]}, include_blank: true, default: nil %>
+    <%= f.select :duration, [2, 4, 5] %>
+    <%= link_to "remove", '#', class: "remove_penalties" %>
+</fieldset>

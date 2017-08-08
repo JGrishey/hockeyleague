@@ -18,11 +18,17 @@ Rails.application.routes.draw do
                 member do
                     get 'enter_home_stats'
                     get 'enter_away_stats'
-                    post 'process_stats'
+                    get 'submit_home_players'
+                    get 'submit_away_players'
+                    post 'process_home_stats'
+                    post 'process_away_stats'
+                    post 'add_players'
+                    post 'make_final'
                 end
             end
             member do
                 get 'upload'
+                get 'standings'
                 post 'process_file'
             end
         end

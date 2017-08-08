@@ -5,15 +5,50 @@
     <%= game.away_team.name %>
 </div>
 <div class="enter-stats-link">
+    <% if game.home_team.captain == current_user %>
+        <%= link_to "Enter home stats", enter_home_stats_league_season_game_path(season.league, season, game), method: :get %>
+        <%= link_to "Submit home players", submit_home_players_league_season_game_path(season.league, season, game), method: :get %>
+    <% end %>
     <% if game.away_team.captain == current_user %>
-        <%= link_to "Enter stats", enter_home_stats_league_season_game_path(season.league, season, game) %>
-    <% elsif game.home_team.captain == current_user %>
-        <%= link_to "Enter stats", enter_away_stats_league_season_game_path(season.league, season, game) %>
+        <%= link_to "Enter away stats", enter_away_stats_league_season_game_path(season.league, season, game), method: :get %>
+        <%= link_to "Submit away players", submit_away_players_league_season_game_path(season.league, season, game), method: :get %>
+    <% end %>
+    <% if !game.final %>
+        <%= link_to "Make final", make_final_league_season_game_path(season.league, season, game), method: :post %>
     <% end %>
 </div>
-<div class="stats">
-    <div class="game-summary">
+<% if game.final %>
+    <div class="stats">
+        <div class="game-summary">
+            <h1>Home: <%= game.home_team.name %></h1>
+
+            <div class="toa">Time on Attack: <%= game.home_toa_minutes %>:<%= sprintf '%02d', game.home_toa_seconds %></div>
+            <div class="pp">Power Play: <%= game.home_ppg %>/<%= game.home_ppo %></div>
+
+            <% @game.home_goals.each do |goal| %>
+                <div class="scorer"><%= goal.scorer ? goal.scorer.user_name : "No scorer" %></div>
+                <div class="assists"><%= goal.primary.user_name if goal.primary %>, <%= goal.secondary.user_name if goal.secondary %></div>
+            <% end %>
+
+            <% @game.home_stats.each do |stat| %>
+                <%= stat.user.user_name %>: <%= pluralize(stat.shots, "shot") %>, <%= pluralize(stat.hits, "hit") %>, <%= sprintf "%+d", stat.plus_minus %>
+            <% end %>
+
+            <h1>Away: <%= game.away_team.name %></h1>
+
+            <div class="toa">Time on Attack: <%= game.away_toa_minutes %>:<%= sprintf '%02d', game.away_toa_seconds %></div>
+            <div class="pp">Power Play: <%= game.away_ppg %>/<%= game.away_ppo %></div>
+
+            <% @game.away_goals.each do |goal| %>
+                <div class="scorer"><%= goal.scorer ? goal.scorer.user_name : "No scorer" %></div>
+                <div class="assists"><%= goal.primary.user_name if goal.primary %>, <%= goal.secondary.user_name if goal.secondary %></div>
+            <% end %>
+
+            <% @game.away_stats.each do |stat| %>
+                <%= stat.user.user_name %>: <%= pluralize(stat.shots, "shot") %>, <%= pluralize(stat.hits, "hit") %>, <%= sprintf "%+d", stat.plus_minus %>
+            <% end %>
+        </div>
+        <div class="player-summary">
+        </div>
     </div>
-    <div class="player-summary">
-    </div>
-</div>
+<% end %>

@@ -15,4 +15,7 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= require edit-team
+//= require enter-stats
 //= require_tree .
+

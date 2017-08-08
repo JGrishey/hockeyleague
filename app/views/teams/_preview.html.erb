@@ -3,6 +3,6 @@
         <%= link_to team.name, league_season_team_path(season.league, season, team) %>
     </div>
     <div class="info">
-        <%= pluralize(team.users.count, "player") %>
+        <%= pluralize(team.players.count, "player") %>
     </div>
 </div>

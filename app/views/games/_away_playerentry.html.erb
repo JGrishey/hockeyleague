@@ -1,0 +1,7 @@
+<fieldset>
+    <%= f.hidden_field :_destroy, class: "removable" %>
+    <%= f.hidden_field :team_id, value: @game.away_team.id %>
+    <%= f.select :user_id, @game.away_team.players.collect{ |p| [p.user_name, p.id]} %>
+    <%= f.select :position, ["LW", "C", "RW", "LD", "RD", "G"] %>
+    <%= link_to "remove", '#', class: "remove_players" %>
+</fieldset>

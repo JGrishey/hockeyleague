@@ -14,9 +14,18 @@ class TeamsController < ApplicationController
     def create
         @team = @season.teams.build(team_params)
 
+        if params[:captain_id]
+            if !@team.players.include?(params[:captain_id])
+                tp = TeamPlayer.new()
+                tp.team = @team
+                tp.player = User.find(params[:team][:captain_id].to_i)
+                tp.save
+            end
+        end
+
         if @team.save
             flash[:success] = "Your team has been created!"
-            redirect_to season_team_path(@season, @team)
+            redirect_to league_season_team_path(@season.league, @season, @team)
         else
             flash[:error] = "Your team couldn't be created. Please check the form."
             render :new
@@ -29,9 +38,10 @@ class TeamsController < ApplicationController
 
     def update
         @team = @season.teams.find_by(id: params[:id])
+
         if @team.update(team_params)
             flash[:success] = "Your team has been updated!"
-            redirect_to season_team_path(@season, @team)
+            redirect_to league_season_team_path(@season.league, @season, @team)
         else
             flash[:error] = "Your team couldn't be updated. Please check the form."
             render :edit
@@ -44,13 +54,13 @@ class TeamsController < ApplicationController
     def destroy
         @team.destroy
         flash[:success] = "Your team has been deleted."
-        redirect_to season_path(@season)
+        redirect_to league_season_path(@season.league, @season)
     end
     
     private
 
     def team_params
-        params.require(:team).permit(:name, :season_id, :user_id)
+        params.require(:team).permit(:name, :season_id, :captain_id, team_players_attributes: [:id, :_destroy, :team_id, :user_id])
     end
 
     def set_team
