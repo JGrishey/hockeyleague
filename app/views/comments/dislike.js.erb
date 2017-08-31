@@ -1,0 +1,3 @@
+$('#like-button-comment-<%= @comment.id %>').attr("src", "https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-up.svg");
+
+$("#likes-comment-<%= @comment.id %>").html("<%= j (render partial: 'comments/likes', locals: { comment: @comment} ) %>");

@@ -1,12 +1,64 @@
-<div class="show-profile-container">
-    <div class="info">
+<div class="player-page">
+    <img class="photo" src="<%= @user.banner %>"/>
+    <div class="avatar">
+        <img class="avtr" src=<%= get_avatar(@user) %>/>
+    </div>
+    <div class="name">
         <%= @user.user_name %>
-        <%= @user.email %>
-        <%= @user.bio %>
-        <img src=<%= asset_url(@user.avatar) %>/>
+        <% if current_user == @user %>
+            <div class="edit">
+                <%= link_to "Edit", edit_profile_path(@user.user_name), method: :get %>
+            </div>
+        <% end %>
+    </div>
+    <div class="info">
     </div>
 
-    <% if current_user == @user %>
-        <%= link_to "Edit profile", edit_profile_path(@user.user_name), method: :get %>
+    <% if @user.games.any? %>
+
+        <div class="header">
+            Current Seasons
+        </div>
+
+        <div class="stats" id="current-stats">
+        </div>
+
+        <div class="header">
+            Recent Games
+        </div>
+
+        <div class="recent" id="recent">
+        </div>
+
+        <div class="stats" id="stats">
+        </div>
+
+        <div class="header">
+            Career Stats
+        </div>
+
+        <div class="stats" id="career-stats">
+        </div>
+
+        <div id="recent-games" data-data="<%= @game_data.to_json %>"></div>
+
+        <div id="current-data" data-data="<%= @current_stats.to_json %>"></div>
+
+        <div id="career-data" data-data="<%= @career_stats.to_json %>"></div>
+
+        <% @leagues.each do |league| %>
+            <div id="<%= league.name %>" class="league-data" data-data="<%= @stats.select{ |s| s[:league_id] == league.id }.to_json %>"></div>
+        <% end %>
+
+        <%= javascript_pack_tag "players/stats" %>
+        <%= javascript_pack_tag "players/career-stats"%>
+        <%= javascript_pack_tag "players/current-stats" %>
+        <%= javascript_pack_tag "players/recent-games"%>
+
     <% end %>
+
 </div>
+
+
+
+

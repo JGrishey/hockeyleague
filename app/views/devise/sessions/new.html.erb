@@ -1,29 +1,25 @@
-<div class="log-in-container">
-
+<div class="log-in">
     <div class="header">
+        <img class="logo" src="<%= image_path("MooseLogo.png") %>"/>
         Log in
     </div>
+    
+    <div class="form">
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <%= f.input_field :email, required: false, autofocus: true, class: "text-input" %>
+            <label class="text-field">Email</label>
 
-        <label class="text-label">
-            Email
-        </label>
-        <%= f.input_field :email, required: false, autofocus: true, class: "text-input" %>
+            <%= f.input_field :password, required: false, class: "text-input" %>
+            <label class="text-field">Password</label>
 
-        <label class="text-label">
-            Password
-        </label>
-        <%= f.input_field :password, required: false, class: "text-input" %>
+            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
 
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+            <%= f.button :submit, "Log in", class: "login-btn" %>
+        <% end %>
 
-        <%= f.button :submit, "Log in", class: "log-in-btn" %>
-
-    <% end %>
-
-    <div class="help-links">
-        <%= render "devise/shared/links" %>
+        <div class="help">
+            <%= render "devise/shared/links" %>
+        </div>
     </div>
-
 </div>

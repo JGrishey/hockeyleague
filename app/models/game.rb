@@ -17,15 +17,43 @@ class Game < ApplicationRecord
     has_many :penalties, dependent: :destroy
     accepts_nested_attributes_for :penalties, allow_destroy: true
 
-    validates :home_toa_minutes, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :home_toa_seconds, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :home_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :home_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
+    validates :home_toa_minutes, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :home_toa_seconds, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :home_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :home_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 
-    validates :away_toa_minutes, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :away_toa_seconds, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :away_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
-    validates :away_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true, allow_blank: true }, allow_nil: true
+    validates :away_toa_minutes, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :away_toa_seconds, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :away_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :away_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+
+    def get_line (user)
+        goals = 0
+        assists = 0
+        points = 0
+        pim = 0
+        self.goals.each do |goal|
+            if goal.scorer == user
+                goals += 1
+                points += 1
+            end
+            if goal.primary == user || goal.secondary == user
+                assists += 1
+                points += 1
+            end
+        end
+        self.penalties.each do |penalty|
+            if penalty.user == user
+                pim += penalty.duration
+            end
+        end
+        {
+            'g': goals,
+            'a': assists,
+            'p': points,
+            'pim': pim,
+        }
+    end
 
     def home_goals
         self.goals.where(team_id: self.home_team.id)

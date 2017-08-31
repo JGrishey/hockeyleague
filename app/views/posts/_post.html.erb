@@ -3,31 +3,48 @@
         <%= post.title %>
     </div>
 
-    <div class="info">
-        <%= link_to post.user.user_name, profile_path(post.user.user_name) %>
-        <%= post.created_at.strftime("%I:%M %p - %d %^b %Y") %>
+    <div class="main">
+        <div class="info">
+            <img class="photo" src=<%= get_avatar(post.user) %>/>
+            <div class="user">
+                <%= link_to post.user.user_name, profile_path(post.user.user_name) %>
+            </div>
+            <div class="time">
+                <%= post.created_at.strftime("%I:%M %p") %>
+            </div>
+            <div class="date">
+                <%= post.created_at.strftime("%d %^b %Y") %>
+            </div>
+            <% if current_user == post.user %>
+                <div class="edit">
+                    <%= link_to "Edit", edit_subforum_post_path(subforum, post), method: :get %>
+                </div>
+            <% end %>
+        </div>
+
+        <div class="content">
+            <%= post.content.html_safe %>
+        </div>
     </div>
 
-    <div class="content">
-        <%= post.content %>
+    <div class="liking">
+        <div id="likes-post-<%= post.id %>">
+            <%= render 'posts/likes', post: post %>
+        </div>
     </div>
 </div>
 
-<% if current_user == post.user %>
-    <%= link_to "Edit", edit_subforum_post_path(subforum, post) %>
-<% end %>
-
 <div class="comments" id="comments">
-    <%= render post.comments.order('created_at ASC'), post: post, subforum: subforum %>
+    <%= render @comments.order('created_at ASC'), post: post, subforum: subforum %>
 </div>
 
 <div class="comment-form">
     <%= simple_form_for([subforum, post, post.comments.build], remote: true) do |f| %>
-        <label class="comment-label">
-            Content
-        </label>
-        <%= f.input_field :content, class: "content-input" %>
-        <%= f.button :submit, "Submit Comment", class: "submit-comment-btn" %>
+        <%= f.hidden_field :content %>
+        <%= f.button :submit, style: "display: none;", id: "real-submit" %>
     <% end %>
+    <div class="pell" id="pell">
+    </div>
+    <button class="submit" id="submit">Submit</button>
 </div>
 

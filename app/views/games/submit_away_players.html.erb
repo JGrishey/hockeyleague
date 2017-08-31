@@ -1,11 +1,20 @@
-<%= form_for(@game, :url => url_for(:action => "add_players", :controller => "games"), method: :post) do |f| %>
-    <div class="select-team">
-        <%= f.fields_for :game_players, @game.game_players.where(team_id: @game.away_team) do |builder| %>
-            <%= render "away_playerentry", f: builder %>
-        <% end %>
-
-        <%= link_to_add_away_players "Add player", f, :game_players %>
+<div class="submit-players">
+    <div class="header">
+        Submit players: <%= @game.date.strftime("%I:%M %p %^b %d %Y")%>
     </div>
+    <div class="teams">
+        <img class="logo" src="<%= get_logo(@game.away_team) %>"/>
+        <img class="logo" src="<%= get_logo(@game.home_team) %>"/>
+    </div>
+    <%= form_for(@game, :url => url_for(:action => "add_players", :controller => "games"), method: :post) do |f| %>
+        <div class="select-team">
+            <%= f.fields_for :game_players, @game.game_players.where(team_id: @game.away_team) do |builder| %>
+                <%= render "away_playerentry", f: builder %>
+            <% end %>
 
-    <%= f.submit %>
-<% end %>
+            <%= link_to_add_away_players "<img class='add-player' src='https://feathericons.com/node_modules/feather-icons/dist/icons/user-plus.svg'/>".html_safe, f, :game_players %>
+        </div>
+
+        <%= f.submit "Submit players", class: "submit-btn" %>
+    <% end %>
+</div>

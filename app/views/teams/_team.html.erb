@@ -1,16 +1,84 @@
-<div class="team-info">
-    <div class="name"><%= team.name %></div>
-    <div class="season"><%= season.title %></div>
-</div>
-<div class="players">
-    <% team.players.each do |player| %>
-        <%= player.user_name %>
-    <% end %>
-</div>
 <div class="games">
-    <% team.games.order('date ASC').each do |game| %>
-        <%= render 'games/preview', game: game, season: season %>
+    <% @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
+        <div class="date-block">
+            <%= key %>
+        </div>
+        <% values.each do |game| %>
+            <%= link_to league_season_game_path(@league, @season, game), method: :get do %>
+                <div class="game">
+                    <div class="logos">
+                        <img class="logo" src="<%= get_logo(game.away_team) %>"/>
+                        <img class="logo" src="<%= get_logo(game.home_team) %>"/>
+                    </div>
+                    <% if game.final %>
+                        <div class="scores">
+                            <div class="score">
+                                <%= game.away_goals.count %>
+                            </div>
+                            <div class="score">
+                                <%= game.home_goals.count %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="tbd">
+                            TBD
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
     <% end %>
 </div>
 
-<%= link_to "Edit team", edit_league_season_team_path(season.league, season, team), method: :get %>
+<div class="league">
+    <div class="title">
+        <%= link_to league_season_path(@league, @season), method: :get do %>
+            <%= @league.name %> - <%= @season.title %>
+        <% end %>
+    </div>
+
+    <div class="team-info">
+        <div class="team-header">
+            <img class="photo" src="http://www.whiteface.com/sites/default/files/media/img_his_03_h.jpg"/>
+        </div>
+
+        <div class="logo">
+            <img class="team-logo" src="<%= get_logo(@team) %>"/>
+        </div>
+        <div class="name">
+            <%= @team.name %>
+        </div>
+        <div class="record">
+            <%= @team_data[:wins] %>-<%= @team_data[:losses] %>-<%= @team_data[:otl] %>
+        </div>
+        <% if @team.captain == current_user %>
+            <div class="edit">
+                <%= link_to "EDIT", edit_league_season_team_path(@league, @season, @team), method: :get %>
+            </div>
+        <% end %>
+
+        <div class="view-schedule">
+            <%= link_to "View Schedule", schedule_league_season_team_path(@league, @season, @team), method: :get %>
+        </div>
+
+        <div class="players">
+            <% @team.players.each do |player| %>
+                <%= link_to profile_path(player.user_name) do %>
+                    <div class="player">
+                        <img class="avatar" src=<%= get_avatar(player) %>/>
+                        <div class="p-name">
+                            <%= player.user_name %>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+
+    <div class="player-stats">
+        <div class="players" id="players" data-data="<%= @data.to_json %>">
+        </div>
+    <div>
+</div>
+
+<%= javascript_pack_tag "tables/team_players" %>

@@ -1,12 +1,43 @@
-<div class="edit-profile-container">
-    <%= simple_form_for(@user, url: {action: "update"}, html: {multipart: true}) do |f| %>
-        <label class="bio-label">
-            Bio 
-        </label>
-        <%= f.input_field :bio, class: "bio-input" %>
+<div class="edit-profile">
+    <div class="header">
+        Edit Profile
+    </div>
+    <div class="form">
+        <%= form_for(@user, url: {action: "update"}, html: {multipart: true}) do |f| %>
 
-        <%= f.input :avatar %>
-        
-        <%= f.button :submit, "Change profile", class: "edit-profile-btn" %>
-    <% end %>
+            <div class="section">
+                <label class="profile-label">Birthplace</label>
+                <%= f.text_field :birthplace, class: "profile-text" %>
+            </div>
+
+            <div class="section">
+                <label class="profile-label">Birthday</label>
+                <%= f.date_select :born, start_year: Date.today.year - 100, end_year: Date.today.year, class: "profile-date" %>
+            </div>
+
+            <div class="section">
+                <label class="profile-label">Height</label>
+                <%= f.text_field :height, class: "profile-text"%>
+            </div>
+
+            <div class="section">
+                <label class="profile-label">Weight</label>
+                <%= f.text_field :weight, class: "profile-text" %>
+            </div>
+
+            <div class="section">
+                <label class="profile-label">Banner</label>
+                <%= f.select :banner, banner_options(), class: "profile-banner" %>
+            </div>
+
+            <div class="section">
+                <label class="profile-label">Avatar</label>
+                <a id="upload-btn" class="upload">Upload</a>
+                <span id="file-display"></span>
+                <%= f.file_field :avatar, class: "profile-avatar" %>
+            </div> 
+            
+            <%= f.submit "Change profile", class: "submit" %>
+        <% end %>
+    </div>
 </div>

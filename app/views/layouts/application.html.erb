@@ -4,34 +4,48 @@
 <head>
     <title>Moose Hockey League</title>
     <link rel="shortcut icon" href=<%= image_path("MooseLogo.png")%> type="image/png"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/pell/dist/pell.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/react-table@latest/react-table.css">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'posting/new-post' %>
 </head>
 
 <body>
     <nav class="navigation-main">
         <div class="nav-container">
-            <div class="nav-element">
-                <%= link_to root_path do %>
-                    <img class="logo" src=<%= image_path("MooseLogo.svg") %>/>
-                <% end %>
-            </div>
+            <div class="nav-left">
+                <div class="nav-element">
+                    <%= link_to root_path, method: :get do %>
+                        <img class="logo" src=<%= image_path("MooseLogo.png") %>/>
+                    <% end %>
+                </div>
 
-            <div class="nav-element title">
-                <%= link_to "MOOSE", root_path %>
+                <div class="nav-element title">
+                    <%= link_to "MOOSE HOCKEY", root_path, method: :get %>
+                </div>
+            </div>
+            <div class="nav-right">
+                <% if user_signed_in? %>
+                    <div class="nav-element">
+                        <%= link_to profile_path(current_user.user_name), method: :get do %>
+                            <img class="nav-photo" src=<%= get_avatar(current_user) %>/>
+                        <% end %>
+                    </div>
+                    <div class="nav-element">
+                        <%= link_to profile_path(current_user.user_name), method: :get do %>
+                            <%= current_user.user_name %>
+                        <% end %>
+                    </div>
+                    <div class="nav-element">
+                        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+                    </div>
+                <% end %>
             </div>
         </div>
     </nav>
-
-    <% if user_signed_in? %>
-        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-    <% end %>
-
-    <%= link_to "New Subforum", new_subforum_path %>
-
-    <%= link_to "Leagues", leagues_path %>
 
     <%= yield %>
 </body>

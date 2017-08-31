@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+    scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }
+
+    acts_as_voter
     
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -19,6 +22,7 @@ class User < ApplicationRecord
     
     has_many :team_players, dependent: :destroy
     has_many :teams, :through => :team_players
+    has_many :seasons, :through => :teams
 
     has_many :goals, :class_name => "Goal", :foreign_key => "scorer_id"
     has_many :primary_assists, :class_name => "Goal", :foreign_key => "primary_id"
@@ -26,44 +30,137 @@ class User < ApplicationRecord
     has_many :penalties
     has_many :stat_lines
 
-    has_attached_file :avatar
+    has_attached_file :avatar, styles: { :small => "400x400#" }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+
+    def online?
+        updated_at < 10.minutes.ago
+    end
+
+    def inSeason (season)
+        self.seasons.include?(season)
+    end
+
+    def current_seasons
+        self.seasons.where("current = ?", true)
+    end
+
+    def get_avatar
+        if self.avatar.exists?
+            self.avatar.url(:small)
+        else
+            "nil"
+        end
+    end
+
+    def recent_games
+        games = []
+        self.stat_lines.each do |s|
+            if games.length == 5
+                break
+            elsif s.game.final && s.position != "G"
+                games.push(s)
+            end
+        end
+        games
+    end
+
+    def recent_goalie_games
+        games = []
+        self.stat_lines.each do |s|
+            if games.length == 5
+                break
+            elsif s.game.final && s.position == "G"
+                games.push(s)
+            end
+        end
+        games
+    end
+
+    def getCurrentTeam (season)
+        team = nil
+        self.team_players.each do |tp|
+            if tp.team.season == season
+                team = tp.team
+            end
+        end
+        team
+    end
+
+    def getLeagues
+        leagues = []
+        self.seasons.each do |season|
+            if !leagues.include?(season.league)
+                leagues.push(season.league)
+            end
+        end
+        leagues
+    end
 
     def getSeasonStats (season)
         goals = 0
+        team = self.getCurrentTeam(season)
         assists = 0
         plus_minus = 0
+        shg = 0
+        ppg = 0
+        shp = 0
+        ppp = 0
         shots = 0
         fow = 0
         fot = 0
         hits = 0
+        wins = 0
+        losses = 0
+        otl = 0
         shots_against = 0
         goals_against = 0
         pim = 0
         games_played = 0
+        goalie_games = 0
+        goals_against = 0
+        shots_against = 0
+        shutouts = 0
 
         self.goals.each do |goal|
-            if goal.game.season == season
+            if goal.game.season == season && goal.game.final
                 goals += 1
+                if goal.time_scored === "Shorthanded"
+                    shg += 1
+                    shp += 1
+                elsif goal.time_scored === "Power Play"
+                    ppg += 1
+                    ppp += 1
+                end
             end
         end
         self.primary_assists.each do |pA|
-            if pA.game.season == season
+            if pA.game.season == season && pA.game.final
                 assists += 1
+                if pA.time_scored === "Shorthanded"
+                    shp += 1
+                elsif pA.time_scored === "Power Play"
+                    ppp += 1
+                end
             end
         end
         self.secondary_assists.each do |sA|
-            if sA.game.season == season
+            if sA.game.season == season && sA.game.final
                 assists += 1
+                if sA.time_scored === "Shorthanded"
+                    shp += 1
+                elsif sA.time_scored === "Power Play"
+                    ppp += 1
+                end
             end
         end
         self.penalties.each do |penalty|
-            if penalty.game.season == season
+            if penalty.game.season == season && penalty.game.final
                 pim += penalty.duration
             end
         end
         self.stat_lines.each do |stats|
-            if stats.game.season == season
+            if stats.game.season == season && stats.game.final
                 plus_minus += stats.plus_minus if stats.plus_minus
                 shots += stats.shots if stats.shots
                 fow += stats.fow if stats.fow
@@ -71,24 +168,73 @@ class User < ApplicationRecord
                 hits += stats.hits if stats.hits
                 shots_against += stats.shots_against if stats.shots_against
                 goals_against += stats.goals_against if stats.goals_against
-                games_played += 1
+
+                if stats.position === "G"
+                    goalie_games += 1
+
+                    if stats.team == stats.game.home_team
+                        if stats.game.home_goals.count > stats.game.away_goals.count
+                            if stats.game.away_goals == 0
+                                shutouts += 1
+                            end
+                            wins += 1
+                        elsif stats.game.overtime
+                            otl += 1
+                        else
+                            losses += 1
+                        end
+                    else
+                        if stats.game.away_goals.count > stats.game.home_goals.count
+                            if stats.game.home_goals == 0
+                                shutouts += 1
+                            end
+                            wins += 1
+                        elsif stats.game.overtime
+                            otl += 1
+                        else
+                            losses += 1
+                        end
+                    end
+                else
+                    games_played += 1
+                end    
             end
         end
         return {
+            'name': self.user_name,
+            'avatar': self.get_avatar,
+            'team': team.abbreviation,
+            'team_logo': team.get_logo,
+            'team_id': team.id,
+            'season': season.title,
+            'season_id': season.id,
+            'league_id': season.league.id,
+            'league': season.league.name,
+            'wins': wins,
+            'losses': losses,
+            'otl': otl,
             'goals': goals,
             'assists': assists,
             'points': goals + assists,
-            'plus_minus': plus_minus,
+            'plus-minus': plus_minus,
+            'pim': pim,
+            'p/gp': games_played > 0 ? (goals + assists) / games_played.to_f : 0,
+            'ppg': ppg,
+            'ppp': ppp,
+            'shg': shg,
+            'shp': shp,
             'shots': shots,
-            'SH%': shots > 0 ? (goals / shots) : 0,
+            'sh%': shots > 0 ? (goals.to_f / shots * 100) : 0,
             'fow': fow,
             'fot': fot,
-            'FO%': fot > 0 ? (fow / fot) : 0,
+            'fo%': fot > 0 ? (fow.to_f / fot) * 100 : 0,
             'hits': hits,
             'shots_against': shots_against,
             'goals_against': goals_against,
-            'SV%': shots_against > 0 ? (goals_against / shots_against) : 0,
-            'GAA': games_played > 0 ? (goals_against / games_played) : 0,
+            'goalie_games': goalie_games,
+            'sv%': shots_against > 0 ? ((shots_against - goals_against.to_f) / shots_against) : 0,
+            'gaa': goalie_games > 0 ? (goals_against.to_f / goalie_games) : 0,
+            'shutouts': shutouts,
             'games_played': games_played
         }
     end

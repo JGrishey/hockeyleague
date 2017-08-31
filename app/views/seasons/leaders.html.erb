@@ -1,0 +1,76 @@
+<div class="games">
+    <% @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
+        <div class="date-block">
+            <%= key %>
+        </div>
+        <% values.each do |game| %>
+            <%= link_to league_season_game_path(@league, @season, game), method: :get do %>
+                <div class="game">
+                    <div class="logos">
+                        <img class="logo" src="<%= get_logo(game.away_team) %>"/>
+                        <img class="logo" src="<%= get_logo(game.home_team) %>"/>
+                    </div>
+                    <% if game.final %>
+                        <div class="scores">
+                            <div class="score">
+                                <%= game.away_goals.count %>
+                            </div>
+                            <div class="score">
+                                <%= game.home_goals.count %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="tbd">
+                            TBD
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>
+
+<div class="league">
+    <div class="title">
+        <%= @league.name %> - <%= @season.title %>
+    </div>
+    <div class="nav">
+        <%= link_to league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Home
+            </div>
+        <% end %>
+        <div class="element -selected">
+            Leaders
+        </div>
+        <%= link_to standings_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Standings
+            </div>
+        <% end %>
+        <%= link_to players_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Players
+            </div>
+        <% end %>
+        <%= link_to schedule_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Schedule
+            </div>
+        <% end %>
+    </div>
+    <div class="leaders-wrapper" id="leaders">
+        
+    </div>
+
+    <div id="goal-leaders" data-data="<%= @goal_leaders.to_json %>"></div>
+    <div id="assist-leaders" data-data="<%= @assist_leaders.to_json %>"></div>
+    <div id="point-leaders" data-data="<%= @point_leaders.to_json %>"></div>
+    <div id="plusminus-leaders" data-data="<%= @plusminus_leaders.to_json %>"></div>
+    <div id="gaa-leaders" data-data="<%= @gaa_leaders.to_json %>"></div>
+    <div id="sv-leaders" data-data="<%= @sv_leaders.to_json %>"></div>
+    <div id="win-leaders" data-data="<%= @win_leaders.to_json %>"></div>
+    <div id="so-leaders" data-data="<%= @so_leaders.to_json %>"></div>
+</div>
+
+<%= javascript_pack_tag "leaders/leaders" %>

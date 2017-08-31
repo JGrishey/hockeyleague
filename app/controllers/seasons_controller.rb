@@ -1,7 +1,7 @@
 class SeasonsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_league
-    before_action :set_season, only: [:show, :destroy, :upload, :process_file, :standings]
+    before_action :set_season, only: [:show, :destroy, :upload, :process_file, :standings, :players, :leaders, :schedule]
     
 
     def index
@@ -40,6 +40,19 @@ class SeasonsController < ApplicationController
     end
 
     def show
+        @data = []
+        playerstats = []
+        @season.teams.each do |team|
+            @data.push(team.standingsData)
+            team.players.each do |player|
+                playerstats.push(player.getSeasonStats(@season))
+            end
+        end
+
+        @goal_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:goals] : 0}
+        @assist_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:assists] : 0}
+        @point_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:points] : 0}
+        @pim_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:pim] : 0}
     end
 
     def destroy
@@ -78,6 +91,51 @@ class SeasonsController < ApplicationController
     end
 
     def standings
+        @data = []
+        @season.teams.each do |team|
+            @data.push(team.standingsData)
+        end
+    end
+
+    def players
+        @data = []
+        @season.teams.each do |team|
+            team.players.each do |player|
+                stats = player.getSeasonStats(@season)
+                stats[:games_played] > 0 ? @data.push(stats) : ()
+            end
+        end
+    end
+
+    def leaders
+        skaters = []
+        goalies = []
+        @season.teams.each do |team|
+            team.players.each do |player|
+                stats = player.getSeasonStats(@season)
+                
+                if stats[:games_played] > 0
+                    skaters.push(stats)
+                end
+
+                if stats[:goalie_games] > 0
+                    goalies.push(stats)
+                end
+            end
+        end
+
+        @goal_leaders = skaters.sort_by { |s| -s[:goals]}
+        @assist_leaders = skaters.sort_by{|s| -s[:assists]}
+        @point_leaders = skaters.sort_by{|s| -s[:points]}
+        @plusminus_leaders = skaters.sort_by{|s| -s[:"plus-minus"]}
+        @gaa_leaders = goalies.sort_by{|s| s[:gaa]}
+        @sv_leaders = goalies.sort_by{|s| -s[:"sv%"]}
+        @win_leaders = goalies.sort_by{|s| -s[:wins]}
+        @so_leaders = goalies.sort_by{|s| -s[:shutouts]}
+    end
+
+    def schedule
+        @games = @season.games.order('date ASC').group_by{|g| g.date.strftime("%^b %d, %Y")}
     end
     
     private

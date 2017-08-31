@@ -37,6 +37,47 @@ class GamesController < ApplicationController
     end
 
     def show
+        @home_box = []
+        @game.home_stats.each do |s|
+            line = s.game.get_line(s.user)
+            @home_box.push({
+                'name': s.user.user_name,
+                'position': s.position,
+                'goals': line[:g],
+                'assists': line[:a],
+                'points': line[:p],
+                'pim': line[:pim],
+                'hits': s.hits,
+                'plus_minus': s.plus_minus,
+                'shots': s.shots,
+                'fow': s.fow,
+                'fot': s.fot,
+                'shots_against': s.shots_against,
+                'goals_against': s.goals_against,
+                'sv%': s.shots_against > 0 ? ((s.shots_against - s.goals_against.to_f) / s.shots_against) : 0,
+            })
+        end
+
+        @away_box = []
+        @game.away_stats.each do |s|
+            line = s.game.get_line(s.user)
+            @away_box.push({
+                'name': s.user.user_name,
+                'position': s.position,
+                'goals': line[:g],
+                'assists': line[:a],
+                'points': line[:p],
+                'pim': line[:pim],
+                'hits': s.hits,
+                'plus_minus': s.plus_minus,
+                'shots': s.shots,
+                'fow': s.fow,
+                'fot': s.fot,
+                'shots_against': s.shots_against,
+                'goals_against': s.goals_against,
+                'sv%': s.shots_against > 0 ? ((s.shots_against - s.goals_against.to_f) / s.shots_against) : 0,
+            })
+        end
     end
 
     def destroy
@@ -79,7 +120,7 @@ class GamesController < ApplicationController
             :away_ppo,
             goals_attributes: [:id, :team_id, :scorer_id, :primary_id, :secondary_id, :time_scored, :_destroy],
             penalties_attributes: [:id, :team_id, :user_id, :duration, :_destroy],
-            stat_lines_attributes: [:id, :team_id, :position, :user_id, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against, :_destroy]
+            game_players_attributes: [:id, stat_line_attributes: [:game_player_id, :game_id, :team_id, :user_id, :id, :position, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against]]
         ))
         puts @game.errors.inspect
         redirect_to league_season_game_path(@season.league, @season, @game)

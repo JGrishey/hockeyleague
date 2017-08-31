@@ -1,8 +1,18 @@
-<div class="post-preview">
-    <div class="title">
-        <%= link_to post.title, subforum_post_path(subforum, post), method: :get %>
+<%= link_to subforum_post_path(@subforum, post), method: :get do %>
+    <div class="post-preview">
+        <div class="post-photo">
+            <img class="user-photo" src=<%= get_avatar(post.user) %>/>
+        </div>
+        <div class="info">
+            <div class="post-title">
+                <%= post.title %>
+            </div>
+            <div class="date-and-author">
+                Last updated at <%= post.updated_at.strftime("%I:%M %p on %d %^b %Y") %> by <%= post.most_recent.user.user_name %>
+            </div>
+            <div class="comments">
+                <%= pluralize(post.comments.count, "comment") %>
+            </div>
+        </div>
     </div>
-    <div class="date">
-        <%= post.created_at.strftime("%I:%M %p - %d %^b %Y") %>
-    </div>
-</div>
+<% end %>

@@ -1,6 +1,22 @@
-<%= link_to "New post", new_subforum_post_path(subforum), method: :get %>
-<%= link_to "Edit subforum", edit_subforum_path(subforum), method: :get %>
+<div class="subforum-container">
+    <div class="title">
+        <%= subforum.title %>
+    </div>
 
-<% subforum.posts.each do |post| %>
-    <%= render 'posts/preview', post: post, subforum: subforum %>
-<% end %>
+    <%= link_to new_subforum_post_path(subforum), method: :get do %>
+        <div class="new-post">
+            <span><img src="https://feathericons.com/node_modules/feather-icons/dist/icons/plus-square.svg"/></span> New post
+        </div>
+    <% end %>
+
+    <% if @posts.any? %>
+        <% @posts.order('updated_at DESC').each do |post| %>
+            <%= render 'posts/preview', post: post, subforum: subforum %>
+        <% end %>
+    <% else %>
+        <div class="no-posts">
+            There aren't any posts in this topic yet!
+        </div>
+    <% end %>
+</div>
+

@@ -1,22 +1,42 @@
+<div class="header">
+    Edit team
+</div>
 <%= form_for(team, :url => url_for(:action => "update", :controller => "teams")) do |f| %>
-    <label class="text-label">
-        Name
-    </label>
-    <%= f.text_field :name, required: true, class: "text-input" %>
-
-    <%= f.select :captain_id, User.all.collect{|u| [u.user_name, u.id]} %>
-
-    <%= f.fields_for :team_players, team.team_players do |builder| %>
-        <%= render 'playerentry', f: builder, team: team %>
-    <% end %>
-
-    <%= link_to_add_players "Add player", f, :team_players %>
-
-    <div class="player-input" id="player-input">
-
+    <div class="input">
+        <label class="text-label">
+            Name
+        </label>
+        <%= f.text_field :name, required: true, class: "text-input" %>
     </div>
 
-    <%= f.submit %>
+    <div class="input">
+        <label class="captain-label">
+            Captain
+        </label>
+        <%= f.select :captain_id, User.all.collect{|u| [u.user_name, u.id]}, {}, {class: "captain-select"} %>
+    </div>
+
+    <div class="input">
+        <label class="team-label">Logo</label>
+        <a id="upload-btn" class="upload">Upload</a>
+        <span id="file-display"></span>
+        <%= f.file_field :logo, class: "team-logo" %>
+    </div>
+
+
+    <div class="players">
+        Players
+    </div>
+    <div>
+        <%= f.fields_for :team_players, team.team_players do |builder| %>
+            <%= render 'playerentry', f: builder, team: team %>
+        <% end %>
+
+        <%= link_to_add_players "<img class='add-player' src='https://feathericons.com/node_modules/feather-icons/dist/icons/user-plus.svg'/>".html_safe, f, :team_players %>
+    </div>
+    <%= f.submit "Update Team", class: "submit-btn" %>
 <% end %>
 
-<%= link_to "Delete team", league_season_team_path(season.league, season, team), method: :delete %>
+<div class="delete">
+    <%= link_to "Delete team", league_season_team_path(season.league, season, team), method: :delete %>
+</div>

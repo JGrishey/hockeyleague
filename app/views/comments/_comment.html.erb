@@ -1,12 +1,36 @@
 <div class="comment" id="comment_<%=comment.id%>">
     <div class="info">
-        <% if comment.user == current_user %>
-            <%= link_to 'Delete', subforum_post_comment_path(subforum, post, comment), method: :delete, remote: true %>
+        <img class="photo" src=<%= get_avatar(comment.user) %>/>
+        <div class="user">
+            <%= link_to comment.user.user_name, profile_path(comment.user.user_name), method: :get %>
+        </div>
+        <div class="time">
+            <%= comment.created_at.strftime("%I:%M %p") %>
+        </div>
+        <div class="date">
+            <%= comment.created_at.strftime("%d %^b %Y") %>
+        </div>
+        <% if current_user == comment.user %>
+            <div class="edit">
+                <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment), method: :get %>
+            </div>
         <% end %>
-        <%= link_to comment.user.user_name, profile_path(comment.user.user_name) %>
-        <%= comment.created_at.strftime("%I:%M %p - %d %^b %Y") %>
+        <% if comment.updated_at != comment.created_at %>
+            <div class="date">
+                Last updated at <%= comment.updated_at.strftime("%I:%M %p - %d %^b %Y") %>
+            </div>
+        <% end %>
     </div>
+
     <div class="content">
-        <%= comment.content %>
+        <%= comment.content.html_safe %>
+    </div>
+
+    
+</div>
+
+<div class="liking">
+    <div id="likes-comment-<%= comment.id %>">
+        <%= render 'comments/likes', comment: comment %>
     </div>
 </div>

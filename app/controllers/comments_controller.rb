@@ -25,6 +25,26 @@ class CommentsController < ApplicationController
         end
     end
 
+    def edit
+        @comment = @post.comments.find(params[:id])
+    end
+
+    def update
+        @comment = @post.comments.find(params[:id])
+        if @comment.update(comment_params)
+            redirect_to subforum_post_path(@subforum, @post)
+        else
+            render :edit
+        end
+    end
+
+    def show
+        @comment = @post.comments.find(params[:id])
+        respond_to do |format|
+            format.js
+        end
+    end
+
     def destroy
         @comment = @post.comments.find(params[:id])
 
@@ -32,6 +52,26 @@ class CommentsController < ApplicationController
             @comment.destroy
             respond_to do |format|
                 format.html { redirect_to post_path(@post) }
+                format.js
+            end
+        end
+    end
+
+    def like
+        @comment = @post.comments.find(params[:id])
+        if @comment.liked_by current_user
+            respond_to do |format|
+                format.html { redirect_to :back }
+                format.js
+            end
+        end
+    end
+
+    def dislike
+        @comment = @post.comments.find(params[:id])
+        if @comment.unliked_by current_user
+            respond_to do |format|
+                format.html { redirect_to :back }
                 format.js
             end
         end

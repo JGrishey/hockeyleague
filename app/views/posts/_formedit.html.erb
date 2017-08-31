@@ -1,17 +1,15 @@
-<%= simple_form_for([subforum, post]) do |f| %>
-    <label class="text-label">
+<%= simple_form_for([@subforum, @post]) do |f| %>
+    <label class="title-label">
         Title
     </label>
-    <%= f.input_field :title, required: true, class: "text-input" %>
+    <%= f.input_field :title, required: true, class: "title-input" %>
 
-    <label class="textbox-label">
-        Content
-    </label>
-    <%= f.input_field :content, as: :text, class: "textbox-input" %>
+    <%= f.hidden_field :content, value: @post.content %>
 
-    <%= f.button :submit, "Edit post", class: "submit-post-btn" %>
+    <%= f.button :submit, style: "display: none;", id: 'real-submit' %>
 <% end %>
 
-<% if current_user == post.user %>
-    <%= link_to "Delete post", subforum_post_path(subforum, post), method: :delete %>
-<% end %>
+<div class="pell" id="pell">
+</div>
+
+<button class="submit-post" id="submit" >Submit</button>

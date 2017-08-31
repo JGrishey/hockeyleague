@@ -7,13 +7,26 @@ Rails.application.routes.draw do
 
     resources :subforums do
         resources :posts do
-            resources :comments
+                member do
+                    get 'like'
+                    get 'dislike'
+                end
+            resources :comments do
+                member do
+                    get 'like'
+                    get 'dislike'
+                end
+            end
         end
     end
 
     resources :leagues do
         resources :seasons do
-            resources :teams
+            resources :teams do
+                member do
+                    get 'schedule'
+                end
+            end
             resources :games do
                 member do
                     get 'enter_home_stats'
@@ -29,8 +42,18 @@ Rails.application.routes.draw do
             member do
                 get 'upload'
                 get 'standings'
+                get 'players'
+                get 'leaders'
+                get 'schedule'
                 post 'process_file'
             end
+        end
+        member do
+            get 'players'
+            get 'standings'
+            get 'leaders'
+            get 'schedule'
+            get 'history'
         end
     end
 
@@ -41,4 +64,5 @@ Rails.application.routes.draw do
     get ':user_name', to: 'profiles#show', as: :profile
     get ':user_name/edit', to: 'profiles#edit', as: :edit_profile
     patch ':user_name/edit', to: 'profiles#update', as: :update_profile
+
 end

@@ -15,14 +15,44 @@ class Team < ApplicationRecord
     has_many :goals
     has_many :penalties
 
+    has_attached_file :logo
+    validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+
+    def abbreviation
+        self.name.split.map(&:first).join
+    end
+
     def games
         Game.where("away_id = ? OR home_id = ?", self.id, self.id)
     end
 
-    def record
+    def games_played
+        self.games.where("final = ?", true)
+    end
+
+    def get_logo
+        if self.logo.exists?
+            self.logo.url
+        else
+            "nil"
+        end
+    end
+
+    def standingsData
         wins = 0
         losses = 0
         otl = 0
+        gp = self.games_played.count
+        gf = self.goals.count
+        ga = 0
+        ppo = 0
+        ppg = 0
+        pko = 0
+        pkk = 0
+        shf = 0
+        sha = 0
+        fow = 0
+        fot = 0
 
         self.games.where(final: true).each do |game|
             if game.home_team == self
@@ -35,6 +65,22 @@ class Team < ApplicationRecord
                         losses += 1
                     end
                 end
+
+                ga += game.away_goals.count
+                ppo += game.home_ppo
+                ppg += game.home_ppg
+                pko += game.away_ppo
+                pkk += game.away_ppo - game.away_ppg
+                
+                game.home_stats.each do |stat|
+                    shf += stat.shots
+                    fow += stat.fow
+                    fot += stat.fot
+                end
+
+                game.away_stats.each do |stat|
+                    sha += stat.shots
+                end
             else
                 if game.away_goals.count > game.home_goals.count
                     wins += 1
@@ -45,9 +91,45 @@ class Team < ApplicationRecord
                         losses += 1
                     end
                 end
+
+                ga += game.home_goals.count
+                ppo += game.away_ppo
+                ppg += game.away_ppg
+                pko += game.home_ppo
+                pkk += game.home_ppo - game.home_ppg
+                
+                game.away_stats.each do |stat|
+                    shf += stat.shots
+                    fow += stat.fow
+                    fot += stat.fot
+                end
+                
+                game.home_stats.each do |stat|
+                    sha += stat.shots
+                end
             end
         end
 
-        {"wins": wins, "losses": losses, "otl": otl}
+        {
+            "league_id": self.season.league.id,
+            "season_id": self.season.id,
+            "team_id": self.id,
+            "wins": wins,
+            "losses": losses,
+            "otl": otl,
+            "pts": wins * 2 + otl,
+            "pts%": gp > 0 ? (wins * 2 + otl) / (gp * 2.0) : 0,
+            "name": self.name,
+            "gp": gp,
+            "gf": gf,
+            "gfpg": gp > 0 ? gf.to_f / gp : 0,
+            "ga": ga,
+            "gapg": gp > 0 ? ga.to_f / gp : 0,
+            "pp%": ppo > 0 ? ppg.to_f / ppo * 100 : 0,
+            "pk%": pko > 0 ? pkk.to_f / pko * 100 : 0,
+            "shfpg": gp > 0 ? shf.to_f / gp : 0,
+            "shapg": gp > 0 ? sha.to_f / gp : 0,
+            "fow%": fot > 0 ? fow.to_f / fot * 100 : 0
+        }
     end
 end

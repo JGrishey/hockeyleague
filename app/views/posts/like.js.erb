@@ -1,0 +1,3 @@
+$('#like-button-post-<%= @post.id %>').attr("src", "https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-down.svg")
+
+$("#likes-post-<%= @post.id %>").html("<%= j (render partial: 'posts/likes', locals: { post: @post} ) %>");

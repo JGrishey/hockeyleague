@@ -1,52 +1,140 @@
 <%= form_for(@game, :url => url_for(:action => "process_away_stats", :controller => "games"), method: :post) do |f| %>
     <div class="enter-stats">
+        <div class="banner">
+            <div class="logo">
+                <img class="img-logo" src="<%= get_logo(@game.away_team) %>"/>
+            </div>
+            <div class="name">
+                <%= @game.away_team.name %>
+            </div>
+            <div class="name">
+                <%= @game.home_team.name %>
+            </div>
+            <div class="logo">
+                <img class="img-logo" src="<%= get_logo(@game.home_team) %>"/>
+            </div>
+        <div class="datetime">
+            <%= @game.date.strftime("%I:%M %p %^b %d %Y") %>
+        </div>
+    </div>
+
         <div class="team">
-            <%= f.number_field :away_toa_minutes %>
-            <%= f.number_field :away_toa_seconds %>
-            <%= f.number_field :away_ppg %>
-            <%= f.number_field :away_ppo %>
+            <label class="number-label">
+                Time on Attack
+            </label>
+            <%= f.text_field :away_toa_minutes, class: "team-num", placeholder: "0" %>:<%= f.text_field :away_toa_seconds, class: "team-num", placeholder: "00" %>
+            <label class="number-label">
+                Power Play
+            </label>
+            <%= f.text_field :away_ppg, class: "team-num", placeholder: "0" %>/<%= f.text_field :away_ppo, class: "team-num", placeholder: "0" %>
         </div>
 
+        <label class="overtime">
+            Overtime?
+        </label>
+        <%= f.check_box :overtime, class: "ot-check" %>
+
         <div class="goals" id="goals">
-            
+            <div class="header">Goals</div>
             <%= f.fields_for :goals, @game.away_goals do |builder| %>
-                <%= render "goalentry", f: builder, players: @game.away_players %>
+                <%= render "goalentry", f: builder, players: @game.away_players, team_id: @game.away_team.id %>
             <% end %>
             
-
-            <%= link_to_add_goals "Add Goal", f, :goals, @game.away_players %>
+            <%= link_to_add_goals "Add Goal", f, :goals, @game.away_players, @game.away_team.id %>
         </div>
 
         <div class="penalties" id="penalties">
+            <div class="header">Penalties</div>
             <%= f.fields_for :penalties, @game.away_penalties do |builder| %>
-                <%= render "penaltyentry", f: builder, players: @game.away_players %>
+                <%= render "penaltyentry", f: builder, players: @game.away_players, team_id: @game.away_team.id %>
             <% end %>
 
-            <%= link_to_add_penalties "Add Penalty", f, :penalties, @game.away_players %>
+            <%= link_to_add_penalties "Add Penalty", f, :penalties, @game.away_players, @game.away_team.id %>
         </div>
 
         <div class="players">
-            <% @game.game_players.each do |gp| %>
-                <% if gp.id != nil && gp.player.teams.include?(@game.away_team) %>
-                    <%= f.fields_for :stat_lines do |builder| %>
-                        <%= builder.hidden_field :team_id, :value => @game.away_team.id %>
-                        <%= builder.hidden_field :position, :value => gp.position %>
-                        <%= builder.hidden_field :user_id, :value => gp.player.id %>
-                        <% if gp.position != "G" %>
-                            <%= builder.number_field :plus_minus %>
-                            <%= builder.number_field :shots %>
-                            <%= builder.number_field :hits %>
-                            <%= builder.number_field :fow %>
-                            <%= builder.number_field :fot %>
-                        <% else %>
-                            <%= builder.number_field :shots_against %>
-                            <%= builder.number_field :goals_against %>
-                        <% end %>
+            <div class="header">Player Stats</div>
+            <%= f.fields_for :game_players, @game.away_players do |gpbuilder| %>
+                <%= gpbuilder.fields_for :stat_line_attributes, gpbuilder.object.stat_line do |builder| %>
+                    <%= builder.hidden_field :game_player_id, :value => gpbuilder.object.id %>
+                    <%= builder.hidden_field :game_id, :value => @game.id %>
+                    <%= builder.hidden_field :team_id, :value => @game.away_team.id %>
+                    <%= builder.hidden_field :position, :value => gpbuilder.object.position %>
+                    <%= builder.hidden_field :user_id, :value => gpbuilder.object.player.id %>
+                    <% if gpbuilder.object.position != "G" %>
+                        <div class="contain">
+                            <div class="bar">
+                                <div class="player">
+                                </div>
+                                <div class="player-num">
+                                    +/-
+                                </div>
+                                <div class="player-num">
+                                    S
+                                </div>
+                                <div class="player-num">
+                                    H
+                                </div>
+                                <div class="player-num">
+                                    FOW
+                                </div>
+                                <div class="player-num">
+                                    FOT
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="player">
+                                    <img class="avatar" src="<%= get_avatar(gpbuilder.object.player) %>"/>
+                                    <%= gpbuilder.object.player.user_name %>
+                                </div>
+                                <% if builder.object.nil? %>
+                                    <%= builder.text_field :plus_minus, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :shots, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :hits, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :fow, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :fot, class: "player-num", value: 0 %>
+                                <% else %>
+                                    <%= builder.text_field :plus_minus, class: "player-num", value: builder.object.plus_minus == 0 ? 0 : builder.object.plus_minus %>
+                                    <%= builder.text_field :shots, class: "player-num", value: builder.object.shots == 0 ? 0 : builder.object.shots %>
+                                    <%= builder.text_field :hits, class: "player-num", value: builder.object.hits == 0 ? 0 : builder.object.hits %>
+                                    <%= builder.text_field :fow, class: "player-num", value: builder.object.fow == 0 ? 0 : builder.object.fow %>
+                                    <%= builder.text_field :fot, class: "player-num", value: builder.object.fot == 0 ? 0 : builder.object.fot %>
+                                <% end %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="contain">
+                            <div class="bar">
+                                <div class="player">
+                                </div>
+                                <div class="player-num">
+                                    SA
+                                </div>
+                                <div class="player-num">
+                                    GA
+                                </div>
+                            </div>
+                            <div class="line">
+                                <div class="player">
+                                    <img class="avatar" src="<%= get_avatar(gpbuilder.object.player) %>"/>
+                                    <%= gpbuilder.object.player.user_name %>
+                                </div>
+                                <% if builder.object.nil? %>
+                                    <%= builder.text_field :shots_against, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :goals_against, class: "player-num", value: 0 %>
+                                <% else %>
+                                    <%= builder.text_field :shots_against, class: "player-num", value: builder.object.shots_against == 0 ? 0 : builder.object.shots_against %>
+                                    <%= builder.text_field :goals_against, class: "player-num", value: builder.object.goals_against == 0 ? 0 : builder.object.goals_against %>
+                                <% end %>
+                            </div>
+                        </div>
                     <% end %>
                 <% end %>
             <% end %>
         </div>
+
+        <%= f.submit "Enter stats", class: "submit-stats" %>
     </div>
 
-    <%= f.submit %>
+    
 <% end %>

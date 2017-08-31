@@ -1,10 +1,73 @@
 <div class="subforums-index">
     
     <div class="first-column">
+        <div class="bar">
+            Chat
+        </div>
         <%= render 'chat_boxes/chatbox', chat_box: ChatBox.first(), message: Message.new %>
+        
+        <div class="bar top">
+            Forum
+        </div>
+        <div class="forum">
+            <% @subforums.each do |subforum| %>
+                <%= render 'preview', subforum: subforum %>
+            <% end %>
+        </div>
     </div>
 
-    <% @subforums.each do |subforum| %>
-        <%= render 'preview', subforum: subforum %>
-    <% end %>
+    <div class="second-column">
+        <div class="leagues">
+            <div class="title">
+                Leagues
+            </div>
+            <% @leagues.each do |league| %>
+                <%= link_to league do %>
+                    <div class="league">
+                        <div class="name">
+                            <%= league.name %>
+                        </div>
+                        <div class="seasons">
+                            <%= pluralize(league.seasons.count, "season") %>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="online-members">
+            <div class="title">
+                Online members
+            </div>
+            <div class="members">
+                <% User.online.each do |u| %>
+                    <%= link_to u.user_name, profile_path(u.user_name), method: :get %>, 
+                <% end %>
+            </div>
+        </div>
+        <div class="recent-posts">
+            <div class="title">
+                Recent posts
+            </div>
+            <% @recent_posts.each do |post| %>
+                <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
+                    <div class="post">
+                        <div class="photo">
+                            <img class="preview" src=<%= get_avatar(post.most_recent.user) %>/>
+                        </div>
+                        <div class="info">
+                            <div class="name">
+                                <%= post.title %>
+                            </div>
+                            <div class="time">
+                                <%= post.updated_at.strftime("%b %d at %I:%M %p") %>
+                            </div>
+                            <div class="sub">
+                                <%= post.subforum.title %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            <% end%>
+        </div>
+    </div>
 <div>

@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_team, only: [:show, :destroy]
+    before_action :set_team, only: [:show, :destroy, :schedule]
     before_action :set_season
 
     def index
@@ -49,6 +49,12 @@ class TeamsController < ApplicationController
     end
 
     def show
+        @league = @season.league
+        @team_data = @team.standingsData
+        @data = []
+        @team.players.each do |player|
+            @data.push(player.getSeasonStats(@season))
+        end
     end
 
     def destroy
@@ -56,11 +62,15 @@ class TeamsController < ApplicationController
         flash[:success] = "Your team has been deleted."
         redirect_to league_season_path(@season.league, @season)
     end
+
+    def schedule
+        @games = @team.games.order('date ASC').group_by{|g| g.date.strftime("%^b %d, %Y")}
+    end
     
     private
 
     def team_params
-        params.require(:team).permit(:name, :season_id, :captain_id, team_players_attributes: [:id, :_destroy, :team_id, :user_id])
+        params.require(:team).permit(:logo, :name, :season_id, :captain_id, team_players_attributes: [:id, :_destroy, :team_id, :user_id])
     end
 
     def set_team

@@ -1,5 +1,137 @@
-<%= link_to "New season", new_league_season_path(league) %>
+<div class="games">
+    <% season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
+        <div class="date-block">
+            <%= key %>
+        </div>
+        <% values.each do |game| %>
+            <%= link_to league_season_game_path(league, season, game), method: :get do %>
+                <div class="game">
+                    <div class="logos">
+                        <img class="logo" src="<%= get_logo(game.away_team) %>"/>
+                        <img class="logo" src="<%= get_logo(game.home_team) %>"/>
+                    </div>
+                    <% if game.final %>
+                        <div class="scores">
+                            <div class="score">
+                                <%= game.away_goals.count %>
+                            </div>
+                            <div class="score">
+                                <%= game.home_goals.count %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="tbd">
+                            TBD
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>
 
-<% league.seasons.each do |season| %>
-    <%= link_to season.title, league_season_path(league, season) %>
-<% end %>
+<div class="league">
+    <div class="title">
+        <%= league.name %> - Current Season (<%= season.title %>)
+    </div>
+    <div class="nav">
+        <div class="element -selected">
+            Home
+        </div>
+        <%= link_to leaders_league_path(league), method: :get do %>
+            <div class="element">
+                Leaders
+            </div>
+        <% end %>
+        <%= link_to standings_league_path(league), method: :get do %>
+            <div class="element">
+                Standings
+            </div>
+        <% end %>
+        <%= link_to players_league_path(league), method: :get do %>
+            <div class="element">
+                Players
+            </div>
+        <% end %>
+        <%= link_to schedule_league_path(league), method: :get do %>
+            <div class="element">
+                Schedule
+            </div>
+        <% end %>
+        <%= link_to history_league_path(league), method: :get do %>
+            <div class="element">
+                History
+            </div>
+        <% end %>
+    </div>
+    <div class="standings-wrapper">
+        <div class="team-bar">
+            <% season.teams.each do |team| %>
+                <%= link_to league_season_team_path(league, season, team), method: :get do %>
+                    <img class="logo" src="<%= get_logo(team) %>"/>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="header">
+            Standings Preview
+        </div>
+        <div class="standings" id="standings" data-data="<%= @data.to_json %>">
+        </div>
+    </div>
+    <% if season.games.where(final: true).any? %>
+        <div class="leaders-header">
+            Players Preview
+        </div>
+        <div class="leaders">
+            <div class="goals">
+                <div class="category">Goals</div>
+                <%= link_to profile_path(@goal_leader[:name]), method: :get do %>
+                    <div class="picture">
+                        <img class="photo" src=<%= get_avatar(User.find_by(user_name: @goal_leader[:name]))%>/>
+                        <img class="team-photo" src="<%= get_logo(User.find_by(user_name: @goal_leader[:name]).getCurrentTeam(season))%>"/>
+                    </div>
+                    <div class="name"><%= @goal_leader[:name] %></div>
+                <% end %>
+                <div class="category-2">Goals</div>
+                <div class="number"><%= @goal_leader[:goals] %></div>
+            </div>
+            <div class="assists">
+                <div class="category">Assists</div>
+                <%= link_to profile_path(@assist_leader[:name]), method: :get do %>
+                    <div class="picture">
+                        <img class="photo" src=<%= get_avatar(User.find_by(user_name: @assist_leader[:name]))%>/>
+                        <img class="team-photo" src="<%= get_logo(User.find_by(user_name: @assist_leader[:name]).getCurrentTeam(season))%>"/>
+                    </div>
+                    <div class="name"><%= @assist_leader[:name] %></div>
+                <% end %>
+                <div class="category-2">Assists</div>
+                <div class="number"><%= @assist_leader[:assists] %></div>
+            </div>
+            <div class="points">
+                <div class="category">Points</div>
+                <%= link_to profile_path(@point_leader[:name]), method: :get do %>
+                    <div class="picture">
+                        <img class="photo" src=<%= get_avatar(User.find_by(user_name: @point_leader[:name]))%>/>
+                        <img class="team-photo" src="<%= get_logo(User.find_by(user_name: @point_leader[:name]).getCurrentTeam(season))%>"/>
+                    </div>
+                    <div class="name"><%= @point_leader[:name] %></div>
+                <% end %>
+                <div class="category-2">Points</div>
+                <div class="number"><%= @point_leader[:points] %></div>
+            </div>
+            <div class="pims">
+                <div class="category">PIMs</div>
+                <%= link_to profile_path(@pim_leader[:name]), method: :get do %>
+                    <div class="picture">
+                        <img class="photo" src=<%= get_avatar(User.find_by(user_name: @pim_leader[:name]))%>/>
+                        <img class="team-photo" src="<%= get_logo(User.find_by(user_name: @pim_leader[:name]).getCurrentTeam(season))%>"/>
+                    </div>
+                    <div class="name"><%= @pim_leader[:name] %></div>
+                <% end %>
+                <div class="category-2">PIMS</div>
+                <div class="number"><%= @pim_leader[:pim] %></div>
+            </div>
+        </div>
+    <% end %>
+    <%= javascript_pack_tag "tables/quickstandings"%>
+</div>

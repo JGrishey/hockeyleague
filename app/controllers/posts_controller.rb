@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
     before_action :authenticate_user!
-    before_action :get_post, only: [:show, :destroy]
+    before_action :get_post, only: [:show, :destroy, :like, :dislike]
     before_action :set_subforum
 
     def index
@@ -9,6 +9,7 @@ class PostsController < ApplicationController
     end
 
     def show
+        @comments = @post.comments.order('created_at ASC')
     end
 
     def new
@@ -47,6 +48,24 @@ class PostsController < ApplicationController
         @post.destroy
         flash[:success] = "Your post has been deleted."
         redirect_to root_path
+    end
+
+    def like
+        if @post.liked_by current_user
+            respond_to do |format|
+                format.html { redirect_to :back }
+                format.js
+            end
+        end
+    end
+
+    def dislike
+        if @post.unliked_by current_user
+            respond_to do |format|
+                format.html { redirect_to :back }
+                format.js
+            end
+        end
     end
 
     private

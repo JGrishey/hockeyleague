@@ -3,8 +3,8 @@
         <%= render chat_box.messages.last(20) %>
     </div>
 
-    <%= simple_form_for(message, url: "#") do |f| %>
-        <%= f.input_field :body, class: "message-input" %>
+    <%= simple_form_for(message, url: "#", class: "message-form") do |f| %>
+        <%= f.input_field :body, as: :string, class: "message-input" %>
         <%= f.button :submit, "Send", class: "send-message-btn" %>
     <% end %>
 </div>

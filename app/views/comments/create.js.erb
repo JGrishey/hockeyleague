@@ -1,3 +1,4 @@
-$("#comments").prepend("<%= j(render "comments/comment", post: @post, comment: @comment, subforum: @subforum) %>");
+$("#comments").append("<%= j(render "comments/comment", post: @post, comment: @comment, subforum: @subforum) %>");
 $("#title").html("Comments (<%= j(@post.comments.count.to_s) %>)");
 $("#comment_content").val("");
+$(".pell-content")[0].innerHTML = "";

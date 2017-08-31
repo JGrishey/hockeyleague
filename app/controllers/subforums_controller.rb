@@ -5,6 +5,8 @@ class SubforumsController < ApplicationController
 
     def index
         @subforums = Subforum.all.order('title DESC')
+        @leagues = League.all.order('name ASC')
+        @recent_posts = Post.order('updated_at DESC').first(5)
     end
 
     def new
@@ -43,6 +45,8 @@ class SubforumsController < ApplicationController
     end 
 
     def show
+        @subforum = Subforum.find(params[:id])
+        @posts = @subforum.posts
     end
 
     private

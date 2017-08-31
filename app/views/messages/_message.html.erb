@@ -1,3 +1,16 @@
 <div class="message">
-    <%= message.created_at.strftime("%m-%d %I:%M %p") %> <%= link_to message.user.user_name, profile_path(message.user.user_name) %>: <%= message.body %>
+
+    <div class="img-profile">
+        <!-- Helper method -->
+        <%= small_image(message.user) %>
+    </div>
+
+    <div class="content">
+        <div class="time-and-user">
+            <span class="user-name"><%= link_to message.user.user_name, profile_path(message.user.user_name) %></span> <span class="gray"><%= message.created_at.strftime("%I:%M %p") %></span>
+        </div>
+        <div class="write">
+            <%= simple_format(message.body) %>
+        </div>
+    </div>
 </div>
