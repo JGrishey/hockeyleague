@@ -10,10 +10,10 @@ jQuery(document).on('turbolinks:load', function() {
         channel: "ChatBoxesChannel",
         chat_box_id: messages.data('chat-box-id')
       }, {
-      connected() {},
+      connected () {},
         // Called when the subscription is ready for use on the server
 
-      disconnected() {},
+      disconnected () {},
         // Called when the subscription has been terminated by the server
 
       received(data) {
