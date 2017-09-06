@@ -10,6 +10,11 @@ class StatLine < ApplicationRecord
     validates :position, presence: true
     validates :plus_minus, numericality: { only_integer: true }
     validates :shots, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :goals, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :assists, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :pim, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+    validates :shg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :fow, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :fot, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :hits, numericality: { greater_than_or_equal_to: 0, only_integer: true }

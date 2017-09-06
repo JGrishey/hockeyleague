@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
     get 'profiles/show'
+    get 'pages/rules'
 
     devise_for :users, :controllers => {registrations: 'registrations'}
     
@@ -45,6 +46,13 @@ Rails.application.routes.draw do
                 get 'players'
                 get 'leaders'
                 get 'schedule'
+                get 'signup'
+                get 'signups'
+                get 'transactions'
+                get 'submit_transaction'
+                post 'process_transaction'
+                post 'approve_transaction'
+                post 'process_signup'
                 post 'process_file'
             end
         end
@@ -54,6 +62,8 @@ Rails.application.routes.draw do
             get 'leaders'
             get 'schedule'
             get 'history'
+            get 'signups'
+            get 'transactions'
         end
     end
 
@@ -64,5 +74,7 @@ Rails.application.routes.draw do
     get ':user_name', to: 'profiles#show', as: :profile
     get ':user_name/edit', to: 'profiles#edit', as: :edit_profile
     patch ':user_name/edit', to: 'profiles#update', as: :update_profile
+
+    get 'notifications/:id/link_through', to: 'notifications#link_through', as: :link_through
 
 end

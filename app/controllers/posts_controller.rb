@@ -22,6 +22,9 @@ class PostsController < ApplicationController
 
         if @post.save
             flash[:success] = "Your post has been created."
+            User.find_by(user_name: "Admin").messages.create!(
+                body: "#{view_context.link_to(current_user.user_name, profile_path(current_user.user_name))} started \"#{view_context.link_to(@post.title, subforum_post_path(@subforum, @post))}\" in #{@subforum.title}.",
+                chat_box_id: ChatBox.first.id)
             redirect_to subforum_post_path(@subforum, @post), method: :get
         else
             flash[:error] = "Something went wrong. Check the form."
@@ -52,6 +55,11 @@ class PostsController < ApplicationController
 
     def like
         if @post.liked_by current_user
+            create_notification(
+                "Your post was liked by #{current_user.user_name}.",
+                @post.user,
+                subforum_post_path(@subforum, @post)
+            )
             respond_to do |format|
                 format.html { redirect_to :back }
                 format.js
@@ -69,6 +77,13 @@ class PostsController < ApplicationController
     end
 
     private
+
+    def create_notification (body, user, src)
+        notification = user.notifications.create!(
+            body: body,
+            src: src
+        )
+    end
 
     def post_params
         params.require(:post).permit(:title, :content, :subforum_id)

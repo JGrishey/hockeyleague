@@ -7,9 +7,9 @@ module PostsHelper
     
     def like_form(post)
         if current_user.voted_for? post
-            return link_to "<img class='like-thumbs' id='like-button-post-#{post.id}' src='https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-down.svg'/>".html_safe, dislike_subforum_post_path(post.subforum, post), remote: true
+            return link_to "<img class='like-thumbs' id='like-button-post-#{post.id}' src='#{asset_path('feathericons/thumbs-down.svg')}'/>".html_safe, dislike_subforum_post_path(post.subforum, post), remote: true
         else
-            return link_to "<img class='like-thumbs' id='like-button-post-#{post.id}' src='https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-up.svg'/>".html_safe, like_subforum_post_path(post.subforum, post), remote: true
+            return link_to "<img class='like-thumbs' id='like-button-post-#{post.id}' src='#{asset_path('feathericons/thumbs-up.svg')}'/>".html_safe, like_subforum_post_path(post.subforum, post), remote: true
         end
     end
     

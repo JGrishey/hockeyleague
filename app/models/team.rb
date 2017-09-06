@@ -26,6 +26,14 @@ class Team < ApplicationRecord
         Game.where("away_id = ? OR home_id = ?", self.id, self.id)
     end
 
+    def trades
+        Movement.where("origin_id = ? OR destination_id = ?", self.id, self.id).group_by{|m| m.trade_id}
+    end
+
+    def salary_hit
+        self.team_players.inject(0){|sum, e| sum + e.salary}
+    end
+
     def games_played
         self.games.where("final = ?", true)
     end

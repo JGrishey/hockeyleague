@@ -44,6 +44,15 @@ module ApplicationHelper
         link_to(name, '#', class: "add_players", data: {id: id, players: players.gsub("\n", "")})
     end
 
+    def link_to_add_movements(name, f, association, players, teams)
+        new_object = f.object.send(association).klass.new
+        id = new_object.object_id
+        movements = f.fields_for(association, new_object, child_index: id) do |builder|
+            render("movement_entry", f: builder, players: players, teams: teams)
+        end
+        link_to(name, '#', class: "add_movements", data: {id: id, movements: movements.gsub("\n", "")})
+    end
+
     def get_avatar (user)
         if user
             if user.avatar.exists?
@@ -58,7 +67,7 @@ module ApplicationHelper
         if team.logo.exists?
             team.logo.url
         else
-            image_path("default-user.png")
+            image_path("MooseLogo.png")
         end
     end
 

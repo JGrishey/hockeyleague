@@ -39,7 +39,7 @@ class LeaguesController < ApplicationController
         @data = []
         playerstats = []
         @league.current_season.teams.each do |team|
-            @data.push(team.standingsData)
+            @data.push(team.standingsData) if team.visibility
             team.players.each do |player|
                 playerstats.push(player.getSeasonStats(@league.current_season))
             end
@@ -55,7 +55,7 @@ class LeaguesController < ApplicationController
         @data = []
         @season = @league.current_season
         @season.teams.each do |team|
-            @data.push(team.standingsData)
+            @data.push(team.standingsData) if team.visibility
         end
     end
 
@@ -82,6 +82,7 @@ class LeaguesController < ApplicationController
     end
 
     def history
+        @season = @league.current_season
     end
 
     def leaders
@@ -110,6 +111,27 @@ class LeaguesController < ApplicationController
         @sv_leaders = goalies.sort_by{|s| -s[:"sv%"]}
         @win_leaders = goalies.sort_by{|s| -s[:wins]}
         @so_leaders = goalies.sort_by{|s| -s[:shutouts]}
+    end
+
+    def signups
+        @season = @league.current_season
+        @signups = []
+        @season.signups.each do |x|
+            @signups.push({
+                'name': x.player.user_name,
+                'preferred': x.preferred,
+                'willing': x.willing.length > 1 ? x.willing.drop(1) : x.willing,
+                'mia': x.mia,
+                'veteran': x.veteran,
+                'part_time': x.part_time,
+            })
+        end
+    end
+
+    def transactions
+        @season = @league.current_season
+        @pending_trades = @season.trades.where(pending: true).order('created_at ASC')
+        @approved_trades = @season.trades.where(approved: true).order('updated_at DESC')
     end
 
     private

@@ -5,5 +5,5 @@
     <%= f.select :primary_id, players.collect{|p| [p.player.user_name, p.player.id]}, include_blank: true, default: nil %>
     <%= f.select :secondary_id, players.collect{|p| [p.player.user_name, p.player.id]}, include_blank: true, default: nil %>
     <%= f.select :time_scored, ["5 on 5", "Shorthanded", "Power Play"] %>
-    <%= link_to "<img class='delete' src='https://feathericons.com/node_modules/feather-icons/dist/icons/x.svg'/>".html_safe, '#', class: "remove_goals" %>
+    <%= link_to "<img class='delete' src='#{asset_path("feathericons/x.svg")}'/>".html_safe, '#', class: "remove_goals" %>
 </fieldset>

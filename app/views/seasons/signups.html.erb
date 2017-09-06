@@ -1,0 +1,92 @@
+<div class="games">
+    <a href="#" class="scroll left" id="scroll-left">
+        <span class="glyphicon glyphicon-menu-left"></span>
+    </a>
+    <div class="embedded" id="games">
+        <% @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
+            <div class="date-block">
+                <%= key %>
+            </div>
+            <% values.each do |game| %>
+                <%= link_to league_season_game_path(@league, @season, game), method: :get do %>
+                    <div class="game">
+                        <div class="logos">
+                            <img class="logo" src="<%= get_logo(game.away_team) %>"/>
+                            <img class="logo" src="<%= get_logo(game.home_team) %>"/>
+                        </div>
+                        <% if game.final %>
+                            <div class="scores">
+                                <div class="score">
+                                    <%= game.away_goals.count %>
+                                </div>
+                                <div class="score">
+                                    <%= game.home_goals.count %>
+                                </div>
+                            </div>
+                        <% else %>
+                            <div class="tbd">
+                                TBD
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <a href="#" class="scroll right" id="scroll-right">
+        <span class="glyphicon glyphicon-menu-right"></span>
+    </a>
+</div>
+
+<div class="league">
+    <div class="top">
+        <div class="title">
+            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
+        </div>
+        <div class="signup">
+            <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
+                <%= link_to "Sign up", signup_league_season_path(@league, @season) %>
+            <% end %>
+        </div>
+    </div>
+    <div class="nav">
+        <%= link_to league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Home
+            </div>
+        <% end %>
+        <%= link_to leaders_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Leaders
+            </div>
+        <% end %>
+        <%= link_to standings_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Standings
+            </div>
+        <% end %>
+        <%= link_to players_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Players
+            </div>
+        <% end %>
+        <%= link_to schedule_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Schedule
+            </div>
+        <% end %>
+        <%= link_to transactions_league_season_path(@league, @season), method: :get do %>
+            <div class="element">
+                Transactions
+            </div>
+        <% end %>
+        <div class="element -selected">
+            Signups
+        </div>
+    </div>
+    <div class="signups-wrapper">
+        <div class="signup-table" id="signups" data-data="<%= @signups.to_json %>"></div>
+    </div>
+</div>
+
+<%= javascript_pack_tag "tables/signups" %>

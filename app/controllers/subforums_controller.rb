@@ -7,6 +7,12 @@ class SubforumsController < ApplicationController
         @subforums = Subforum.all.order('title DESC')
         @leagues = League.all.order('name ASC')
         @recent_posts = Post.order('updated_at DESC').first(5)
+        @chatbox = ChatBox.first
+        @messages = @chatbox.messages.order('created_at DESC').paginate(page: params[:page])
+        respond_to do |format|
+            format.html
+            format.js
+        end
     end
 
     def new

@@ -8,8 +8,8 @@ class Panel extends React.Component {
         super(props)
         this.state = {
             name: props.statName,
-            players: JSON.parse(props.players),
-            selected: JSON.parse(props.players)[0]
+            players: props.players,
+            selected: props.players[0]
         }
     }
 
@@ -77,7 +77,7 @@ class Panel extends React.Component {
                                     <div className={player["name"] === selected["name"] ? "player -bold" : "player"}>{player["name"]}</div>
                                         <svg className="percent" width="200px" height="5px">
                                             <rect width={
-                                                        player[name.toLowerCase()] != 0 ? player[name.toLowerCase()] / maxStat * 200 : 0
+                                                        player[name.toLowerCase()] > 0 ? player[name.toLowerCase()] / maxStat * 200 : 0
                                                     } 
                                                     height={"5px"} 
                                                     rx="2px" 

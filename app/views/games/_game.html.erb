@@ -1,16 +1,18 @@
-<div class="options">
-    <% if game.home_team.captain == current_user || current_user.admin %>
-        <span class="option"><%= link_to "Enter home stats", enter_home_stats_league_season_game_path(season.league, season, game), method: :get %></span>
-        <span class="option"><%= link_to "Submit home players", submit_home_players_league_season_game_path(season.league, season, game), method: :get %></span>
-    <% end %>
-    <% if game.away_team.captain == current_user || current_user.admin %>
-        <span class="option"><%= link_to "Enter away stats", enter_away_stats_league_season_game_path(season.league, season, game), method: :get %></span>
-        <span class="option"><%= link_to "Submit away players", submit_away_players_league_season_game_path(season.league, season, game), method: :get %></span>
-    <% end %>
-    <% if !game.final && current_user.admin %>
-        <span class="option"><%= link_to "Make final", make_final_league_season_game_path(season.league, season, game), method: :post %></span>
-    <% end %>
-</div>
+<% if game.home_team.captain == current_user || game.away_team.captain == current_user || current_user.admin %>
+    <div class="options">
+        <% if game.home_team.captain == current_user || current_user.admin %>
+            <span class="option"><%= link_to "Enter home stats", enter_home_stats_league_season_game_path(season.league, season, game), method: :get %></span>
+            <span class="option"><%= link_to "Submit home players", submit_home_players_league_season_game_path(season.league, season, game), method: :get %></span>
+        <% end %>
+        <% if game.away_team.captain == current_user || current_user.admin %>
+            <span class="option"><%= link_to "Enter away stats", enter_away_stats_league_season_game_path(season.league, season, game), method: :get %></span>
+            <span class="option"><%= link_to "Submit away players", submit_away_players_league_season_game_path(season.league, season, game), method: :get %></span>
+        <% end %>
+        <% if !game.final && current_user.admin %>
+            <span class="option"><%= link_to "Make final", make_final_league_season_game_path(season.league, season, game), method: :post %></span>
+        <% end %>
+    </div>
+<% end %>
 
 <div class="banner">
         <div class="logo">

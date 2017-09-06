@@ -175,7 +175,7 @@ class Stats extends React.Component {
                         className="-striped -highlight"
                         resizable={false}
                         showPagination={false}
-                        pageSize={leagueData.length}
+                        pageSize={skaterData(leagueData).length}
                         defaultSorted={[
                             {
                                 id: "points",
@@ -265,7 +265,7 @@ class Stats extends React.Component {
                         className="-striped -highlight"
                         resizable={false}
                         showPagination={false}
-                        pageSize={leagueData.length}
+                        pageSize={goalieData(leagueData).length}
                         defaultSorted={[
                             {
                                 id: "season",

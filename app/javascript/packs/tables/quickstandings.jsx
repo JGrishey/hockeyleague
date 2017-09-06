@@ -50,7 +50,7 @@ class QuickStandings extends React.Component {
                         {
                             Header: "P",
                             accessor: "pts",
-                            width: 100,
+                            width: 98,
                             style: {"textAlign": "center"}
                         }
                     ]}

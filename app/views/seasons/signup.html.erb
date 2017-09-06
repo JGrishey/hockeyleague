@@ -1,0 +1,52 @@
+<%= form_for(@signup, :url => url_for(:action => "process_signup", :controller => "seasons"), method: :post) do |f| %>
+
+    <div class="season-signup">
+    
+        <img class="logo" src="<%= asset_path("MooseLogo.png") %>"/>
+
+        <div class="header">
+            <%= @season.title %> Signup
+        </div>
+
+        <div class="form">
+
+            <%= f.hidden_field :season_id, value: @season.id %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+
+            <div class="signup-input">
+                <label class="signup-label">Preferred Position</label>
+                <%= f.select :preferred, ["LW", "C", "RW", "LD", "RD", "G"], {}, {class: "select-preferred"} %>
+            </div>
+
+            <div class="signup-input checkboxes">
+                <label class="signup-label">Willing Positions</label>
+                <%= f.collection_check_boxes(:willing, ["LW", "C", "RW", "LD", "RD", "G"], :to_s, :to_s) do |c| %>
+                    <div class="position">
+                        <div class="text"><%= c.text %></div>
+                        <div class="box"><%= c.check_box %></div>
+                    </div>
+                <% end %>
+            </div>
+
+            <div class="signup-input">
+                <label class="signup-label">Moose Veteran?</label>
+                <%= f.check_box :veteran %>
+            </div>
+
+            <div class="signup-input">
+                <label class="signup-label">Part-time?</label>
+                <%= f.check_box :part_time %>
+            </div class="signup-input">
+
+            <div class="signup-input">
+                <label class="signup-label">MIA Dates</label>
+                <%= f.text_field :mia, class: "text-input" %>
+            </div>
+    
+            <%= f.submit "Sign up", class: "submit" %>
+
+        </div>
+
+    </div>
+
+<% end %>

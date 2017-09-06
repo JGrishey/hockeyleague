@@ -1,10 +1,15 @@
 <div class="chatbox">
     <div class="messages" id="messages" data-chat-box-id="<%= chat_box.id %>">
-        <%= render chat_box.messages.last(20) %>
+        <div id="infinite-scrolling">
+            <%= will_paginate @messages %>
+        </div>
+        <div id="inner-messages">
+            <%= render @messages.reverse %>
+        </div>
     </div>
 
     <%= simple_form_for(message, url: "#", class: "message-form") do |f| %>
-        <%= f.input_field :body, as: :string, class: "message-input" %>
+        <%= f.input_field :body, as: :text, class: "message-input" %>
         <%= f.button :submit, "Send", class: "send-message-btn" %>
     <% end %>
 </div>

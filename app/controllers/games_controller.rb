@@ -140,10 +140,26 @@ class GamesController < ApplicationController
 
     def make_final
         @game.update_attributes(final: true)
+
+        @game.players.each do |player|
+            create_notification(
+                "Stats have been made available for your game on #{@game.date.strftime("%^b %d at %I:%M %p")}.",
+                player,
+                league_season_game_path(@season.league, @season, @game)
+            )
+        end
+
         redirect_to league_season_game_path(@season.league, @season, @game)
     end
 
     private
+
+    def create_notification (body, user, src)
+        notification = user.notifications.create!(
+            body: body,
+            src: src
+        )
+    end
 
     def game_params
         params.require(:game).permit(:away_id, :home_id, :season_id, :date)

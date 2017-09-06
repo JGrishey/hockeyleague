@@ -7,7 +7,7 @@ import ReactTable from 'react-table'
 const getData = (attrib) => {
     const data = document.getElementById(attrib + "-leaders").getAttribute("data-data")
 
-    return data
+    return JSON.parse(data)
 }
 
 class Leaders extends React.Component {
@@ -32,17 +32,19 @@ class Leaders extends React.Component {
             <div>
                 <div className="category">
                     <div className="header">Skaters</div>
-                    <Panel statName="goals" players={goals}/>
-                    <Panel statName="assists" players={assists}/>
-                    <Panel statName="points" players={points}/>
-                    <Panel statName="plus-minus" players={plus_minus}/>
+                    {goals.length == 0 && <div className="noData">No Data</div>}
+                    {goals.length > 0 && <Panel statName="goals" players={goals}/>}
+                    {assists.length > 0 && <Panel statName="assists" players={assists}/>}
+                    {points.length > 0 && <Panel statName="points" players={points}/>}
+                    {plus_minus.length > 0 && <Panel statName="plus-minus" players={plus_minus}/>}
                 </div>
                 <div className="category">
                     <div className="header">Goalies</div>
-                    <Panel statName="gaa" players={gaa}/>
-                    <Panel statName="wins" players={wins}/>
-                    <Panel statName="sv%" players={sv}/>
-                    <Panel statName="shutouts" players={so}/>
+                    {gaa.length == 0 && <div className="no-data">No Data</div>}
+                    {gaa.length > 0 && <Panel statName="gaa" players={gaa}/>}
+                    {wins.length > 0 && <Panel statName="wins" players={wins}/>}
+                    {sv.length > 0 && <Panel statName="sv%" players={sv}/>}
+                    {so.length > 0 && <Panel statName="shutouts" players={so}/>}
                 </div>
             </div>
         )

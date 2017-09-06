@@ -4,7 +4,7 @@
         <div class="bar">
             Chat
         </div>
-        <%= render 'chat_boxes/chatbox', chat_box: ChatBox.first(), message: Message.new %>
+        <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
         
         <div class="bar top">
             Forum
@@ -22,7 +22,7 @@
                 Leagues
             </div>
             <% @leagues.each do |league| %>
-                <%= link_to league do %>
+                <%= link_to league, method: :get do %>
                     <div class="league">
                         <div class="name">
                             <%= league.name %>

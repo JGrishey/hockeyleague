@@ -5,7 +5,7 @@
 
     <%= link_to new_subforum_post_path(subforum), method: :get do %>
         <div class="new-post">
-            <span><img src="https://feathericons.com/node_modules/feather-icons/dist/icons/plus-square.svg"/></span> New post
+            <span><img src="<%= asset_path("feathericons/plus.svg") %>"/></span> New post
         </div>
     <% end %>
 

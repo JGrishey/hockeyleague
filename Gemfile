@@ -60,8 +60,9 @@ gem 'bootstrap-sass', '~> 3.3.6'
 # Thin Server on Local Machine
 gem 'thin'
 
-# Kaminari Pagination
-gem 'kaminari', '~> 0.16.3'
+# Pagination
+gem 'will_paginate', '~> 3.0.5'
+gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 # Simple Form
 gem 'simple_form'

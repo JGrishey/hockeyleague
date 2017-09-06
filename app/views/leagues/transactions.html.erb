@@ -1,0 +1,162 @@
+<div class="games">
+    <a href="#" class="scroll left" id="scroll-left">
+        <span class="glyphicon glyphicon-menu-left"></span>
+    </a>
+    <div class="embedded" id="games">
+        <% @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
+            <div class="date-block">
+                <%= key %>
+            </div>
+            <% values.each do |game| %>
+                <%= link_to league_season_game_path(@league, @season, game), method: :get do %>
+                    <div class="game">
+                        <div class="logos">
+                            <img class="logo" src="<%= get_logo(game.away_team) %>"/>
+                            <img class="logo" src="<%= get_logo(game.home_team) %>"/>
+                        </div>
+                        <% if game.final %>
+                            <div class="scores">
+                                <div class="score">
+                                    <%= game.away_goals.count %>
+                                </div>
+                                <div class="score">
+                                    <%= game.home_goals.count %>
+                                </div>
+                            </div>
+                        <% else %>
+                            <div class="tbd">
+                                TBD
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+    <a href="#" class="scroll right" id="scroll-right">
+        <span class="glyphicon glyphicon-menu-right"></span>
+    </a>
+</div>
+
+<div class="league">
+    <div class="top">
+        <div class="title">
+            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
+        </div>
+        <div class="signup">
+            <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
+                <%= link_to "Sign up", signup_league_season_path(@league, @season) %>
+            <% end %>
+        </div>
+    </div>
+    <div class="nav">
+        <%= link_to league_path(@league), method: :get do %>
+            <div class="element">
+                Home
+            </div>
+        <% end %>
+        <%= link_to leaders_league_path(@league), method: :get do %>
+            <div class="element">
+                Leaders
+            </div>
+        <% end %>
+        <%= link_to standings_league_path(@league), method: :get do %>
+            <div class="element">
+                Standings
+            </div>
+        <% end %>
+        <%= link_to players_league_path(@league), method: :get do %>
+            <div class="element">
+                Players
+            </div>
+        <% end %>
+        <%= link_to schedule_league_path(@league), method: :get do %>
+            <div class="element">
+                Schedule
+            </div>
+        <% end %>
+        <div class="element -selected">
+            Transactions
+        </div>
+        <%= link_to signups_league_path(@league), method: :get do %>
+            <div class="element">
+                Signups
+            </div>
+        <% end %>
+        <%= link_to history_league_path(@league), method: :get do %>
+            <div class="element">
+                History
+            </div>
+        <% end %>
+    </div>
+    <div class="transactions">
+        <% if current_user.admin || current_user.captain?(@season) %>
+            <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
+                <div class="new-transaction">
+                    Submit transaction
+                </div>
+            <% end %>
+        <% end %>
+
+        <% if current_user.admin %>
+            <div class="trades-section">
+                <div class="header">Pending</div>
+                <% if @pending_trades.any? %>
+                    <% @pending_trades.each do |trade| %>
+                        <div class="trade">
+                            <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
+                                <div class="team">
+                                    <div class="name">
+                                        <img class="logo" src="<%= get_logo(@season.teams.find(key)) %>"/> <%= @season.teams.find(key).name %>
+                                    </div>
+                                    <% value.each do |v| %>
+                                        <div class="movement">
+                                            <img class="logo" src="<%= get_logo(@season.teams.find(v.origin_id))%>"/> <img class="profile" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> - $<%= v.team_player.salary %>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            <% end %>
+
+                            <div class="approve">
+                                <%= link_to "Approve transaction", approve_transaction_league_season_path(@league, @season, trade_id: trade.id), method: :post %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% else %>
+                    <div class="none">
+                        No pending transactions
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+        <div class="trades-section">
+            <div class="header">Approved Transactions</div>
+            <% if @approved_trades.any? %>
+                <% @approved_trades.each do |trade| %>
+                    <div class="trade">
+                        <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
+                            <div class="team">
+                                <div class="name">
+                                    <img class="logo" src="<%= get_logo(@season.teams.find(key)) %>"/> <%= @season.teams.find(key).name %>
+                                </div>
+                                <% value.each do |v| %>
+                                    <div class="movement">
+                                        <img class="logo" src="<%= get_logo(@season.teams.find(v.origin_id))%>"/> <img class="profile" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> - $<%= v.team_player.salary %>
+                                    </div>
+                                <% end %>
+                            </div>
+                        <% end %>
+
+                        <div class="date">
+                            <%= trade.updated_at.strftime("%^b %d %Y") %>
+                        </div>
+                    </div>
+                <% end %>
+            <% else %>
+                <div class="none">
+                    No transactions
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

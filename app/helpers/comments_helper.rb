@@ -7,9 +7,9 @@ module CommentsHelper
     
     def like_form_comment(comment)
         if current_user.voted_for? comment
-            return link_to "<img class='like-thumbs' id='like-button-comment-#{comment.id}' src='https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-down.svg'/>".html_safe, dislike_subforum_post_comment_path(comment.post.subforum, comment.post, comment), remote: true
+            return link_to "<img class='like-thumbs' id='like-button-comment-#{comment.id}' src='#{asset_path('feathericons/thumbs-down.svg')}'/>".html_safe, dislike_subforum_post_comment_path(comment.post.subforum, comment.post, comment), remote: true
         else
-            return link_to "<img class='like-thumbs' id='like-button-comment-#{comment.id}' src='https://feathericons.com/node_modules/feather-icons/dist/icons/thumbs-up.svg'/>".html_safe, like_subforum_post_comment_path(comment.post.subforum, comment.post, comment), remote: true
+            return link_to "<img class='like-thumbs' id='like-button-comment-#{comment.id}' src='#{asset_path('feathericons/thumbs-up.svg')}'/>".html_safe, like_subforum_post_comment_path(comment.post.subforum, comment.post, comment), remote: true
         end
     end
     

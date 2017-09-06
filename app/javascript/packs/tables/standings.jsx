@@ -26,105 +26,107 @@ class Standings extends React.Component {
                             Header: "Name",
                             id: "name",
                             accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.name}</a></div>),
-                            width: 200
+                            minWidth: 300
                         },
                         {
                             Header: "GP",
                             accessor: "gp",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "W",
                             accessor: "wins",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "L",
                             accessor: "losses",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "OTL",
                             accessor: "otl",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "P",
                             accessor: "pts",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "P%",
                             id: "pts%",
                             accessor: d => d["pts%"].toFixed(3),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "GF",
                             accessor: "gf",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "GA",
                             accessor: "ga",
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "GF/GP",
                             id: "gfpg",
                             accessor: d => d.gfpg.toFixed(2),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "GA/GP",
                             id: "gapg",
                             accessor: d => d.gapg.toFixed(2),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "PP%",
                             id: "pp%",
                             accessor: d => d["pp%"].toFixed(1),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "PK%",
                             id: "pk%",
                             accessor: d => d["pk%"].toFixed(1),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "SHOTS/GP",
                             id: "shfpg",
                             accessor: d => d.shfpg.toFixed(1),
                             width: 79,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "SA/GP",
                             id: "shapg",
                             accessor: d => d.shapg.toFixed(1),
-                            width: 63,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                         {
                             Header: "FOW%",
                             id: "fow%",
                             accessor: d => d["fow%"].toFixed(1),
                             width: 73,
-                            style: {"textAlign": "center"}
+                            style: {"textAlign": "center"},
+                            minWidth: 100
                         },
                     ]}
                     className="-striped -highlight"

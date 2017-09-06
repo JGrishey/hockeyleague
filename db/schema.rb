@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829234446) do
+ActiveRecord::Schema.define(version: 20170906031051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,29 @@ ActiveRecord::Schema.define(version: 20170829234446) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "movements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "trade_id"
+    t.bigint "team_player_id"
+    t.integer "origin_id"
+    t.integer "destination_id"
+    t.index ["destination_id"], name: "index_movements_on_destination_id"
+    t.index ["origin_id"], name: "index_movements_on_origin_id"
+    t.index ["team_player_id"], name: "index_movements_on_team_player_id"
+    t.index ["trade_id"], name: "index_movements_on_trade_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "body"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "src"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "penalties", force: :cascade do |t|
     t.integer "duration"
     t.datetime "created_at", null: false
@@ -126,6 +149,20 @@ ActiveRecord::Schema.define(version: 20170829234446) do
     t.index ["league_id"], name: "index_seasons_on_league_id"
   end
 
+  create_table "signups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "season_id"
+    t.text "willing", default: [], array: true
+    t.string "preferred", default: ""
+    t.string "mia", default: ""
+    t.boolean "part_time", default: false
+    t.boolean "veteran", default: true
+    t.index ["season_id"], name: "index_signups_on_season_id"
+    t.index ["user_id"], name: "index_signups_on_user_id"
+  end
+
   create_table "stat_lines", force: :cascade do |t|
     t.string "position", default: ""
     t.integer "plus_minus", default: 0
@@ -141,6 +178,11 @@ ActiveRecord::Schema.define(version: 20170829234446) do
     t.bigint "user_id"
     t.bigint "team_id"
     t.bigint "game_player_id"
+    t.integer "goals", default: 0
+    t.integer "assists", default: 0
+    t.integer "pim", default: 0
+    t.integer "ppg", default: 0
+    t.integer "shg", default: 0
     t.index ["game_id"], name: "index_stat_lines_on_game_id"
     t.index ["game_player_id"], name: "index_stat_lines_on_game_player_id"
     t.index ["team_id"], name: "index_stat_lines_on_team_id"
@@ -158,6 +200,7 @@ ActiveRecord::Schema.define(version: 20170829234446) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "team_id"
+    t.integer "salary", default: 0
     t.index ["team_id"], name: "index_team_players_on_team_id"
     t.index ["user_id"], name: "index_team_players_on_user_id"
   end
@@ -172,8 +215,19 @@ ActiveRecord::Schema.define(version: 20170829234446) do
     t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
+    t.boolean "visibility", default: true
+    t.integer "salary_cap", default: 0
     t.index ["captain_id"], name: "index_teams_on_captain_id"
     t.index ["season_id"], name: "index_teams_on_season_id"
+  end
+
+  create_table "trades", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "season_id"
+    t.boolean "pending", default: true
+    t.boolean "approved", default: false
+    t.index ["season_id"], name: "index_trades_on_season_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -231,12 +285,17 @@ ActiveRecord::Schema.define(version: 20170829234446) do
   add_foreign_key "goals", "teams"
   add_foreign_key "messages", "chat_boxes"
   add_foreign_key "messages", "users"
+  add_foreign_key "movements", "team_players"
+  add_foreign_key "movements", "trades"
+  add_foreign_key "notifications", "users"
   add_foreign_key "penalties", "games"
   add_foreign_key "penalties", "teams"
   add_foreign_key "penalties", "users"
   add_foreign_key "posts", "subforums"
   add_foreign_key "posts", "users"
   add_foreign_key "seasons", "leagues"
+  add_foreign_key "signups", "seasons"
+  add_foreign_key "signups", "users"
   add_foreign_key "stat_lines", "game_players"
   add_foreign_key "stat_lines", "games"
   add_foreign_key "stat_lines", "teams"
@@ -244,5 +303,6 @@ ActiveRecord::Schema.define(version: 20170829234446) do
   add_foreign_key "team_players", "teams"
   add_foreign_key "team_players", "users"
   add_foreign_key "teams", "seasons"
+  add_foreign_key "trades", "seasons"
   add_foreign_key "users", "teams"
 end

@@ -3,5 +3,5 @@
     <%= f.hidden_field :team_id, value: @game.home_team.id %>
     <%= f.select :user_id, @game.home_team.players.collect{ |p| [p.user_name, p.id]}, {},  {class: "select-player"} %>
     <%= f.select :position, ["LW", "C", "RW", "LD", "RD", "G"], {}, {class: "select-position"} %>
-    <%= link_to "<img src='https://feathericons.com/node_modules/feather-icons/dist/icons/delete.svg'>".html_safe, '#', class: "remove_players" %>
+    <%= link_to "<img src='#{asset_path("feathericons/x.svg")}'>".html_safe, '#', class: "remove_players" %>
 </fieldset>

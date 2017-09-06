@@ -26,9 +26,16 @@
                 <div class="nav-element title">
                     <%= link_to "MOOSE HOCKEY", root_path, method: :get %>
                 </div>
+
+                <div class="nav-element rules">
+                    <%= link_to "RULES", pages_rules_path, method: :get %>
+                </div>
             </div>
             <div class="nav-right">
                 <% if user_signed_in? %>
+                    <div class="nav-element noti">
+                        <%= render 'notifications/notification_dropdown' %>
+                    </div>
                     <div class="nav-element">
                         <%= link_to profile_path(current_user.user_name), method: :get do %>
                             <img class="nav-photo" src=<%= get_avatar(current_user) %>/>
@@ -39,7 +46,7 @@
                             <%= current_user.user_name %>
                         <% end %>
                     </div>
-                    <div class="nav-element">
+                    <div class="nav-element log-out">
                         <%= link_to "Log out", destroy_user_session_path, method: :delete %>
                     </div>
                 <% end %>

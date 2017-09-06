@@ -10,30 +10,12 @@
     </div>
 
     <div class="input">
-        <label class="captain-label">
-            Captain
-        </label>
-        <%= f.select :captain_id, User.all.collect{|u| [u.user_name, u.id]}, {}, {class: "captain-select"} %>
-    </div>
-
-    <div class="input">
         <label class="team-label">Logo</label>
         <a id="upload-btn" class="upload">Upload</a>
         <span id="file-display"></span>
         <%= f.file_field :logo, class: "team-logo" %>
     </div>
 
-
-    <div class="players">
-        Players
-    </div>
-    <div>
-        <%= f.fields_for :team_players, team.team_players do |builder| %>
-            <%= render 'playerentry', f: builder, team: team %>
-        <% end %>
-
-        <%= link_to_add_players "<img class='add-player' src='https://feathericons.com/node_modules/feather-icons/dist/icons/user-plus.svg'/>".html_safe, f, :team_players %>
-    </div>
     <%= f.submit "Update Team", class: "submit-btn" %>
 <% end %>
 

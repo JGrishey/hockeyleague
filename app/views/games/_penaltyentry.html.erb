@@ -3,5 +3,5 @@
     <%= f.hidden_field :_destroy, class: "removable" %>
     <%= f.select :user_id, players.collect{|p| [p.player.user_name, p.player.id]}, include_blank: true, default: nil %>
     <%= f.select :duration, [2, 4, 5] %>
-    <%= link_to "<img class='delete' src='https://feathericons.com/node_modules/feather-icons/dist/icons/x.svg'/>".html_safe, '#', class: "remove_penalties" %>
+    <%= link_to "<img class='delete' src='#{asset_path("feathericons/x.svg")}'/>".html_safe, '#', class: "remove_penalties" %>
 </fieldset>

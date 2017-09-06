@@ -1,0 +1,6 @@
+<fieldset class="movement">
+    <%= f.hidden_field :_destroy, class: "removable" %>
+    <%= f.select :team_player_id, players.collect{|p| ["#{p.player.user_name} - #{p.team.abbreviation} (#{p.salary})", p.id]} %>
+    <%= f.select :destination_id, teams.collect{|t| [t.name, t.id]} %>
+    <%= link_to "<img class='delete' src='#{asset_path("feathericons/x.svg")}'/>".html_safe, '#', class: "remove_movements" %>
+</fieldset>

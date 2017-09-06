@@ -31,10 +31,15 @@
 </div>
 
 <div class="league">
-    <div class="title">
-        <%= link_to league_season_path(@league, @season), method: :get do %>
-            <%= @league.name %> - <%= @season.title %>
-        <% end %>
+    <div class="top">
+        <div class="title">
+            <%= @league.name %> - <%= link_to @season.title, league_season_path(@league, @season) %>
+        </div>
+        <div class="signup">
+            <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
+                <%= link_to "Sign up", signup_league_season_path(@league, @season) %>
+            <% end %>
+        </div>
     </div>
 
     <div class="team-info">

@@ -15,6 +15,8 @@ class User < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_many :messages, dependent: :destroy
 
+    has_many :notifications, dependent: :destroy
+
     has_many :owned_teams, :class_name => "Team", :foreign_key => "captain_id"
 
     has_many :game_players, dependent: :destroy
@@ -23,6 +25,9 @@ class User < ApplicationRecord
     has_many :team_players, dependent: :destroy
     has_many :teams, :through => :team_players
     has_many :seasons, :through => :teams
+
+    has_many :signups, dependent: :destroy
+    has_many :seasons_signed_up, :through => :signups, :source => :season
 
     has_many :goals, :class_name => "Goal", :foreign_key => "scorer_id"
     has_many :primary_assists, :class_name => "Goal", :foreign_key => "primary_id"
@@ -35,6 +40,15 @@ class User < ApplicationRecord
 
     def online?
         updated_at < 10.minutes.ago
+    end
+
+    def captain? (season)
+        self.owned_teams.each do |team|
+            if team.season.current && team.season == season
+                true
+            end
+        end
+        false
     end
 
     def inSeason (season)
