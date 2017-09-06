@@ -87,6 +87,10 @@ a, a:focus, a:hover {
 
 @media (max-width: 1024px) {
 
+    .modal-body {
+        font-size: 24px;
+    }
+
     // nav-bar
 
     .navigation-main {
@@ -239,7 +243,7 @@ a, a:focus, a:hover {
 
                             .small-img {
                                 width: 100%;
-                                border-radius: 25%;
+                                border-radius: 50%;
                             }
                         }
 
@@ -1740,10 +1744,8 @@ a, a:focus, a:hover {
             width: 100%;
 
             .first-column {
-                width: calc(66.66% - 12px);
+                width: 100%;
                 display: block;
-                float: left;
-                margin-right: 12px;
 
                 .teams {
                     width: 100%;
@@ -1756,7 +1758,7 @@ a, a:focus, a:hover {
                         margin-bottom: 1em;
                         
                         .logo, .name, .sog, .toa, .faceoff, .pp, .pim, .hits {
-                            width: 12.25%;
+                            width: 12%;
                             font-size: 3em;
                             max-width: 12.25%;
                             vertical-align: middle;
@@ -2544,6 +2546,15 @@ a, a:focus, a:hover {
 
 @media (min-width: 1024px) {
 
+    .modal-body {
+        font-size: 2em;
+    }
+
+    .modal-title {
+        font-size: 3em;
+        font-weight: 800;
+    }
+
     // nav-bar
 
     .navigation-main {
@@ -2607,7 +2618,7 @@ a, a:focus, a:hover {
 
             .nav-photo {
                 width: 2em;
-                border-radius: 25%;
+                border-radius: 50%;
             }
 
             .league {
@@ -2681,7 +2692,7 @@ a, a:focus, a:hover {
 
                             .small-img {
                                 width: 100%;
-                                border-radius: 25%;
+                                border-radius: 50%;
                             }
                         }
 
@@ -2868,7 +2879,7 @@ a, a:focus, a:hover {
 
                         .preview {
                             width: 90%;
-                            border-radius: 25%;
+                            border-radius: 50%;
                         }
                     }
 
@@ -2937,7 +2948,7 @@ a, a:focus, a:hover {
 
                 .user-photo {
                     width: 100%;
-                    border-radius: 25%;
+                    border-radius: 50%;
                 }
             }
 
@@ -3033,7 +3044,7 @@ a, a:focus, a:hover {
 
                     .photo {
                         width: 100%;
-                        border-radius: 25%;
+                        border-radius: 50%;
                         margin-bottom: 1em;
                     }
 
@@ -3134,7 +3145,7 @@ a, a:focus, a:hover {
 
                 .photo {
                     width: 100%;
-                    border-radius: 25%;
+                    border-radius: 50%;
                     margin-bottom: 1em;
                 }
 
@@ -4153,10 +4164,8 @@ a, a:focus, a:hover {
             width: 100%;
 
             .first-column {
-                width: calc(66.66% - 12px);
+                width: 100%;
                 display: block;
-                float: left;
-                margin-right: 12px;
 
                 .teams {
                     width: 100%;

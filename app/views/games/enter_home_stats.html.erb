@@ -34,24 +34,6 @@
         </label>
         <%= f.check_box :overtime, class: "ot-check" %>
 
-        <div class="goals" id="goals">
-            <div class="header">Goals</div>
-            <%= f.fields_for :goals, @game.home_goals do |builder| %>
-                <%= render "goalentry", f: builder, players: @game.home_players, team_id: @game.home_team.id %>
-            <% end %>
-            
-            <%= link_to_add_goals "Add Goal", f, :goals, @game.home_players, @game.home_team.id %>
-        </div>
-
-        <div class="penalties" id="penalties">
-            <div class="header">Penalties</div>
-            <%= f.fields_for :penalties, @game.home_penalties do |builder| %>
-                <%= render "penaltyentry", f: builder, players: @game.home_players, team_id: @game.home_team.id %>
-            <% end %>
-
-            <%= link_to_add_penalties "Add Penalty", f, :penalties, @game.home_players, @game.home_team.id %>
-        </div>
-
         <div class="players">
             <div class="header">Player Stats</div>
             <%= f.fields_for :game_players, @game.home_players do |gpbuilder| %>
@@ -67,13 +49,28 @@
                                 <div class="player">
                                 </div>
                                 <div class="player-num">
+                                    G
+                                </div>
+                                <div class="player-num">
+                                    A
+                                </div>
+                                <div class="player-num">
                                     +/-
                                 </div>
                                 <div class="player-num">
                                     S
                                 </div>
                                 <div class="player-num">
+                                    PIM
+                                </div>
+                                <div class="player-num">
                                     H
+                                </div>
+                                <div class="player-num">
+                                    PPG
+                                </div>
+                                <div class="player-num">
+                                    SHG
                                 </div>
                                 <div class="player-num">
                                     FOW
@@ -88,15 +85,25 @@
                                     <%= gpbuilder.object.player.user_name %>
                                 </div>
                                 <% if builder.object.nil? %>
+                                    <%= builder.text_field :goals, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :assists, class: "player-num", value: 0 %>
                                     <%= builder.text_field :plus_minus, class: "player-num", value: 0 %>
                                     <%= builder.text_field :shots, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :pim, class: "player-num", value: 0 %>
                                     <%= builder.text_field :hits, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :ppg, class: "player-num", value: 0 %>
+                                    <%= builder.text_field :shg, class: "player-num", value: 0 %>
                                     <%= builder.text_field :fow, class: "player-num", value: 0 %>
                                     <%= builder.text_field :fot, class: "player-num", value: 0 %>
                                 <% else %>
+                                    <%= builder.text_field :goals, class: "player-num", value: builder.object.goals == 0 ? 0 : builder.object.goals %>
+                                    <%= builder.text_field :assists, class: "player-num", value: builder.object.assists == 0 ? 0 : builder.object.assists %>
                                     <%= builder.text_field :plus_minus, class: "player-num", value: builder.object.plus_minus == 0 ? 0 : builder.object.plus_minus %>
                                     <%= builder.text_field :shots, class: "player-num", value: builder.object.shots == 0 ? 0 : builder.object.shots %>
+                                    <%= builder.text_field :pim, class: "player-num", value: builder.object.pim == 0 ? 0 : builder.object.pim %>
                                     <%= builder.text_field :hits, class: "player-num", value: builder.object.hits == 0 ? 0 : builder.object.hits %>
+                                    <%= builder.text_field :ppg, class: "player-num", value: builder.object.ppg == 0 ? 0 : builder.object.ppg %>
+                                    <%= builder.text_field :shg, class: "player-num", value: builder.object.shg == 0 ? 0 : builder.object.shg %>
                                     <%= builder.text_field :fow, class: "player-num", value: builder.object.fow == 0 ? 0 : builder.object.fow %>
                                     <%= builder.text_field :fot, class: "player-num", value: builder.object.fot == 0 ? 0 : builder.object.fot %>
                                 <% end %>

@@ -17,10 +17,10 @@
                         <% if game.final %>
                             <div class="scores">
                                 <div class="score">
-                                    <%= game.away_goals.count %>
+                                    <%= game.away_goals %>
                                 </div>
                                 <div class="score">
-                                    <%= game.home_goals.count %>
+                                    <%= game.home_goals %>
                                 </div>
                             </div>
                         <% else %>
@@ -105,10 +105,10 @@
                             </div>
                             <% if v.final %>
                                 <div class="score">
-                                    <%= v.away_goals.count %>
+                                    <%= v.away_goals %>
                                 </div>
                                 <div class="score">
-                                    <%= v.home_goals.count %>
+                                    <%= v.home_goals %>
                                 </div>
                             <% else %>
                                 <div class="score">

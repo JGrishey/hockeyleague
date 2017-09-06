@@ -39,14 +39,13 @@ class GamesController < ApplicationController
     def show
         @home_box = []
         @game.home_stats.each do |s|
-            line = s.game.get_line(s.user)
             @home_box.push({
                 'name': s.user.user_name,
                 'position': s.position,
-                'goals': line[:g],
-                'assists': line[:a],
-                'points': line[:p],
-                'pim': line[:pim],
+                'goals': s.goals,
+                'assists': s.assists,
+                'points': s.goals + s.assists,
+                'pim': s.pim,
                 'hits': s.hits,
                 'plus_minus': s.plus_minus,
                 'shots': s.shots,
@@ -60,14 +59,13 @@ class GamesController < ApplicationController
 
         @away_box = []
         @game.away_stats.each do |s|
-            line = s.game.get_line(s.user)
             @away_box.push({
                 'name': s.user.user_name,
                 'position': s.position,
-                'goals': line[:g],
-                'assists': line[:a],
-                'points': line[:p],
-                'pim': line[:pim],
+                'goals': s.goals,
+                'assists': s.assists,
+                'points': s.goals + s.assists,
+                'pim': s.pim,
                 'hits': s.hits,
                 'plus_minus': s.plus_minus,
                 'shots': s.shots,
@@ -87,13 +85,9 @@ class GamesController < ApplicationController
     end
 
     def enter_home_stats
-        @game.home_goals.build
-        @game.home_penalties.build
     end
 
     def enter_away_stats
-        @game.away_goals.build
-        @game.away_penalties.build
     end
 
     def process_home_stats
@@ -103,9 +97,7 @@ class GamesController < ApplicationController
             :home_toa_seconds,
             :home_ppg,
             :home_ppo,
-            goals_attributes: [:id, :team_id, :scorer_id, :primary_id, :secondary_id, :time_scored, :_destroy],
-            penalties_attributes: [:id, :team_id, :user_id, :duration, :_destroy],
-            game_players_attributes: [:id, stat_line_attributes: [:game_player_id, :game_id, :team_id, :user_id, :id, :position, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against]]
+            game_players_attributes: [:id, stat_line_attributes: [:game_player_id, :game_id, :team_id, :user_id, :id, :position, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against, :goals, :assists, :ppg, :shg, :pim]]
         ))
         puts @game.errors.inspect
         redirect_to league_season_game_path(@season.league, @season, @game)
@@ -118,9 +110,7 @@ class GamesController < ApplicationController
             :away_toa_seconds,
             :away_ppg,
             :away_ppo,
-            goals_attributes: [:id, :team_id, :scorer_id, :primary_id, :secondary_id, :time_scored, :_destroy],
-            penalties_attributes: [:id, :team_id, :user_id, :duration, :_destroy],
-            game_players_attributes: [:id, stat_line_attributes: [:game_player_id, :game_id, :team_id, :user_id, :id, :position, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against]]
+            game_players_attributes: [:id, stat_line_attributes: [:game_player_id, :game_id, :team_id, :user_id, :id, :position, :plus_minus, :shots, :hits, :fow, :fot, :shots_against, :goals_against, :goals, :assists, :ppg, :shg, :pim]]
         ))
         puts @game.errors.inspect
         redirect_to league_season_game_path(@season.league, @season, @game)

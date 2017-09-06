@@ -27,48 +27,12 @@ class Game < ApplicationRecord
     validates :away_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :away_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 
-    def get_line (user)
-        goals = 0
-        assists = 0
-        points = 0
-        pim = 0
-        self.goals.each do |goal|
-            if goal.scorer == user
-                goals += 1
-                points += 1
-            end
-            if goal.primary == user || goal.secondary == user
-                assists += 1
-                points += 1
-            end
-        end
-        self.penalties.each do |penalty|
-            if penalty.user == user
-                pim += penalty.duration
-            end
-        end
-        {
-            'g': goals,
-            'a': assists,
-            'p': points,
-            'pim': pim,
-        }
-    end
-
     def home_goals
-        self.goals.where(team_id: self.home_team.id)
+        self.home_stats.inject(0){|sum, e| sum + e.goals}
     end
 
     def away_goals
-        self.goals.where(team_id: self.away_team.id)
-    end
-
-    def home_penalties
-        self.penalties.where(team_id: self.home_team.id)
-    end
-
-    def away_penalties
-        self.penalties.where(team_id: self.away_team.id)
+        self.away_stats.inject(0){|sum, e| sum + e.goals}
     end
 
     def home_stats

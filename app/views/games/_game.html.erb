@@ -25,12 +25,12 @@
         </div>
         <% if game.final %>
             <div class="score">
-                <%= game.away_goals.count %>
+                <%= game.away_goals %>
             </div>
         <% end %>
         <% if game.final %>
             <div class="score">
-                <%= game.home_goals.count %>
+                <%= game.home_goals %>
             </div>
         <% end %>
         <div class="name">
@@ -93,7 +93,7 @@
                         <%= game.away_ppg %>/<%= game.away_ppo %>
                     </div>
                     <div class="pim">
-                        <%= game.away_penalties.inject(0){|sum, e| sum + e.duration} %>
+                        <%= game.away_stats.inject(0){|sum, e| sum + e.pim} %>
                     </div>
                     <div class="hits">
                         <%= game.away_stats.inject(0){|sum, e| sum + e.hits} %>
@@ -119,7 +119,7 @@
                         <%= game.home_ppg %>/<%= game.home_ppo %>
                     </div>
                     <div class="pim">
-                        <%= game.home_penalties.inject(0){|sum, e| sum + e.duration} %>
+                        <%= game.home_stats.inject(0){|sum, e| sum + e.pim} %>
                     </div>
                     <div class="hits">
                         <%= game.home_stats.inject(0){|sum, e| sum + e.hits} %>
@@ -140,88 +140,6 @@
             </div>
             <%= javascript_pack_tag "games/player-stats-away" %>
             <%= javascript_pack_tag "games/player-stats-home" %>
-        </div>
-        <div class="second-column">
-            <div class="goals">
-                <div class="team">
-                    <div class="header">
-                        <img class="logo-img" src="<%= get_logo(game.away_team) %>"> <%= game.away_team.name %>
-                    </div>
-                    <% if game.away_goals.any? %>
-                        <% game.away_goals.each do |goal| %>
-                            <div class="goal">
-                                <div class="photo">
-                                    <img class="player-photo" src="<%= get_avatar(goal.scorer) %>"/>
-                                </div>
-                                <div class="info">
-                                    <div class="scorer">
-                                        <% if goal.scorer %>
-                                            <%= goal.scorer.user_name %>
-                                        <% else %>
-                                             CPU
-                                        <% end %>
-                                    </div>
-                                    <div class="assists">
-                                        <% if goal.primary && goal.secondary %>
-                                            <%= goal.primary.user_name %>, <%= goal.secondary.user_name %>
-                                        <% elsif goal.primary && !goal.secondary %>
-                                            <%= goal.primary.user_name %>
-                                        <% elsif !goal.primary && goal.secondary %>
-                                            CPU, <%= goal.secondary.user_name %>
-                                        <% else %>
-                                            Unassisted
-                                        <% end %>
-                                    </div>
-                                    <div class="type">
-                                        <%= goal.time_scored %>
-                                    </div>
-                                </div>
-                            </div>
-                        <% end %>
-                    <% else %>
-                        <div class="none">No goals scored</div>
-                    <% end %>
-                </div>
-                <div class="team">
-                    <div class="header">
-                        <img class="logo-img" src="<%= get_logo(game.home_team) %>"> <%= game.home_team.name %>
-                    </div>
-                    <% if game.home_goals.any? %>
-                        <% game.home_goals.each do |goal| %>
-                            <div class="goal">
-                                <div class="photo">
-                                    <img class="player-photo" src="<%= get_avatar(goal.scorer) %>"/>
-                                </div>
-                                <div class="info">
-                                    <div class="scorer">
-                                        <% if goal.scorer %>
-                                            <%= goal.scorer.user_name %>
-                                        <% else %>
-                                             CPU
-                                        <% end %>
-                                    </div>
-                                    <div class="assists">
-                                        <% if goal.primary && goal.secondary %>
-                                            <%= goal.primary.user_name %>, <%= goal.secondary.user_name %>
-                                        <% elsif goal.primary && !goal.secondary %>
-                                            <%= goal.primary.user_name %>
-                                        <% elsif !goal.primary && goal.secondary %>
-                                            CPU, <%= goal.secondary.user_name %>
-                                        <% else %>
-                                            Unassisted
-                                        <% end %>
-                                    </div>
-                                    <div class="type">
-                                        <%= goal.time_scored %>
-                                    </div>
-                                </div>
-                            </div>
-                        <% end %>
-                    <% else %>
-                        <div class="none">No goals scored</div>
-                    <% end %>
-                </div>
-            </div>
         </div>
     </div>
 <% end %>

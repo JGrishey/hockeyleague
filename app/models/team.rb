@@ -51,7 +51,7 @@ class Team < ApplicationRecord
         losses = 0
         otl = 0
         gp = self.games_played.count
-        gf = self.goals.count
+        gf = 0
         ga = 0
         ppo = 0
         ppg = 0
@@ -64,7 +64,7 @@ class Team < ApplicationRecord
 
         self.games.where(final: true).each do |game|
             if game.home_team == self
-                if game.home_goals.count > game.away_goals.count
+                if game.home_goals > game.away_goals
                     wins += 1
                 else
                     if game.overtime
@@ -74,7 +74,8 @@ class Team < ApplicationRecord
                     end
                 end
 
-                ga += game.away_goals.count
+                gf += game.home_goals
+                ga += game.away_goals
                 ppo += game.home_ppo
                 ppg += game.home_ppg
                 pko += game.away_ppo
@@ -90,7 +91,7 @@ class Team < ApplicationRecord
                     sha += stat.shots
                 end
             else
-                if game.away_goals.count > game.home_goals.count
+                if game.away_goals > game.home_goals
                     wins += 1
                 else
                     if game.overtime
@@ -100,7 +101,8 @@ class Team < ApplicationRecord
                     end
                 end
 
-                ga += game.home_goals.count
+                gf += game.away_goals
+                ga += game.home_goals
                 ppo += game.away_ppo
                 ppg += game.away_ppg
                 pko += game.home_ppo

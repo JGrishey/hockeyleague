@@ -78,7 +78,6 @@ class ProfilesController < ApplicationController
         @game_data = []
 
         recent_games.each do |s|
-            scoring = s.game.get_line(@user)
             @game_data.push(
                 {
                     'league': s.game.season.league.name,
@@ -88,18 +87,18 @@ class ProfilesController < ApplicationController
                     'date': s.game.date.strftime("%^b %d"),
                     'away': s.game.away_team.abbreviation,
                     'away_id': s.game.away_team.id,
-                    'away_goals': s.game.away_goals.count,
+                    'away_goals': s.game.away_goals,
                     'home': s.game.home_team.abbreviation,
                     'home_id': s.game.home_team.id,
-                    'home_goals': s.game.home_goals.count,
+                    'home_goals': s.game.home_goals,
                     'game_id': s.game.id,
                     'position': s.position,
-                    'goals': scoring[:g],
-                    'assists': scoring[:a],
-                    'points': scoring[:p],
-                    'pim': scoring[:pim],
+                    'goals': s.goals,
+                    'assists': s.assists,
+                    'points': s.goals + s.assists,
+                    'pim': s.pim,
                     'hits': s.hits,
-                    'plus-minus': s["plus-minus"],
+                    'plus_minus': s["plus_minus"],
                     'shots': s.shots,
                     'shots_against': s.shots_against,
                     'goals_against': s.goals_against,

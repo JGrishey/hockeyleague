@@ -69,7 +69,7 @@ class User < ApplicationRecord
 
     def recent_games
         games = []
-        self.stat_lines.each do |s|
+        self.stat_lines.order('created_at ASC').each do |s|
             if games.length == 5
                 break
             elsif s.game.final && s.position != "G"
@@ -81,7 +81,7 @@ class User < ApplicationRecord
 
     def recent_goalie_games
         games = []
-        self.stat_lines.each do |s|
+        self.stat_lines.order('created_at ASC').each do |s|
             if games.length == 5
                 break
             elsif s.game.final && s.position == "G"
@@ -136,43 +136,6 @@ class User < ApplicationRecord
         shots_against = 0
         shutouts = 0
 
-        self.goals.each do |goal|
-            if goal.game.season == season && goal.game.final
-                goals += 1
-                if goal.time_scored === "Shorthanded"
-                    shg += 1
-                    shp += 1
-                elsif goal.time_scored === "Power Play"
-                    ppg += 1
-                    ppp += 1
-                end
-            end
-        end
-        self.primary_assists.each do |pA|
-            if pA.game.season == season && pA.game.final
-                assists += 1
-                if pA.time_scored === "Shorthanded"
-                    shp += 1
-                elsif pA.time_scored === "Power Play"
-                    ppp += 1
-                end
-            end
-        end
-        self.secondary_assists.each do |sA|
-            if sA.game.season == season && sA.game.final
-                assists += 1
-                if sA.time_scored === "Shorthanded"
-                    shp += 1
-                elsif sA.time_scored === "Power Play"
-                    ppp += 1
-                end
-            end
-        end
-        self.penalties.each do |penalty|
-            if penalty.game.season == season && penalty.game.final
-                pim += penalty.duration
-            end
-        end
         self.stat_lines.each do |stats|
             if stats.game.season == season && stats.game.final
                 plus_minus += stats.plus_minus if stats.plus_minus
@@ -182,6 +145,11 @@ class User < ApplicationRecord
                 hits += stats.hits if stats.hits
                 shots_against += stats.shots_against if stats.shots_against
                 goals_against += stats.goals_against if stats.goals_against
+                goals += stats.goals if stats.goals
+                assists += stats.assists if stats.assists
+                pim += stats.pim if stats.pim
+                ppg += stats.ppg if stats.ppg
+                shg += stats.shg if stats.shg
 
                 if stats.position === "G"
                     goalie_games += 1
