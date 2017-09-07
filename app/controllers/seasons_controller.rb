@@ -9,10 +9,18 @@ class SeasonsController < ApplicationController
     end
 
     def new
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @season = @league.seasons.build
     end
 
     def create
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @season = @league.seasons.build(season_params)
 
         if @season.save
@@ -25,9 +33,17 @@ class SeasonsController < ApplicationController
     end
 
     def edit
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def update
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         if @season.update(season_params)
             flash[:success] = "Your season has been updated!"
             redirect_to league_season_path(@league, @season)
@@ -54,12 +70,20 @@ class SeasonsController < ApplicationController
     end
 
     def destroy
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @season.destroy
         flash[:success] = "Your season has been deleted."
         redirect_to root_path
     end
 
     def upload
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def process_file
@@ -74,6 +98,8 @@ class SeasonsController < ApplicationController
             team.destroy
         end
 
+        @season.trades.destroy_all
+
 
         data["teams"].each do |team|
             temp_team = @season.teams.build(name: team, captain_id: current_user.id, salary_cap: 115)
@@ -87,6 +113,11 @@ class SeasonsController < ApplicationController
 
         unplaced_players = @season.teams.build(name: "Unplaced Players", captain_id: current_user.id, visibility: false, salary_cap: 20000)
         unplaced_players.save
+
+        @season.signups.each do |s|
+            tp = TeamPlayer.new(team_id: unplaced_players.id, user_id: s.user_id, salary: 0)
+            tp.save
+        end
 
         redirect_to league_season_path(@league, @season)
     end
@@ -178,12 +209,20 @@ class SeasonsController < ApplicationController
     end
 
     def submit_transaction
+        if !current_user.admin && !current_user.captain?(@season) && !current_user.stat_admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @transaction = @season.trades.build
         @transaction.movements.build
         @teams = current_user.owned_teams
     end
 
     def process_transaction
+        if !current_user.admin && !current_user.captain?(@season) && !current_user.stat_admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @transaction = @season.trades.build(params.require(:trade).permit(
             movements_attributes: [:_destroy, :id, :destination_id, :team_player_id]
         ))
@@ -202,6 +241,10 @@ class SeasonsController < ApplicationController
     end
 
     def approve_transaction
+        if !current_user.admin && !current_user.captain?(@season) && !current_user.stat_admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @trade = @season.trades.find(params[:trade_id])
 
         over = check_trade(@trade, @season)

@@ -8,10 +8,18 @@ class TeamsController < ApplicationController
     end
 
     def new
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @team = @season.teams.build
     end
 
     def create
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @team = @season.teams.build(team_params)
 
         if params[:captain_id]
@@ -33,6 +41,10 @@ class TeamsController < ApplicationController
     end
 
     def edit
+        if !current_user.admin && current_user != @team.captain
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @team = @season.teams.find_by(id: params[:id])
     end
 

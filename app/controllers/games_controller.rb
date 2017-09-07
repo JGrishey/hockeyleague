@@ -8,10 +8,18 @@ class GamesController < ApplicationController
     end
 
     def new
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @game = @season.games.build
     end
 
     def create
+        if !current_user.admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @game = @season.games.build(game_params)
 
         if @game.save
@@ -24,9 +32,17 @@ class GamesController < ApplicationController
     end
 
     def edit
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def update
+        if !current_user.admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         if @game.update(game_params)
             flash[:success] = "Your game has been updated!"
             redirect_to league_season_game_path(@season.league, @season, @game)
@@ -79,15 +95,27 @@ class GamesController < ApplicationController
     end
 
     def destroy
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @game.destroy
         flash[:success] = "Your game has been deleted."
         redirect_to root_path
     end
 
     def enter_home_stats
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def enter_away_stats
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def process_home_stats
@@ -117,9 +145,17 @@ class GamesController < ApplicationController
     end
 
     def submit_home_players
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def submit_away_players
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def add_players
@@ -129,6 +165,10 @@ class GamesController < ApplicationController
     end
 
     def make_final
+        if !current_user.stat_admin && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @game.update_attributes(final: true)
 
         @game.players.each do |player|

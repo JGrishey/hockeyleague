@@ -85,10 +85,12 @@
         <% end %>
     </div>
     <div class="transactions">
-        <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
-            <div class="new-transaction">
-                Submit transaction
-            </div>
+        <% if current_user.admin || current_user.captain?(@season) || current_user.stat_admin %>
+            <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
+                <div class="new-transaction">
+                    Submit transaction
+                </div>
+            <% end %>
         <% end %>
 
         <% if current_user.admin %>

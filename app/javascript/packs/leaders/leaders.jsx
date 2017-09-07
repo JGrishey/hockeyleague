@@ -32,7 +32,7 @@ class Leaders extends React.Component {
             <div>
                 <div className="category">
                     <div className="header">Skaters</div>
-                    {goals.length == 0 && <div className="noData">No Data</div>}
+                    {goals.length == 0 && <div className="no-data">No Data</div>}
                     {goals.length > 0 && <Panel statName="goals" players={goals}/>}
                     {assists.length > 0 && <Panel statName="assists" players={assists}/>}
                     {points.length > 0 && <Panel statName="points" players={points}/>}

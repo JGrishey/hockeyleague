@@ -7,10 +7,18 @@ class LeaguesController < ApplicationController
     end
 
     def new
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @league = League.new
     end
 
     def create
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @league = League.new(league_params)
 
         if @league.save
@@ -23,9 +31,17 @@ class LeaguesController < ApplicationController
     end
 
     def edit
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def update
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         if @league.update(league_params)
             flash[:success] = "Your league has been updated!"
             redirect_to @league
@@ -71,6 +87,10 @@ class LeaguesController < ApplicationController
     end
 
     def destroy
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @league.destroy
         flash[:success] = "Your league was deleted."
         redirect_to root_path

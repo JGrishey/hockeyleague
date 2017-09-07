@@ -4468,6 +4468,12 @@ a, a:focus, a:hover {
             border-color: rgba(0,0,0,0.6);
             border-width: 1px;
             border-style: solid;
+            cursor: pointer;
+            transition: ease-in 0.1s;
+        }
+
+        .upload:hover {
+            box-shadow: 0px 0px 3px #000;
         }
 
         .submit-btn {

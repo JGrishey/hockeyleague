@@ -33,10 +33,18 @@ class PostsController < ApplicationController
     end
 
     def edit
+        if current_user != @post.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "That's not your post!"
+        end
         @post = @subforum.posts.find_by(id: params[:id])
     end
 
     def update
+        if current_user != @post.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "That's not your post!"
+        end
         @post = @subforum.posts.find_by(id: params[:id])
         if @post.update(post_params)
             flash[:success] = "Your post has been updated."
@@ -48,6 +56,10 @@ class PostsController < ApplicationController
     end
 
     def destroy
+        if current_user != @post.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "That's not your post!"
+        end
         @post.destroy
         flash[:success] = "Your post has been deleted."
         redirect_to root_path

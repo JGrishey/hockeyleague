@@ -35,10 +35,18 @@ class CommentsController < ApplicationController
 
     def edit
         @comment = @post.comments.find(params[:id])
+        if current_user != @comment.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def update
         @comment = @post.comments.find(params[:id])
+        if current_user != @comment.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         if @comment.update(comment_params)
             redirect_to subforum_post_path(@subforum, @post)
         else
@@ -55,11 +63,14 @@ class CommentsController < ApplicationController
 
     def destroy
         @comment = @post.comments.find(params[:id])
-
-        if @comment.user_id == current_user.id
+        if current_user != @comment.user && !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
+        if @comment.user == current_user || current_user.admin
             @comment.destroy
             respond_to do |format|
-                format.html { redirect_to post_path(@post) }
+                format.html { redirect_to subforum_post_path(@subforum, @post) }
                 format.js
             end
         end

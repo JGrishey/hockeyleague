@@ -90,7 +90,7 @@
         <% end %>
     </div>
     <div class="transactions">
-        <% if current_user.admin || current_user.captain?(@season) %>
+        <% if current_user.admin || current_user.captain?(@season) || current_user.stat_admin %>
             <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
                 <div class="new-transaction">
                     Submit transaction

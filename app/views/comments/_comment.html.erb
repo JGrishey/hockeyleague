@@ -10,9 +10,12 @@
         <div class="date">
             <%= comment.created_at.strftime("%d %^b %Y") %>
         </div>
-        <% if current_user == comment.user %>
+        <% if current_user == comment.user || current_user.admin %>
             <div class="edit">
                 <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment), method: :get %>
+            </div>
+            <div class="edit">
+                <%= link_to "<img src='#{asset_path("feathericons/x.svg")}'/>".html_safe, subforum_post_comment_path(subforum, post, comment), method: :delete, data: {confirm: "Are you sure?"} %>
             </div>
         <% end %>
         <% if comment.updated_at != comment.created_at %>
@@ -25,8 +28,6 @@
     <div class="content">
         <%= comment.content.html_safe %>
     </div>
-
-    
 </div>
 
 <div class="liking">

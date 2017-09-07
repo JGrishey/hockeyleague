@@ -8,7 +8,7 @@ class SubforumsController < ApplicationController
         @leagues = League.all.order('name ASC')
         @recent_posts = Post.order('updated_at DESC').first(5)
         @chatbox = ChatBox.first
-        @messages = @chatbox.messages.order('created_at DESC').paginate(page: params[:page])
+        @messages = @chatbox.messages.order('created_at ASC').last(25)
         respond_to do |format|
             format.html
             format.js
@@ -16,10 +16,18 @@ class SubforumsController < ApplicationController
     end
 
     def new
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @subforum = Subforum.new
     end
 
     def create
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @subforum = Subforum.new(subforum_params)
 
         if @subforum.save
@@ -32,9 +40,17 @@ class SubforumsController < ApplicationController
     end
 
     def edit
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
     end
 
     def update
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         if @subforum.update(subforum_params)
             flash[:success] = "Your subforum has been updated."
             redirect_to @subforum, method: :get
@@ -45,6 +61,10 @@ class SubforumsController < ApplicationController
     end
 
     def destroy
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
         @subforum.destroy
         flash[:success] = "Your subforum has been deleted."
         redirect_to root_path

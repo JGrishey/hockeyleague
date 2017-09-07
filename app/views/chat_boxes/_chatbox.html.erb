@@ -1,10 +1,7 @@
 <div class="chatbox">
     <div class="messages" id="messages" data-chat-box-id="<%= chat_box.id %>">
-        <div id="infinite-scrolling">
-            <%= will_paginate @messages %>
-        </div>
         <div id="inner-messages">
-            <%= render @messages.reverse %>
+            <%= render @messages %>
         </div>
     </div>
 

@@ -15,9 +15,12 @@
             <div class="date">
                 <%= post.created_at.strftime("%d %^b %Y") %>
             </div>
-            <% if current_user == post.user %>
+            <% if current_user == post.user || current_user.admin %>
                 <div class="edit">
                     <%= link_to "Edit", edit_subforum_post_path(subforum, post), method: :get %>
+                </div>
+                <div class="edit">
+                    <%= link_to "<img src='#{asset_path("feathericons/x.svg")}'/>".html_safe, subforum_post_path(subforum, post), method: :delete, data: {confirm: "Are you sure?"} %>
                 </div>
             <% end %>
         </div>
