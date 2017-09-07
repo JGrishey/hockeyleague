@@ -32,78 +32,78 @@ class Standings extends React.Component {
                             Header: "GP",
                             accessor: "gp",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "W",
                             accessor: "wins",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "L",
                             accessor: "losses",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "OTL",
                             accessor: "otl",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "P",
                             accessor: "pts",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "P%",
                             id: "pts%",
                             accessor: d => d["pts%"].toFixed(3),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "GF",
                             accessor: "gf",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "GA",
                             accessor: "ga",
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "GF/GP",
                             id: "gfpg",
                             accessor: d => d.gfpg.toFixed(2),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "GA/GP",
                             id: "gapg",
                             accessor: d => d.gapg.toFixed(2),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "PP%",
                             id: "pp%",
                             accessor: d => d["pp%"].toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "PK%",
                             id: "pk%",
                             accessor: d => d["pk%"].toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "SHOTS/GP",
@@ -111,14 +111,14 @@ class Standings extends React.Component {
                             accessor: d => d.shfpg.toFixed(1),
                             width: 79,
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "SA/GP",
                             id: "shapg",
                             accessor: d => d.shapg.toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                         {
                             Header: "FOW%",
@@ -126,7 +126,7 @@ class Standings extends React.Component {
                             accessor: d => d["fow%"].toFixed(1),
                             width: 73,
                             style: {"textAlign": "center"},
-                            minWidth: 100
+                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
                         },
                     ]}
                     className="-striped -highlight"

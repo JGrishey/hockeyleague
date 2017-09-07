@@ -4,7 +4,7 @@ class SubforumsController < ApplicationController
     before_action :set_subforum, only: [:edit, :update, :show, :destroy]
 
     def index
-        @subforums = Subforum.all.order('title DESC')
+        @subforums = Subforum.all.order('title ASC')
         @leagues = League.all.order('name ASC')
         @recent_posts = Post.order('updated_at DESC').first(5)
         @chatbox = ChatBox.first

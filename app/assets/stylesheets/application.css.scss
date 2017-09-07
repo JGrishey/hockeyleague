@@ -51,13 +51,13 @@ table {
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import url('https://fonts.googleapis.com/css?family=Sintony');
 @import url('https://fonts.googleapis.com/css?family=Saira');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 // body
 
 body {
-    font-family: "Sintony", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 62.5%;
     width: 100%;
     background-color: #ececec;
@@ -87,8 +87,12 @@ a, a:focus, a:hover {
 
 @media (max-width: 1024px) {
 
+    body {
+        -webkit-font-smoothing: antialiased;
+    }
+
     .modal-body {
-        font-size: 24px;
+        font-size: 2em;
     }
 
     // nav-bar
@@ -98,50 +102,38 @@ a, a:focus, a:hover {
         width: 100%;
         background-color: #d2d2d2;
         text-transform: uppercase;
-        font-size: 28px;
+        height: 44px;
+        max-height: 44px;
         font-weight: 800;
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 900px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
             display: block;
             margin: 0em auto;
             width: 100%;
-            padding: 1em 0;
 
             .nav-left {
-                width: 49.5%;
                 display: inline-block;
                 vertical-align: middle;
+                float: left;
                 text-align: left;
-
-                .nav-element {
-                    width: 32%;
-                }
             }
 
             .nav-right {
-                width: 49.5%;
                 display: inline-block;
                 vertical-align: middle;
-
-                font-size: 20px;
-
-                .noti {
-                    width: auto;
-                    font-size: 18px;
-                }
-
-                .log-out {
-                    font-size: 14px;
-                    width: 15%;
-                }
+                text-align: right;
+                float: right;
             }
 
             .nav-element {
                 display: inline-block;
                 vertical-align: middle;
-                text-align: center;
-                width: 24%;
+                padding: 2px 0;
+                margin: 0 5px;
 
                 .notification-dropdown {
                     display: inline-block;
@@ -152,11 +144,7 @@ a, a:focus, a:hover {
 
                     .dropdown-menu {
                         width: 300px;
-                        font-size: 24px;
 
-                        li {
-                            font-size: 24px;
-                        }
                     }
 
                     .dropdown-element {
@@ -167,13 +155,9 @@ a, a:focus, a:hover {
                 }
             }
 
-            .rules {
-                font-weight: normal;
-            }
-
             .nav-photo {
                 border-radius: 50%;
-                width: 80%;
+                max-height: 40px;
             }
         }
 
@@ -181,13 +165,12 @@ a, a:focus, a:hover {
 
         .title {
             font-family: "Saira";
-            font-size: 30px;
         }
 
         // logo
 
         .logo {
-            width: 100%;
+            max-height: 40px;
         }
     }
 
@@ -195,7 +178,7 @@ a, a:focus, a:hover {
 
     .subforums-index {
         display: block;
-        max-width: 1200px;
+        max-width: 900px;
         width: 100%;
         padding: 1em; 
         margin: 2em auto;
@@ -1108,14 +1091,14 @@ a, a:focus, a:hover {
                         }
         
                         .category-2 {
-                            font-family: "Sintony";
+                            font-family: "Roboto";
                             font-weight: 800;
                             text-align: center;
                         }
         
                         .number {
                             font-size: 2.5em;
-                            font-family: "Sintony";
+                            font-family: "Roboto";
                             font-weight: 800;
                         }
                     }
@@ -1321,13 +1304,13 @@ a, a:focus, a:hover {
 
                 .category-2 {
                     font-size: 24px;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
                     font-weight: 800;
                 }
 
                 .number {
                     font-size: 40px;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
                     font-weight: 800;
                 }
             }
@@ -1414,12 +1397,12 @@ a, a:focus, a:hover {
             }
 
             .name {
-                font-family: "Sintony";
+                font-family: "Roboto";
                 font-size: 36px;
             }
 
             .record {
-                font-family: "Sintony";
+                font-family: "Roboto";
                 font-size: 30px;
                 opacity: 0.5;
             }
@@ -1428,7 +1411,7 @@ a, a:focus, a:hover {
                 margin-bottom: 1em;
                 font-size: 26px;
                 opacity: 0.5;
-                font-family: "Sintony";
+                font-family: "Roboto";
             }
 
             .view-schedule {
@@ -1545,7 +1528,7 @@ a, a:focus, a:hover {
         .name {
             text-align: center;
             font-size: 35px;
-            font-family: "Sintony";
+            font-family: "Roboto";
             margin-bottom: 2em;
 
             .edit {
@@ -1726,7 +1709,7 @@ a, a:focus, a:hover {
             .score {
                 display: inline-block;
                 vertical-align: middle;
-                font-family: "Sintony";
+                font-family: "Roboto";
                 width: 15%;
                 font-size: 5em;
                 font-weight: 800;
@@ -1754,7 +1737,7 @@ a, a:focus, a:hover {
 
                     .headers, .team {
                         text-transform: uppercase;
-                        font-family: "Sintony";
+                        font-family: "Roboto";
                         margin-bottom: 1em;
                         
                         .logo, .name, .sog, .toa, .faceoff, .pp, .pim, .hits {
@@ -1781,7 +1764,7 @@ a, a:focus, a:hover {
                     padding: 1em;
                     background-color: #fff;
                     margin-top: 2em;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
 
                     .table-header {
                         font-size: 2em;
@@ -2536,7 +2519,7 @@ a, a:focus, a:hover {
     }
 
     .rt-table {
-        font-family: "Sintony";
+        font-family: "Roboto";
     }
 }
 
@@ -3527,14 +3510,14 @@ a, a:focus, a:hover {
                         }
         
                         .category-2 {
-                            font-family: "Sintony";
+                            font-family: "Roboto";
                             font-weight: 800;
                             text-align: center;
                         }
         
                         .number {
                             font-size: 2.5em;
-                            font-family: "Sintony";
+                            font-family: "Roboto";
                             font-weight: 800;
                         }
                     }
@@ -3742,13 +3725,13 @@ a, a:focus, a:hover {
 
                 .category-2 {
                     font-size: 1.5em;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
                     font-weight: 800;
                 }
 
                 .number {
                     font-size: 2.5em;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
                     font-weight: 800;
                 }
             }
@@ -3835,12 +3818,12 @@ a, a:focus, a:hover {
             }
 
             .name {
-                font-family: "Sintony";
+                font-family: "Roboto";
                 font-size: 5em;
             }
 
             .record {
-                font-family: "Sintony";
+                font-family: "Roboto";
                 font-size: 4em;
                 opacity: 0.5;
             }
@@ -3849,7 +3832,7 @@ a, a:focus, a:hover {
                 margin-bottom: 1em;
                 font-size: 3em;
                 opacity: 0.5;
-                font-family: "Sintony";
+                font-family: "Roboto";
             }
 
             .view-schedule {
@@ -3965,7 +3948,7 @@ a, a:focus, a:hover {
         .name {
             text-align: center;
             font-size: 5em;
-            font-family: "Sintony";
+            font-family: "Roboto";
             margin-bottom: 2em;
 
             .edit {
@@ -4146,7 +4129,7 @@ a, a:focus, a:hover {
             .score {
                 display: inline-block;
                 vertical-align: middle;
-                font-family: "Sintony";
+                font-family: "Roboto";
                 width: 15%;
                 font-size: 5em;
                 font-weight: 800;
@@ -4174,7 +4157,7 @@ a, a:focus, a:hover {
 
                     .headers, .team {
                         text-transform: uppercase;
-                        font-family: "Sintony";
+                        font-family: "Roboto";
                         margin-bottom: 1em;
                         
                         .logo, .name, .sog, .toa, .faceoff, .pp, .pim, .hits {
@@ -4201,7 +4184,7 @@ a, a:focus, a:hover {
                     padding: 1em;
                     background-color: #fff;
                     margin-top: 2em;
-                    font-family: "Sintony";
+                    font-family: "Roboto";
 
                     .table-header {
                         font-size: 2em;
@@ -4969,7 +4952,7 @@ a, a:focus, a:hover {
     }
 
     .rt-table {
-        font-family: "Sintony";
+        font-family: "Roboto";
     }
 }
 
