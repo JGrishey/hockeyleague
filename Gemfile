@@ -55,7 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 # Bootstrap CSS
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap'
 
 # Thin Server on Local Machine
 gem 'thin'

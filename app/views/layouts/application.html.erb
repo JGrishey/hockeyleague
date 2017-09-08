@@ -55,44 +55,23 @@
             $("#myModal").modal('toggle');
         </script>
     <% end %>
-    <nav class="navigation-main">
-        <div class="nav-container">
-            <div class="nav-left">
-                <div class="nav-element">
-                    <%= link_to root_path, method: :get do %>
-                        <img class="logo" src=<%= image_path("MooseLogo.png") %>/>
-                    <% end %>
-                </div>
+   
+     <nav class="navbar navbar-light bg-faded" style="background-color: #d2d2d2;">
+        <%= link_to root_path, class: "navbar-brand", method: :get do %>
+            <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/> MOOSE HOCKEY
+        <% end %>
 
-                <div class="nav-element title">
-                    <%= link_to "MOOSE HOCKEY", root_path, method: :get %>
-                </div>
+        <%= link_to "Rules", pages_rules_path, method: :get, class: "nav-link" %>
 
-                <div class="nav-element rules">
-                    <%= link_to "RULES", pages_rules_path, method: :get %>
-                </div>
-            </div>
-            <div class="nav-right">
-                <% if user_signed_in? %>
-                    <div class="nav-element noti">
-                        <%= render 'notifications/notification_dropdown' %>
-                    </div>
-                    <div class="nav-element">
-                        <%= link_to profile_path(current_user.user_name), method: :get do %>
-                            <img class="nav-photo" src=<%= get_avatar(current_user) %>/>
-                        <% end %>
-                    </div>
-                    <div class="nav-element">
-                        <%= link_to profile_path(current_user.user_name), method: :get do %>
-                            <%= current_user.user_name %>
-                        <% end %>
-                    </div>
-                    <div class="nav-element log-out">
-                        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-                    </div>
-                <% end %>
-            </div>
-        </div>
+        <% if user_signed_in? %>
+
+            <%= link_to profile_path(current_user.user_name), method: :get, class: "nav-link" do %>
+                <img class="img-fluid rounded-circle" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
+            <% end %>
+
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-link" %>
+
+        <% end %>
     </nav>
 
     <%= yield %>
