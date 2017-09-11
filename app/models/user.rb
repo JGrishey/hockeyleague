@@ -35,8 +35,12 @@ class User < ApplicationRecord
     has_many :penalties
     has_many :stat_lines
 
-    has_attached_file :avatar, styles: { :small => "400x400#" }
+    has_attached_file :avatar, styles: { :small => "400x400#" }, :storage => :s3, :s3_credentials => Proc.new{|a| a.instance.s3_credentials }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+
+    def s3_credentials
+        {:bucket => ENV.fetch("AWS_BUCKET"), :access_key_id => ENV.fetch("AWS_ACCESS_KEY_ID"), :secret_access_key => ENV.fetch("AWS_SECRET_ACCESS_KEY")}
+    end
 
     def online?
         updated_at < 10.minutes.ago

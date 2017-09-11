@@ -15,8 +15,14 @@ class Team < ApplicationRecord
     has_many :goals
     has_many :penalties
 
-    has_attached_file :logo, styles: {:medium => "300x300>"}, default_style: :medium
+    has_attached_file :logo, styles: {:medium => "300x300>"}, default_style: :medium, :storage => :s3, :s3_credentials => Proc.new{|a| a.instance.s3_credentials }
     validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
+
+    
+    
+    def s3_credentials
+        {:bucket => ENV.fetch("AWS_BUCKET"), :access_key_id => ENV.fetch("AWS_ACCESS_KEY_ID"), :secret_access_key => ENV.fetch("AWS_SECRET_ACCESS_KEY")}
+    end
 
     def abbreviation
         self.name.split.map(&:first).join
