@@ -69,6 +69,7 @@ gem 'simple_form'
 
 # Paperclip (Image Uploading)
 gem 'paperclip', "~> 5.0.0"
+gem 'aws-sdk', "~> 2.3"
 
 # Markdown
 gem 'redcarpet'
