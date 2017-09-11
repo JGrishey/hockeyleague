@@ -1,63 +1,74 @@
-<div class="player-page">
-    <img class="photo" src="<%= @user.banner %>"/>
-    <div class="avatar">
-        <img class="avtr" src=<%= get_avatar(@user) %>/>
+<img class="img-responsive mt-3" style="max-width: 100%; max-height: 100%;" src="<%= @user.banner %>"/>
+<div class="profile-avatar">
+    <img class="avtr" src=<%= get_avatar(@user) %>/>
+</div>
+<div class="text-center font-weight-bold text-uppercase mt-4" style="font-size: 2em;">
+    <%= @user.user_name %>
+</div>
+<% if current_user == @user %>
+    <div class="text-center text-muted">
+        <%= link_to "Edit", edit_profile_path(@user.user_name), method: :get %>
     </div>
-    <div class="name">
-        <%= @user.user_name %>
-        <% if current_user == @user %>
-            <div class="edit">
-                <%= link_to "Edit", edit_profile_path(@user.user_name), method: :get %>
-            </div>
-        <% end %>
-    </div>
-    <div class="info">
-    </div>
+<% end %>
 
-    <% if @user.games.any? %>
+<% if @user.games.any? %>
 
-        <div class="header">
+    <div class="card mt-4">
+        <div class="card-header">
             Current Seasons
         </div>
-
-        <div class="stats" id="current-stats">
+        <div class="card-body">
+            <div id="current-stats" style="font-size: 0.75em;">
+            </div>
         </div>
+    </div>
 
-        <div class="header">
-            Recent Games
+    <div class="card mt-4">
+        <div class="card-header">
+            Recent games
         </div>
-
-        <div class="recent" id="recent">
+        <div class="card-body">
+            <div id="recent" style="font-size: 0.75em;">
+            </div>
         </div>
+    </div>
 
-        <div class="stats" id="stats">
+    <div class="card mt-4">
+        <div class="card-header">
+            Stats
         </div>
-
-        <div class="header">
-            Career Stats
+        <div class="card-body">
+            <div style="font-size: 0.75em;" id="stats">
+            </div>
         </div>
+    </div>
 
-        <div class="stats" id="career-stats">
+    <div class="card mt-4 mb-4">
+        <div class="card-header">
+            Career
         </div>
+        <div class="card-body">
+            <div style="font-size: 0.75em;" id="career-stats">
+            </div>
+        </div>
+    </div>
 
-        <div id="recent-games" data-data="<%= @game_data.to_json %>"></div>
+    <div id="recent-games" data-data="<%= @game_data.to_json %>"></div>
 
-        <div id="current-data" data-data="<%= @current_stats.to_json %>"></div>
+    <div id="current-data" data-data="<%= @current_stats.to_json %>"></div>
 
-        <div id="career-data" data-data="<%= @career_stats.to_json %>"></div>
+    <div id="career-data" data-data="<%= @career_stats.to_json %>"></div>
 
-        <% @leagues.each do |league| %>
-            <div id="<%= league.name %>" class="league-data" data-data="<%= @stats.select{ |s| s[:league_id] == league.id }.to_json %>"></div>
-        <% end %>
-
-        <%= javascript_pack_tag "players/stats" %>
-        <%= javascript_pack_tag "players/career-stats"%>
-        <%= javascript_pack_tag "players/current-stats" %>
-        <%= javascript_pack_tag "players/recent-games"%>
-
+    <% @leagues.each do |league| %>
+        <div id="<%= league.name %>" class="league-data" data-data="<%= @stats.select{ |s| s[:league_id] == league.id }.to_json %>"></div>
     <% end %>
 
-</div>
+    <%= javascript_pack_tag "players/stats" %>
+    <%= javascript_pack_tag "players/career-stats"%>
+    <%= javascript_pack_tag "players/current-stats" %>
+    <%= javascript_pack_tag "players/recent-games"%>
+
+<% end %>
 
 
 

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
     get 'profiles/show'
     get 'pages/rules'
+    get 'chat_boxes/:id/archive', to: "chat_boxes#archive", as: :archive
 
     devise_for :users, :controllers => {registrations: 'registrations'}
     
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
                 get 'submit_transaction'
                 post 'process_transaction'
                 post 'approve_transaction'
+                post 'decline_transaction'
                 post 'process_signup'
                 post 'process_file'
             end

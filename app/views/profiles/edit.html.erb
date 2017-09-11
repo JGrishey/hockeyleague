@@ -1,43 +1,36 @@
-<div class="edit-profile">
-    <div class="header">
-        Edit Profile
+<div class="card mt-3">
+    <div class="card-header text-center">
+        Edit Profile: <%= @user.user_name%>
     </div>
-    <div class="form">
+    <div class="card-body">
         <%= form_for(@user, url: {action: "update"}, html: {multipart: true}) do |f| %>
+            <div class="form-group row justify-content-center">
+                <div class="col-12 col-lg-6">
+                    <label>Birthplace</label>
+                    <%= f.text_field :birthplace, class: "form-control" %>
 
-            <div class="section">
-                <label class="profile-label">Birthplace</label>
-                <%= f.text_field :birthplace, class: "profile-text" %>
+                    <label class="mt-2">Birthday</label>
+                    <div class="row justify-content-center">
+                    <%= f.date_select :born, {start_year: Date.today.year - 100, end_year: Date.today.year}, {class: "form-control col-2 mr-2"} %>
+                    </div>
+
+                    <label class="mt-2">Height</label>
+                    <%= f.text_field :height, class: "form-control"%>
+
+                    <label class="mt-2">Weight</label>
+                    <%= f.text_field :weight, class: "form-control" %>
+
+                    <label class="mt-2">Banner</label>
+                    <%= f.select :banner, banner_options(), {}, {class: "form-control"} %>
+
+                    <label class="mt-2">Avatar</label>
+                    <%= f.file_field :avatar, class: "form-control" %>
+                    
+                    <div class="text-center mt-3">
+                        <%= f.submit "Update Profile", class: "btn btn-outline-dark", style: "cursor: pointer;" %>
+                    </div>
+                </div>
             </div>
-
-            <div class="section">
-                <label class="profile-label">Birthday</label>
-                <%= f.date_select :born, start_year: Date.today.year - 100, end_year: Date.today.year, class: "profile-date" %>
-            </div>
-
-            <div class="section">
-                <label class="profile-label">Height</label>
-                <%= f.text_field :height, class: "profile-text"%>
-            </div>
-
-            <div class="section">
-                <label class="profile-label">Weight</label>
-                <%= f.text_field :weight, class: "profile-text" %>
-            </div>
-
-            <div class="section">
-                <label class="profile-label">Banner</label>
-                <%= f.select :banner, banner_options(), class: "profile-banner" %>
-            </div>
-
-            <div class="section">
-                <label class="profile-label">Avatar</label>
-                <a id="upload-btn" class="upload">Upload</a>
-                <span id="file-display"></span>
-                <%= f.file_field :avatar, class: "profile-avatar" %>
-            </div> 
-            
-            <%= f.submit "Change profile", class: "submit" %>
         <% end %>
     </div>
 </div>

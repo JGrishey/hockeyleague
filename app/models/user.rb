@@ -155,7 +155,7 @@ class User < ApplicationRecord
                     goalie_games += 1
 
                     if stats.team == stats.game.home_team
-                        if stats.game.home_goals.count > stats.game.away_goals.count
+                        if stats.game.home_goals > stats.game.away_goals
                             if stats.game.away_goals == 0
                                 shutouts += 1
                             end
@@ -166,7 +166,7 @@ class User < ApplicationRecord
                             losses += 1
                         end
                     else
-                        if stats.game.away_goals.count > stats.game.home_goals.count
+                        if stats.game.away_goals > stats.game.home_goals
                             if stats.game.home_goals == 0
                                 shutouts += 1
                             end

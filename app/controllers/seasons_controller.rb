@@ -1,7 +1,9 @@
 class SeasonsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_league
+    
     before_action :set_season, except: [:new, :index, :create]
+    before_action :set_games, except: [:new, :index, :create]
     
 
     def index
@@ -271,6 +273,19 @@ class SeasonsController < ApplicationController
             redirect_to transactions_league_season_path(@league, @season)
         end
     end
+
+    def decline_transaction
+        if !current_user.admin && !current_user.captain?(@season) && !current_user.stat_admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
+
+        @trade = @season.trades.find(params[:trade_id])
+
+        @trade.update_attributes(pending: false)
+
+        redirect_to transactions_league_season_path(@league, @season)
+    end
     
     private
 
@@ -332,5 +347,9 @@ class SeasonsController < ApplicationController
 
     def set_league
         @league = League.find(params[:league_id])
+    end
+
+    def set_games
+        @recent_games = @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
     end
 end

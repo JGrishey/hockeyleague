@@ -79,6 +79,8 @@ group :development, :test do
     gem 'factory_girl_rails', '~> 4.0'
 end
 
+gem 'octicons_helper'
+
 # Webpack
 
 gem 'webpacker', '~> 2.0'

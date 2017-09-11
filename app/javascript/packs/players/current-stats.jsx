@@ -28,138 +28,140 @@ class Current extends React.Component {
     }
     render () {
         const { data } = this.state
+        const docWidth = document.getElementById("current-stats").offsetWidth - (1.25 * 16 * 2)
+        const actualWidth = document.body.clientWidth
         return (
             <div>
                 { skaterData(data).length > 0 &&
                     <div>
-                    <div className="sub-header">Skater</div>
+                    <div className="font-weight-bold mb-2 text-uppercase">Skater</div>
                     <ReactTable
                         data={skaterData(data)}
                         columns={[
                             {
                                 Header: "League",
                                 accessor: "league",
-                                width: 60,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 7.5) : 75,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "Season",
                                 id: "season",
                                 accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id}>{d.season}</a></div>),
-                                width: 75,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 7.5) : 75,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "Team",
                                 id: "team",
                                 accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.team}</a></div>),
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "GP",
                                 accessor: "games_played",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "G",
                                 accessor: "goals",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "A",
                                 accessor: "assists",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "P",
                                 accessor: "points",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "+/-",
                                 id: "plus-minus",
                                 accessor: d => d["plus-minus"] > 0 ? "+" + d["plus-minus"] : d["plus-minus"],
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "PIM",
                                 accessor: "pim",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "Hits",
                                 accessor: "hits",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "P/GP",
                                 id: "p/gp",
                                 accessor: d => d["p/gp"].toFixed(2),
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "PPG",
                                 accessor: "ppg",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "PPP",
                                 accessor: "ppp",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SHG",
                                 accessor: "shg",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SHP",
                                 accessor: "shp",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "S",
                                 accessor: "shots",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SH%",
                                 id: "sh%",
                                 accessor: d => d["sh%"].toFixed(1),
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "FOW",
                                 accessor: "fow",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "FOT",
                                 accessor: "fot",
-                                width: 56,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "FO%",
                                 id: "fo%",
                                 accessor: d => d["fo%"].toFixed(1),
-                                width: 58,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 18)) : 50,
                                 style: {"textAlign": "center"}
                             },
                         ]}
@@ -178,84 +180,84 @@ class Current extends React.Component {
                 }
                 { goalieData(data).length > 0 &&
                     <div>
-                    <div className="sub-header">Goalie</div>
+                    <div className="font-weight-bold mb-2 mt-2 text-uppercase">Goalie</div>
                     <ReactTable
                         data={goalieData(data)}
                         columns={[
                             {
                                 Header: "League",
                                 accessor: "league",
-                                width: 120,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 7.5) : 75,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "Season",
                                 id: "season",
                                 accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id}>{d.season}</a></div>),
-                                width: 120,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 7.5) : 75,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "Team",
                                 id: "team",
                                 accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.team}</a></div>),
-                                width: 65,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "GP",
                                 accessor: "goalie_games",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "W",
                                 accessor: "wins",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "L",
                                 accessor: "losses",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "OTL",
                                 accessor: "otl",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "GA",
                                 accessor: "goals_against",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SA",
                                 accessor: "shots_against",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SV%",
                                 id: "sv%",
                                 accessor: d => d["sv%"].toFixed(3),
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "GAA",
                                 id: "gaa",
                                 accessor: d => d["gaa"].toFixed(2),
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SO",
                                 accessor: "shutouts",
-                                width: 92,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                         ]}

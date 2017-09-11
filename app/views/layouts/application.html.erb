@@ -10,7 +10,6 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'posting/new-post' %>
 </head>
 
 <body>
@@ -56,7 +55,7 @@
         </script>
     <% end %>
    
-     <nav class="navbar navbar-light bg-faded" style="background-color: #d2d2d2;">
+     <nav class="navbar navbar-light bg-faded" style="background-color: #d2d2d2; margin-bottom: 0.2em;">
         <%= link_to root_path, class: "navbar-brand", method: :get do %>
             <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/> MOOSE HOCKEY
         <% end %>
@@ -64,6 +63,8 @@
         <%= link_to "Rules", pages_rules_path, method: :get, class: "nav-link" %>
 
         <% if user_signed_in? %>
+
+            <%= render 'notifications/notification_dropdown' %>
 
             <%= link_to profile_path(current_user.user_name), method: :get, class: "nav-link" do %>
                 <img class="img-fluid rounded-circle" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
@@ -74,7 +75,9 @@
         <% end %>
     </nav>
 
-    <%= yield %>
+    <div class="container mb-3">
+        <%= yield %>
+    </div>
 </body>
 
 </html>

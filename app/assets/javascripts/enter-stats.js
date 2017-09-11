@@ -32,13 +32,13 @@ $(document).on('click', 'form .add_movements', function(event) {
 });
 
 $(document).on('click', 'form .remove_movements', function(event) {
-  $(this).parent().children('.removable')[0].value = 1;
+  $(this).parent().parent().parent().children('.removable')[0].value = 1;
   $(this).closest('fieldset').hide();
   return event.preventDefault();
 });
 
 $(document).on('click', 'form .remove_players', function(event) {
-  $(this).parent().children('.removable')[0].value = 1;
+  $(this).parent().parent().parent().children('.removable')[0].value = 1;
   $(this).closest('fieldset').hide();
   return event.preventDefault();
 });

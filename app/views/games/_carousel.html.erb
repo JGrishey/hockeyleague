@@ -1,26 +1,26 @@
-<% if @recent_games.any? %>
+<% if recent_games.any? %>
     <div class="carousel slide mt-2 rounded" id="gameCarousel" data-ride="carousel" style="background-color: #fff;">
         <ol class="carousel-indicators">
-            <% @recent_games.each_with_index do |(key, values), index| %>
+            <% recent_games.each_with_index do |(key, values), index| %>
                 <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= index == 0 ? "active" : "" %>"></li>
             <% end %>
         </ol>
         <div class="carousel-inner">
-            <% @recent_games.each_with_index do |(key, values), index| %>
+            <% recent_games.each_with_index do |(key, values), index| %>
                 <div class="<%= index == 0 ? "carousel-item active" : "carousel-item" %>">
                     <div class="row justify-content-center mt-2">
                         <% values.each do |game| %>
-                            <%= link_to league_season_game_path(@league, @season, game), method: :get, class: "col-2 border border-light p-3" do %>
+                            <%= link_to league_season_game_path(league, season, game), method: :get, class: "col-2 border border-light p-3" do %>
                                     <div class="row">
-                                        <div class="col-6 text-center">
+                                        <div class="col-6 text-center align-self-center">
                                             <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
                                         </div>
 
-                                        <div class="col-6 text-center">
+                                        <div class="col-6 text-center align-self-center">
                                             <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row mt-2">
                                         <% if game.final %>
                                             <div class="col-6 text-center">
                                                 <%= game.away_goals %>
@@ -54,67 +54,3 @@
         </a>
     </div>
 <% end %>
-
-<div class="card mt-2">
-    <div class="card-body">
-        <%= @league.name %> - <%= @season.title %>
-    </div>
-</div>
-
-<div class="card mt-2">
-    <div class="card-body">
-        <div class="row text-center">
-            <div class="col">
-                <img class="img-responsive" width="100" src="<%= get_logo(@team) %>">
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col font-weight-bold" style="font-size: 2.5em;">
-                <%= @team.name %>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col text-muted">
-                <%= @team_data[:wins] %>-<%= @team_data[:losses] %>-<%= @team_data[:otl] %>
-            </div>
-        </div>
-        <% if current_user.admin %>
-            <div class="text-center text-muted">
-                <%= link_to "Edit team", edit_league_season_team_path(@league, @season, @team), method: :get %>
-            </div>
-        <% end %>
-    </div>
-</div>
-
-<div class="card mt-2">
-    <div class="card-body">
-        <div class="row">
-            <% @team.players.each do |player| %>
-                <%= link_to profile_path(player.user_name), method: :get, class: "col-6 col-lg-3 p-5 text-center" do %>
-                        <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(player) %>/>
-                        <div class="text-center font-weight-bold text-uppercase mt-2">
-                            <%= player.user_name %>
-                        </div>
-                <% end %>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<div class="card mt-2">
-    <div class="card-body">
-        <div class="row mt-3">
-            <div class="col-12 mb-2">
-                <div class="text-left font-weight-bold text-uppercase">
-                    Player Statistics
-                </div>
-            </div>
-            <div class="col-12">
-                <div id="players" style="font-size: 0.75em;"data-data="<%= @data.to_json %>">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<%= javascript_pack_tag "tables/team_players" %>

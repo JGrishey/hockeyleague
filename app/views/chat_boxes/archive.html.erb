@@ -1,0 +1,7 @@
+<div class="card mt-3">
+    <div class="card-header text-center">Chat Archive</div>
+
+    <div class="card-body" id="messages">
+        <%= render @chatbox.messages.order('created_at DESC') %>
+    </div>
+</div>

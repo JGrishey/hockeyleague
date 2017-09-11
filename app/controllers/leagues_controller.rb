@@ -1,6 +1,7 @@
 class LeaguesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_league, except: [:new, :create, :index]
+    before_action :set_games, except: [:new, :create, :index]
 
     def index
         @leagues = League.all.order('name DESC')
@@ -60,6 +61,8 @@ class LeaguesController < ApplicationController
                 playerstats.push(player.getSeasonStats(@league.current_season))
             end
         end
+
+        
 
         @goal_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:goals] : 0}
         @assist_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:assists] : 0}
@@ -123,14 +126,14 @@ class LeaguesController < ApplicationController
             end
         end
 
-        @goal_leaders = skaters.sort_by { |s| -s[:goals]}
-        @assist_leaders = skaters.sort_by{|s| -s[:assists]}
-        @point_leaders = skaters.sort_by{|s| -s[:points]}
-        @plusminus_leaders = skaters.sort_by{|s| -s[:"plus-minus"]}
-        @gaa_leaders = goalies.sort_by{|s| s[:gaa]}
-        @sv_leaders = goalies.sort_by{|s| -s[:"sv%"]}
-        @win_leaders = goalies.sort_by{|s| -s[:wins]}
-        @so_leaders = goalies.sort_by{|s| -s[:shutouts]}
+        @goal_leaders = skaters.sort_by { |s| -s[:goals]}.first(5)
+        @assist_leaders = skaters.sort_by{|s| -s[:assists]}.first(5)
+        @point_leaders = skaters.sort_by{|s| -s[:points]}.first(5)
+        @plusminus_leaders = skaters.sort_by{|s| -s[:"plus-minus"]}.first(5)
+        @gaa_leaders = goalies.sort_by{|s| s[:gaa]}.first(5)
+        @sv_leaders = goalies.sort_by{|s| -s[:"sv%"]}.first(5)
+        @win_leaders = goalies.sort_by{|s| -s[:wins]}.first(5)
+        @so_leaders = goalies.sort_by{|s| -s[:shutouts]}.first(5)
     end
 
     def signups
@@ -162,5 +165,9 @@ class LeaguesController < ApplicationController
 
     def set_league
         @league = League.find(params[:id])
+    end
+
+    def set_games
+        @recent_games = @league.current_season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
     end
 end

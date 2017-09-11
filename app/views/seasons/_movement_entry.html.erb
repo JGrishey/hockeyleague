@@ -1,6 +1,14 @@
-<fieldset class="movement">
+<fieldset>
     <%= f.hidden_field :_destroy, class: "removable" %>
-    <%= f.select :team_player_id, players.collect{|p| ["#{p.player.user_name} - #{p.team.abbreviation} (#{p.salary})", p.id]} %>
-    <%= f.select :destination_id, teams.collect{|t| [t.name, t.id]} %>
-    <%= link_to "<img class='delete' src='#{asset_path("feathericons/x.svg")}'/>".html_safe, '#', class: "remove_movements" %>
+    <div class="row justify-content-center mb-3">
+        <div class="col-5">
+            <%= f.select :team_player_id, players.collect{|p| ["#{p.player.user_name} - #{p.team.abbreviation} (#{p.salary})", p.id]},{}, {class: "form-control"} %>
+        </div>
+        <div class="col-5">
+            <%= f.select :destination_id, teams.collect{|t| [t.name, t.id]}, {}, {class: "form-control"} %>
+        </div>
+        <div class="col-1 align-self-center">
+            <%= link_to "<img class='delete' src='#{asset_path("feathericons/x.svg")}'/>".html_safe, '#', class: "remove_movements" %>
+        </div>
+    </div>
 </fieldset>

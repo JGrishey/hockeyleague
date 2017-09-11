@@ -1,37 +1,38 @@
-<div class="comment" id="comment_<%=comment.id%>">
-    <div class="info">
-        <img class="photo" src=<%= get_avatar(comment.user) %>/>
-        <div class="user">
-            <%= link_to comment.user.user_name, profile_path(comment.user.user_name), method: :get %>
-        </div>
-        <div class="time">
-            <%= comment.created_at.strftime("%I:%M %p") %>
-        </div>
-        <div class="date">
-            <%= comment.created_at.strftime("%d %^b %Y") %>
-        </div>
-        <% if current_user == comment.user || current_user.admin %>
-            <div class="edit">
-                <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment), method: :get %>
+<div class="card mt-3" id="comment_<%=comment.id%>">
+    <div class="card-body row">
+        <div class="col-2">
+            <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(comment.user) %>/>
+            <div class="card-text text-center">
+                <%= link_to comment.user.user_name, profile_path(comment.user.user_name), method: :get %>
             </div>
-            <div class="edit">
-                <%= link_to "<img src='#{asset_path("feathericons/x.svg")}'/>".html_safe, subforum_post_comment_path(subforum, post, comment), method: :delete, data: {confirm: "Are you sure?"} %>
+            <div class="card-text text-center text-muted">
+                <%= comment.created_at.strftime("%I:%M %p") %>
             </div>
-        <% end %>
-        <% if comment.updated_at != comment.created_at %>
-            <div class="date">
-                Last updated at <%= comment.updated_at.strftime("%I:%M %p - %d %^b %Y") %>
+            <div class="card-text text-center text-muted">
+                <%= comment.created_at.strftime("%d %^b %Y") %>
             </div>
-        <% end %>
-    </div>
+            <% if current_user == comment.user || current_user.admin %>
+                <div class="card-link text-center text-muted">
+                    <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment), method: :get %>
+                </div>
+                <div class="text-center">
+                    <%= link_to subforum_post_comment_path(subforum, post, comment), method: :delete, data: {confirm: "Are you sure?"} do %>
+                        <%= octicon "x" %>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
 
-    <div class="content">
-        <%= comment.content.html_safe %>
+        <div class="col-10">
+            <%= comment.content.html_safe %>
+        </div>
     </div>
 </div>
 
-<div class="liking">
-    <div id="likes-comment-<%= comment.id %>">
-        <%= render 'comments/likes', comment: comment %>
+<div class="card">
+    <div class="card-body">
+        <div class="row" id="likes-comment-<%= comment.id %>">
+            <%= render 'comments/likes', comment: comment %>
+        </div>
     </div>
 </div>

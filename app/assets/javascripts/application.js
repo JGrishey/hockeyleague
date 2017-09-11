@@ -16,8 +16,6 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require edit-profile
-//= require chat-box
-//= require games-scroll
+//= require chat
 //= require enter-stats
 //= require_tree .

@@ -28,6 +28,8 @@ class HomeBox extends React.Component {
     }
     render () {
         const { data } = this.state
+        const docWidth = document.getElementById("home").offsetWidth - (1.25 * 16 * 2)
+        const actualWidth = document.body.clientWidth
         return (
             <div>
                 { skaterData(data).length > 0 &&
@@ -36,64 +38,64 @@ class HomeBox extends React.Component {
                         data={skaterData(data)}
                         columns={[
                             {
-                                Header: "POS",
-                                accessor: "position",
-                                minWidth: 70,
-                                style: {"textAlign": "center"}
-                            },
-                            {
                                 Header: "Player",
                                 accessor: "name",
-                                minWidth: 124,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 15) : 150,
                                 style: { "textAlign": "center"}
+                            },
+                            {
+                                Header: "POS",
+                                accessor: "position",
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
+                                style: {"textAlign": "center"}
                             },
                             {
                                 Header: "G",
                                 accessor: "goals",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "A",
                                 accessor: "assists",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "P",
                                 accessor: "points",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "+/-",
                                 id: "plus_minus",
                                 accessor: d => d["plus_minus"] > 0 ? "+" + d["plus_minus"] : d["plus_minus"],
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "PIM",
                                 accessor: "pim",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SOG",
                                 accessor: "shots",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "FOW",
                                 accessor: "fow",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "FOT",
                                 accessor: "fot",
-                                minWidth: 70,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 10)) : 50,
                                 style: {"textAlign": "center"}
                             },
                         ]}
@@ -111,39 +113,33 @@ class HomeBox extends React.Component {
                     </div>
                 }
                 { goalieData(data).length > 0 &&
-                    <div>
+                    <div className="mt-2">
                     <ReactTable
                         data={goalieData(data)}
                         columns={[
                             {
-                                Header: "POS",
-                                accessor: "position",
-                                minWidth: 70,
-                                style: {"textAlign": "center"}
-                            },
-                            {
                                 Header: "Player",
                                 accessor: "name",
-                                minWidth: 124,
+                                minWidth: actualWidth >= 992 ? docWidth / (100 / 20) : 400,
                                 style: { "textAlign": "center"}
                             },
                             {
                                 Header: "GA",
                                 accessor: "goals_against",
-                                minWidth: 185,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (80 / 4)) : 200,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SA",
                                 accessor: "shots_against",
-                                minWidth: 185,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (80 / 4)) : 200,
                                 style: {"textAlign": "center"}
                             },
                             {
                                 Header: "SV%",
                                 id: "sv%",
                                 accessor: d => d["sv%"].toFixed(3),
-                                minWidth: 185,
+                                maxWidth: actualWidth >= 992 ? docWidth / (100 / (80 / 4)) : 200,
                                 style: {"textAlign": "center"}
                             },
                         ]}

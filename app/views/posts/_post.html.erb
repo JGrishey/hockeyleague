@@ -1,53 +1,64 @@
-<div class="main-post">
-    <div class="title">
-        <%= post.title %>
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+            <%= post.title %>
+        </div>
     </div>
+</div>
 
-    <div class="main">
-        <div class="info">
-            <img class="photo" src=<%= get_avatar(post.user) %>/>
-            <div class="user">
+<div class="card mt-2">
+    <div class="card-body row">
+        <div class="col-2">
+            <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(post.user) %>/>
+            <div class="card-link text-center">
                 <%= link_to post.user.user_name, profile_path(post.user.user_name) %>
             </div>
-            <div class="time">
+            <div class="card-text text-center text-muted">
                 <%= post.created_at.strftime("%I:%M %p") %>
             </div>
-            <div class="date">
+            <div class="card-text text-center text-muted">
                 <%= post.created_at.strftime("%d %^b %Y") %>
             </div>
             <% if current_user == post.user || current_user.admin %>
-                <div class="edit">
+                <div class="card-link text-center text-muted">
                     <%= link_to "Edit", edit_subforum_post_path(subforum, post), method: :get %>
                 </div>
-                <div class="edit">
-                    <%= link_to "<img src='#{asset_path("feathericons/x.svg")}'/>".html_safe, subforum_post_path(subforum, post), method: :delete, data: {confirm: "Are you sure?"} %>
+                <div class="text-center text-muted">
+                    <%= link_to subforum_post_path(subforum, post), method: :delete, data: {confirm: "Are you sure?"} do %>
+                        <%= octicon "x" %>
+                    <% end %>
                 </div>
             <% end %>
         </div>
 
-        <div class="content">
+        <div class="col-10">
             <%= post.content.html_safe %>
         </div>
     </div>
+</div>
 
-    <div class="liking">
-        <div id="likes-post-<%= post.id %>">
+<div class="card">
+    <div class="card-body">
+        <div class="row" id="likes-post-<%= post.id %>">
             <%= render 'posts/likes', post: post %>
         </div>
     </div>
 </div>
 
-<div class="comments" id="comments">
+<div id="comments">
     <%= render @comments.order('created_at ASC'), post: post, subforum: subforum %>
 </div>
 
-<div class="comment-form">
+<div class="mt-4">
     <%= simple_form_for([subforum, post, post.comments.build], remote: true) do |f| %>
         <%= f.hidden_field :content %>
         <%= f.button :submit, style: "display: none;", id: "real-submit" %>
     <% end %>
     <div class="pell" id="pell">
     </div>
-    <button class="submit" id="submit">Submit</button>
+    <div class="row justify-content-center mt-2">
+        <button class="btn btn-outline-dark" style="cursor: pointer;" id="submit">Submit</button>
+    </div>
 </div>
 
+<%= javascript_pack_tag 'posting/new-post' %>

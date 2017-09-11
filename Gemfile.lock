@@ -112,6 +112,11 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    octicons (4.0.2)
+      nokogiri (>= 1.6.3.1)
+    octicons_helper (4.0.1)
+      octicons (~> 4.0)
+      rails
     orm_adapter (0.5.0)
     paperclip (5.0.0)
       activemodel (>= 4.2.0)
@@ -248,6 +253,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
+  octicons_helper
   paperclip (~> 5.0.0)
   pg (~> 0.18)
   puma (~> 3.0)

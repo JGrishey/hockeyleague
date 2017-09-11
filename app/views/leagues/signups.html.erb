@@ -1,96 +1,58 @@
-<div class="games">
-    <a href="#" class="scroll left" id="scroll-left">
-        <span class="glyphicon glyphicon-menu-left"></span>
-    </a>
-    <div class="embedded" id="games">
-        <% @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}.each do |key, values| %>
-            <div class="date-block">
-                <%= key %>
+<%= render 'games/carousel', recent_games: @recent_games, league: @league, season: @season %>
+
+<div class="card mt-3">
+        <div class="card-header text-center">
+            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season), method: :get %>)
+        </div>
+        <div class="card-body text-center">
+            Welcome to the <%= @league.name %>. We are currently in <%= @season.title %>.
+        </div>
+        <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
+            <div class="card-footer text-center text-muted">
+                <%= link_to "Sign up", signup_league_season_path(@league, @season) %>
             </div>
-            <% values.each do |game| %>
-                <%= link_to league_season_game_path(@league, @season, game), method: :get do %>
-                    <div class="game">
-                        <div class="logos">
-                            <img class="logo" src="<%= get_logo(game.away_team) %>"/>
-                            <img class="logo" src="<%= get_logo(game.home_team) %>"/>
-                        </div>
-                        <% if game.final %>
-                            <div class="scores">
-                                <div class="score">
-                                    <%= game.away_goals %>
-                                </div>
-                                <div class="score">
-                                    <%= game.home_goals %>
-                                </div>
-                            </div>
-                        <% else %>
-                            <div class="tbd">
-                                TBD
-                            </div>
-                        <% end %>
-                    </div>
-                <% end %>
-            <% end %>
         <% end %>
     </div>
-    <a href="#" class="scroll right" id="scroll-right">
-        <span class="glyphicon glyphicon-menu-right"></span>
-    </a>
 </div>
 
-<div class="league">
-    <div class="top">
-        <div class="title">
-            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
+<div class="container mt-4 text-center">
+    <nav class="navbar navbar-white bg-white navbar-expand-lg rounded" style="background-color: #fff;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span><%= octicon "three-bars" %></span>
+        </button>
+        <div class="collapse navbar-collapse" id="leagueNav">
+            <ul class="navbar-nav">
+                <li class="nav-item text-muted">
+                    <%= link_to "Home", league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Leaders", leaders_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Standings", standings_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Players", players_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Schedule", schedule_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Transactions", transactions_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item font-weight-bold">
+                    <%= link_to "Signups", signups_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "History", history_league_path(@league), method: :get, class: "nav-link" %>
+                </li>
+            </ul>
         </div>
-        <div class="signup">
-            <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
-                <%= link_to "Sign up", signup_league_season_path(@league, @season) %>
-            <% end %>
-        </div>
-    </div>
-    <div class="nav">
-        <%= link_to league_path(@league), method: :get do %>
-            <div class="element">
-                Home
-            </div>
-        <% end %>
-        <%= link_to leaders_league_path(@league), method: :get do %>
-            <div class="element">
-                Leaders
-            </div>
-        <% end %>
-        <%= link_to standings_league_path(@league), method: :get do %>
-            <div class="element">
-                Standings
-            </div>
-        <% end %>
-        <%= link_to players_league_path(@league), method: :get do %>
-            <div class="element">
-                Players
-            </div>
-        <% end %>
-        <%= link_to schedule_league_path(@league), method: :get do %>
-            <div class="element">
-                Schedule
-            </div>
-        <% end %>
-        <%= link_to transactions_league_path(@league), method: :get do %>
-            <div class="element">
-                Transactions
-            </div>
-        <% end %>
-        <div class="element -selected">
-            Signups
-        </div>
-        <%= link_to history_league_path(@league), method: :get do %>
-            <div class="element">
-                History
-            </div>
-        <% end %>
-    </div>
-    <div class="signups-wrapper">
-        <div class="signup-table" id="signups" data-data="<%= @signups.to_json %>"></div>
+    </nav>
+    <div class="card mt-3 mb-3">
+        <div class="card-header text-center">Signups</div>
+
+        <div class="card-body" id="signups" data-data="<%= @signups.to_json %>"></div>
     </div>
 </div>
 

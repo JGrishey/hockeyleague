@@ -1,16 +1,17 @@
-<div class="message">
-
-    <div class="img-profile">
-        <!-- Helper method -->
-        <%= small_image(message.user) %>
-    </div>
-
-    <div class="content">
-        <div class="time-and-user">
-            <span class="user-name"><%= link_to message.user.user_name, profile_path(message.user.user_name) %></span> <span class="gray"><%= message.created_at.strftime("%I:%M %p") %></span>
+<div class="row mt-1 pt-2 border-bottom-0 border-left-0 border-right-0 border border-light">
+    <div class="col-12">
+        <div class="row justify-content-between mb-2">
+            <div class="col-3 text-left text-muted">
+                <img class="rounded-circle" width="20" height="20" src="<%= get_avatar(message.user) %>"/> <%= message.user.user_name%>
+            </div>
+            <div class="col-3 text-right text-muted">
+                <%= time_ago_in_words(message.created_at) %> ago
+            </div>
         </div>
-        <div class="write">
-            <%= simple_format(message.body) %>
+        <div class="row">
+            <div class="col-12 text-left">
+                <%= simple_format(message.body) %>
+            </div>
         </div>
     </div>
 </div>

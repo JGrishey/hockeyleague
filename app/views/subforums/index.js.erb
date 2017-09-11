@@ -1,7 +1,0 @@
-$("#inner-messages").prepend("<%= j render @messages.reverse %>");
-
-<% if @messages.next_page %>
-<% else %>
-    $(window).off('scroll');
-    $(".pagination").remove();
-<% end %>

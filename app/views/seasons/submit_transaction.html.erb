@@ -1,13 +1,19 @@
 <%= form_for(@transaction, :url => url_for(:action => "process_transaction", :controller => "seasons"), method: :post) do |f| %>
-    <div class="enter-transaction">
-        <div class="header"><%= "#{@league.name} #{@season.title}" %> Transaction Form</div>
-        <div class="movements" id="movements">
-            <%= f.fields_for :movements, @transaction.movements do |builder| %>
-                <%= render "movement_entry", f: builder, players: @season.team_players, teams: @season.teams %>
-            <% end %>
-            
-            <%= link_to_add_movements "<img class='add-player' src='#{asset_path("feathericons/user-plus.svg")}'/>".html_safe, f, :movements, @season.team_players, @season.teams %>
+    <div class="card">
+        <div class="card-header text-center">
+            <%= @league.name %> <%= @season.title %> Transaction Form
         </div>
-        <%= f.submit "Submit transaction", class: "submit" %>
-    </div>  
+        <div class="card-body text-center">
+            <div class="form-group">
+                <div id="movements">
+                    <%= f.fields_for :movements, @transaction.movements do |builder| %>
+                        <%= render "movement_entry", f: builder, players: @season.team_players, teams: @season.teams %>
+                    <% end %>
+                    
+                    <%= link_to_add_movements "<button class='btn btn-outline-dark' style='cursor: pointer;'>Add transaction</button>".html_safe, f, :movements, @season.team_players, @season.teams %>
+                </div>
+                <%= f.submit "Submit transaction", class: "btn btn-info mt-4", style: "cursor: pointer;" %>
+            </div>
+        </div>
+    </div>
 <% end %>

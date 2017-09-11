@@ -1,10 +1,12 @@
-<div class="preview">
+<div class="card mb-2">
     <%= link_to subforum, method: :get do %>
-        <div class="name">
-            <%= subforum.title %>
-        </div>
-        <div class="posts">
-            <%= pluralize(subforum.posts.count, "post") %>
+        <div class="card-body">
+            <div class="card-title">
+                <%= subforum.title %>
+            </div>
+            <div class="card-text text-muted">
+                <%= pluralize(subforum.posts.count, "post") %>
+            </div>
         </div>
     <% end %>
 </div>

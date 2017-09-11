@@ -1,18 +1,20 @@
 <%= link_to subforum_post_path(@subforum, post), method: :get do %>
-    <div class="post-preview">
-        <div class="post-photo">
-            <img class="user-photo" src=<%= get_avatar(post.user) %>/>
-        </div>
-        <div class="info">
-            <div class="post-title">
-                <%= post.title %>
-            </div>
-            <div class="date-and-author">
-                Last updated at <%= post.updated_at.strftime("%I:%M %p on %d %^b %Y") %> by <%= post.most_recent.user.user_name %>
-            </div>
-            <div class="comments">
-                <%= pluralize(post.comments.count, "comment") %>
-            </div>
+    <div class="card mt-2">
+        <div class="card-body row">
+                <div class="col-1 text-center align-self-center">
+                    <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(post.user) %>/>
+                </div>
+                <div class="col-11">
+                    <div class="row">
+                        <%= post.title %>
+                    </div>
+                    <div class="row">
+                        <span class="text-muted">Last updated at <%= post.updated_at.strftime("%I:%M %p on %d %^b %Y") %> by <%= post.most_recent.user.user_name %></span>
+                    </div>
+                    <div class="row">
+                        <span class="text-muted"><%= pluralize(post.comments.count, "comment") %></span>
+                    </div>
+                </div>
         </div>
     </div>
 <% end %>

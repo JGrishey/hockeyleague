@@ -1,145 +1,219 @@
+<%= render 'games/carousel', recent_games: @recent_games, season: season, league: season.league %>
+
+<div class="card mt-2">
+    <div class="card-body">
+        <%= season.league.name %> - <%= season.title %>
+    </div>
+</div>
+
 <% if game.home_team.captain == current_user || game.away_team.captain == current_user || current_user.admin %>
-    <div class="options">
-        <% if game.home_team.captain == current_user || current_user.admin %>
-            <span class="option"><%= link_to "Enter home stats", enter_home_stats_league_season_game_path(season.league, season, game), method: :get %></span>
-            <span class="option"><%= link_to "Submit home players", submit_home_players_league_season_game_path(season.league, season, game), method: :get %></span>
-        <% end %>
-        <% if game.away_team.captain == current_user || current_user.admin %>
-            <span class="option"><%= link_to "Enter away stats", enter_away_stats_league_season_game_path(season.league, season, game), method: :get %></span>
-            <span class="option"><%= link_to "Submit away players", submit_away_players_league_season_game_path(season.league, season, game), method: :get %></span>
-        <% end %>
-        <% if !game.final && current_user.admin %>
-            <span class="option"><%= link_to "Make final", make_final_league_season_game_path(season.league, season, game), method: :post %></span>
-        <% end %>
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <% if game.home_team.captain == current_user || current_user.admin %>
+                    <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
+                        <%= link_to enter_home_stats_league_season_game_path(season.league, season, game), method: :get do %>
+                            <button class="btn btn-outline-info" style="cursor: pointer;">Enter Home Stats</button>
+                        <% end %>
+                    </div>
+                    <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
+                        <%= link_to submit_home_players_league_season_game_path(season.league, season, game), method: :get do %>
+                            <button class="btn btn-outline-info" style="cursor: pointer;">Enter Home Players</button>
+                        <% end %>
+                    </div>
+                <% end %>
+                <% if game.away_team.captain == current_user || current_user.admin %>
+                    <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
+                        <%= link_to enter_away_stats_league_season_game_path(season.league, season, game), method: :get do %>
+                            <button class="btn btn-outline-info" style="cursor: pointer;">Enter Away Stats</button>
+                        <% end %>
+                    </div>
+                    <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
+                        <%= link_to submit_away_players_league_season_game_path(season.league, season, game), method: :get do %>
+                            <button class="btn btn-outline-info" style="cursor: pointer;">Enter Away Players</button>
+                        <% end %>
+                    </div>
+                <% end %>
+                <% if !game.final && current_user.admin %>
+                    <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
+                        <%= link_to make_final_league_season_game_path(season.league, season, game), method: :post do %>
+                            <button class="btn btn-outline-info" style="cursor: pointer;">Make Final</button>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
     </div>
 <% end %>
 
-<div class="banner">
-        <div class="logo">
-            <%= link_to league_season_team_path(season.league, season, game.away_team), method: :get do %>
-                <img class="img-logo" src="<%= get_logo(game.away_team) %>"/>
-            <% end %>
-        </div>
-        <div class="name">
-            <%= link_to game.away_team.name, league_season_team_path(season.league, season, game.away_team), method: :get %>
-        </div>
-        <% if game.final %>
-            <div class="score">
-                <%= game.away_goals %>
+<div class="card mt-2">
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col text-center align-self-center">
+                <%= link_to league_season_team_path(season.league, season, game.away_team), method: :get do %>
+                    <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
+                <% end %>
             </div>
-        <% end %>
-        <% if game.final %>
-            <div class="score">
-                <%= game.home_goals %>
+            <div class="col text-center align-self-center font-weight-bold text-uppercase">
+                <%= link_to game.away_team.name, league_season_team_path(season.league, season, game.away_team), method: :get %>
             </div>
-        <% end %>
-        <div class="name">
-            <%= link_to game.home_team.name, league_season_team_path(season.league, season, game.home_team), method: :get %>
-        </div>
-        <div class="logo">
-            <%= link_to league_season_team_path(season.league, season, game.home_team), method: :get do %>
-                <img class="img-logo" src="<%= get_logo(game.home_team) %>"/>
+            <% if game.final %>
+                <div class="col text-center align-self-center font-weight-bold">
+                    <%= game.away_goals %>
+                </div>
             <% end %>
+            <% if game.final %>
+                <div class="col text-center align-self-center font-weight-bold">
+                    <%= game.home_goals %>
+                </div>
+            <% end %>
+            <div class="col text-center align-self-center font-weight-bold text-uppercase">
+                <%= link_to game.home_team.name, league_season_team_path(season.league, season, game.home_team), method: :get %>
+            </div>
+            <div class="col text-center align-self-center">
+                <%= link_to league_season_team_path(season.league, season, game.home_team), method: :get do %>
+                    <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
+                <% end %>
+            </div>
         </div>
-    <div class="datetime">
-        <%= game.date.strftime("%I:%M %p %^b %d %Y") %>
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <%= game.date.strftime("%I:%M %p %^b %d %Y") %>
+            </div>
+        </div>
     </div>
 </div>
+
 <% if game.final %>
-    <div class="game-summary">
-        <div class="first-column">
-            <div class="teams">
-                <div class="headers">
-                    <div class="logo">
-                    </div>
-                    <div class="name">
-                    </div>
-                    <div class="sog">
-                        SOG
-                    </div>
-                    <div class="toa">
-                        TOA
-                    </div>
-                    <div class="faceoff">
-                        FO%
-                    </div>
-                    <div class="pp">
-                        PP
-                    </div>
-                    <div class="pim">
-                        PIM
-                    </div>
-                    <div class="hits">
-                        HITS
+    <div class="card mt-4">
+        <div class="card-header">Team Stats</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                        <div class="col-8">
+                        </div>
                     </div>
                 </div>
-                <div class="team">
-                    <div class="logo">
-                        <img class="img-logo" src="<%= get_logo(game.away_team) %>"/>
-                    </div>
-                    <div class="name">
-                        <%= game.away_team.name %>
-                    </div>
-                    <div class="sog">
-                        <%= game.away_stats.inject(0){|sum, e| sum + e.shots} %>
-                    </div>
-                    <div class="toa">
-                        <%= game.away_toa_minutes %>:<%= sprintf '%02d', game.away_toa_seconds %>
-                    </div>
-                    <div class="faceoff">
-                        <%= game.away_stats.inject(0){|sum, e| sum + e.fot} > 0 ? "#{ (game.away_stats.inject(0){|sum, e| sum + e.fow}.to_f / game.away_stats.inject(0){|sum, e| sum + e.fot} * 100).to_i }%" : "0%" %>
-                    </div>
-                    <div class="pp">
-                        <%= game.away_ppg %>/<%= game.away_ppo %>
-                    </div>
-                    <div class="pim">
-                        <%= game.away_stats.inject(0){|sum, e| sum + e.pim} %>
-                    </div>
-                    <div class="hits">
-                        <%= game.away_stats.inject(0){|sum, e| sum + e.hits} %>
-                    </div>
-                </div>
-                <div class="team">
-                    <div class="logo">
-                        <img class="img-logo" src="<%= get_logo(game.home_team) %>"/>
-                    </div>
-                    <div class="name">
-                        <%= game.home_team.name %>
-                    </div>
-                    <div class="sog">
-                        <%= game.home_stats.inject(0){|sum, e| sum + e.shots} %>
-                    </div>
-                    <div class="toa">
-                        <%= game.home_toa_minutes %>:<%= sprintf '%02d', game.home_toa_seconds %>
-                    </div>
-                    <div class="faceoff">
-                        <%= game.home_stats.inject(0){|sum, e| sum + e.fot} > 0 ? "#{ (game.home_stats.inject(0){|sum, e| sum + e.fow}.to_f / game.home_stats.inject(0){|sum, e| sum + e.fot} * 100).to_i }%" : "0%"%>
-                    </div>
-                    <div class="pp">
-                        <%= game.home_ppg %>/<%= game.home_ppo %>
-                    </div>
-                    <div class="pim">
-                        <%= game.home_stats.inject(0){|sum, e| sum + e.pim} %>
-                    </div>
-                    <div class="hits">
-                        <%= game.home_stats.inject(0){|sum, e| sum + e.hits} %>
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            SOG
+                        </div>
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            TOA
+                        </div>
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            FO%
+                        </div>
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            PP
+                        </div>
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            PIM
+                        </div>
+                        <div class="col-2 text-center font-weight-bold text-muted">
+                            HITS
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="player-stats">
-                <div class="table-header">
-                    <%= !@away_box.empty? ? game.away_team.name : "" %>
+            <div class="row mt-2">
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-4 text-center align-self-center">
+                            <%= link_to league_season_team_path(season.league, season, game.away_team), method: :get do %>
+                                <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
+                            <% end %>
+                        </div>
+                        <div class="col-8 text-center align-self-center">
+                            <%= game.away_team.name %>
+                        </div>
+                    </div>
                 </div>
-                <div class="away" id="away" data-data="<%= @away_box.to_json %>">
-                </div>
-                <div class="table-header">
-                    <%= !@home_box.empty? ? game.home_team.name : "" %>
-                </div>
-                <div class="home" id="home" data-data="<%= @home_box.to_json %>">
+                <div class="col-9 align-self-center">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            <%= game.away_stats.inject(0){|sum, e| sum + e.shots} %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.away_toa_minutes %>:<%= sprintf '%02d', game.away_toa_seconds %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.away_stats.inject(0){|sum, e| sum + e.fot} > 0 ? "#{ (game.away_stats.inject(0){|sum, e| sum + e.fow}.to_f / game.away_stats.inject(0){|sum, e| sum + e.fot} * 100).to_i }%" : "0%" %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.away_ppg %>/<%= game.away_ppo %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.away_stats.inject(0){|sum, e| sum + e.pim} %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.away_stats.inject(0){|sum, e| sum + e.hits} %>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <%= javascript_pack_tag "games/player-stats-away" %>
-            <%= javascript_pack_tag "games/player-stats-home" %>
+            <div class="row mt-2">
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col-4 text-center align-self-center">
+                            <%= link_to league_season_team_path(season.league, season, game.home_team), method: :get do %>
+                                <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
+                            <% end %>
+                        </div>
+                        <div class="col-8 text-center align-self-center">
+                            <%= game.home_team.name %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9 align-self-center">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            <%= game.home_stats.inject(0){|sum, e| sum + e.shots} %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.home_toa_minutes %>:<%= sprintf '%02d', game.home_toa_seconds %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.home_stats.inject(0){|sum, e| sum + e.fot} > 0 ? "#{ (game.home_stats.inject(0){|sum, e| sum + e.fow}.to_f / game.home_stats.inject(0){|sum, e| sum + e.fot} * 100).to_i }%" : "0%" %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.home_ppg %>/<%= game.home_ppo %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.home_stats.inject(0){|sum, e| sum + e.pim} %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= game.home_stats.inject(0){|sum, e| sum + e.hits} %>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="card mt-4 mb-4">
+        <div class="card-header">Box Score</div>
+        <div class="card-body">
+
+            <div class="text-left font-weight-bold text-uppercase mb-2">
+                <%= !@away_box.empty? ? game.away_team.name : "" %>
+            </div>
+
+            <div id="away" style="font-size: 0.75em;" data-data="<%= @away_box.to_json %>">
+            </div>
+
+            <div class="text-left font-weight-bold text-uppercase mt-3 mb-2">
+                <%= !@home_box.empty? ? game.home_team.name : "" %>
+            </div>
+
+            <div id="home" style="font-size: 0.75em;" data-data="<%= @home_box.to_json %>">
+            </div>
+
+        </div>
+    </div>
+    <%= javascript_pack_tag "games/player-stats-away" %>
+    <%= javascript_pack_tag "games/player-stats-home" %>
 <% end %>

@@ -1,22 +1,28 @@
-<div class="subforum-container">
-    <div class="title">
-        <%= subforum.title %>
+<div class="card">
+    <div class="card-body">
+        <div class="card-body"><%= subforum.title %></div>
     </div>
+</div>
+
+<div class="row justify-content-center mt-2">
 
     <%= link_to new_subforum_post_path(subforum), method: :get do %>
-        <div class="new-post">
-            <span><img src="<%= asset_path("feathericons/plus.svg") %>"/></span> New post
-        </div>
+        <button class="btn btn-outline-dark text-center" style="cursor: pointer;"><%= octicon "plus" %> New post</button>
     <% end %>
 
-    <% if @posts.any? %>
-        <% @posts.order('updated_at DESC').each do |post| %>
-            <%= render 'posts/preview', post: post, subforum: subforum %>
-        <% end %>
-    <% else %>
-        <div class="no-posts">
-            There aren't any posts in this topic yet!
-        </div>
-    <% end %>
 </div>
+
+<% if @posts.any? %>
+
+    <% @posts.order('updated_at DESC').each do |post| %>
+        <%= render 'posts/preview', post: post, subforum: subforum %>
+    <% end %>
+
+<% else %>
+
+    <div class="alert alert-dark mt-2">
+        There aren't any posts in this topic yet!
+    </div>
+
+<% end %>
 

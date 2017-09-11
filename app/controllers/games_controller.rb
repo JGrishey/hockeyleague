@@ -92,6 +92,8 @@ class GamesController < ApplicationController
                 'sv%': s.shots_against > 0 ? ((s.shots_against - s.goals_against.to_f) / s.shots_against) : 0,
             })
         end
+
+        @recent_games = @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
     end
 
     def destroy

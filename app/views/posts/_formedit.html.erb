@@ -1,15 +1,21 @@
-<%= simple_form_for([@subforum, @post]) do |f| %>
-    <label class="title-label">
-        Title
-    </label>
-    <%= f.input_field :title, required: true, class: "title-input" %>
+<div class="mt-2">
+    <%= simple_form_for([@subforum, @post]) do |f| %>
+        <div class="form-group">
+            <label>Title</label>
+            <%= f.input_field :title, required: true, class: "form-control" %>
+        </div>
 
-    <%= f.hidden_field :content, value: @post.content %>
+        <%= f.hidden_field :content, value: @post.content%>
 
-    <%= f.button :submit, style: "display: none;", id: 'real-submit' %>
-<% end %>
+        <%= f.button :submit, style: "display: none;", id: 'real-submit' %>
+    <% end %>
+</div>
 
 <div class="pell" id="pell">
 </div>
 
-<button class="submit-post" id="submit" >Submit</button>
+<div class="row justify-content-center mt-2">
+    <button class="btn btn-outline-dark" style="cursor: pointer;" id="submit">Submit</button>
+</div>
+
+<%= javascript_pack_tag 'posting/new-post' %>

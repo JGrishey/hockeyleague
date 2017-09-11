@@ -1,24 +1,24 @@
-<div class="header">
-    Edit team
-</div>
-<%= form_for(team, :url => url_for(:action => "update", :controller => "teams")) do |f| %>
-    <div class="input">
-        <label class="text-label">
-            Name
-        </label>
-        <%= f.text_field :name, required: true, class: "text-input" %>
+<div class="card">
+    <div class="card-header">
+        Edit team
     </div>
+    <div class="card-body">
+        <%= form_for(team, :url => url_for(:action => "update", :controller => "teams")) do |f| %>
+            <div class="form-group row justify-content-center">
+                <div class="col-12 col-lg-6">
+                    <label>
+                        Name
+                    </label>
+                    <%= f.text_field :name, required: true, class: "form-control" %>
 
-    <div class="input">
-        <label class="team-label">Logo</label>
-        <a id="upload-btn" class="upload">Upload</a>
-        <span id="file-display"></span>
-        <%= f.file_field :logo, class: "team-logo" %>
+                    <label class="mt-2">Logo</label>
+                    <%= f.file_field :logo, class: "form-control" %>
+
+                    <div class="text-center mt-4">
+                        <%= f.submit "Update Team", class: "btn btn-outline-dark", style: "cursor: pointer;"%>
+                    </div>
+                </div>
+            </div>
+        <% end %>
     </div>
-
-    <%= f.submit "Update Team", class: "submit-btn" %>
-<% end %>
-
-<div class="delete">
-    <%= link_to "Delete team", league_season_team_path(season.league, season, team), method: :delete %>
 </div>

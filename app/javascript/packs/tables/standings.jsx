@@ -17,6 +17,8 @@ class Standings extends React.Component {
     }
     render () {
         const { data } = this.state
+        const docWidth = document.getElementById("standings").offsetWidth - (1.25 * 16 * 2)
+        const actualWidth = document.body.clientWidth
         return (
             <div>
                 <ReactTable
@@ -26,107 +28,121 @@ class Standings extends React.Component {
                             Header: "Name",
                             id: "name",
                             accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.name}</a></div>),
-                            minWidth: 300
+                            minWidth: actualWidth >= 992 ? docWidth / (100 / 15) : 150,
+                            headerStyle: {whiteSpace: "normal"}
                         },
                         {
                             Header: "GP",
                             accessor: "gp",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "W",
                             accessor: "wins",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "L",
                             accessor: "losses",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "OTL",
                             accessor: "otl",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "P",
                             accessor: "pts",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "P%",
                             id: "pts%",
                             accessor: d => d["pts%"].toFixed(3),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "GF",
                             accessor: "gf",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "GA",
                             accessor: "ga",
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "GF/GP",
                             id: "gfpg",
                             accessor: d => d.gfpg.toFixed(2),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "GA/GP",
                             id: "gapg",
                             accessor: d => d.gapg.toFixed(2),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "PP%",
                             id: "pp%",
                             accessor: d => d["pp%"].toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "PK%",
                             id: "pk%",
                             accessor: d => d["pk%"].toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "SHOTS/GP",
                             id: "shfpg",
                             accessor: d => d.shfpg.toFixed(1),
-                            width: 79,
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "SA/GP",
                             id: "shapg",
                             accessor: d => d.shapg.toFixed(1),
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                         {
                             Header: "FOW%",
                             id: "fow%",
                             accessor: d => d["fow%"].toFixed(1),
-                            width: 73,
                             style: {"textAlign": "center"},
-                            minWidth: document.body.clientWidth > 1024 ? 50 : 100
+                            headerStyle: {whiteSpace: "normal"},
+                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
                         },
                     ]}
                     className="-striped -highlight"

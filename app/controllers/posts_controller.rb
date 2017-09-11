@@ -33,19 +33,19 @@ class PostsController < ApplicationController
     end
 
     def edit
+        @post = @subforum.posts.find_by(id: params[:id])
         if current_user != @post.user && !current_user.admin
             redirect_to root_path
             flash[:alert] = "That's not your post!"
         end
-        @post = @subforum.posts.find_by(id: params[:id])
     end
 
     def update
+        @post = @subforum.posts.find_by(id: params[:id])
         if current_user != @post.user && !current_user.admin
             redirect_to root_path
             flash[:alert] = "That's not your post!"
         end
-        @post = @subforum.posts.find_by(id: params[:id])
         if @post.update(post_params)
             flash[:success] = "Your post has been updated."
             redirect_to subforum_post_path(@subforum, @post), method: :get

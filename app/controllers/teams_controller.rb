@@ -67,6 +67,7 @@ class TeamsController < ApplicationController
         @team.players.each do |player|
             @data.push(player.getSeasonStats(@season))
         end
+        @recent_games = @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
     end
 
     def destroy

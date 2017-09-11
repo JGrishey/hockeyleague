@@ -27,30 +27,26 @@ class QuickStandings extends React.Component {
                             Header: "Name",
                             id: "name",
                             accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.name}</a></div>),
-                            width: 200
+                            minWidth: 200
                         },
                         {
                             Header: "W",
                             accessor: "wins",
-                            width: 100,
                             style: {"textAlign": "center"}
                         },
                         {
                             Header: "L",
                             accessor: "losses",
-                            width: 100,
                             style: {"textAlign": "center"}
                         },
                         {
                             Header: "OTL",
                             accessor: "otl",
-                            width: 100,
                             style: {"textAlign": "center"}
                         },
                         {
                             Header: "P",
                             accessor: "pts",
-                            width: 98,
                             style: {"textAlign": "center"}
                         }
                     ]}

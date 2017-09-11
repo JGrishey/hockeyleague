@@ -1,12 +1,24 @@
-<div class="chatbox">
-    <div class="messages" id="messages" data-chat-box-id="<%= chat_box.id %>">
-        <div id="inner-messages">
-            <%= render @messages %>
+<div class="card mb-2" style="max-height: 400px; overflow: scroll;" id="scrolling">
+    <div class="card-body" style="font-size: 0.75em;" id="messages" data-chat-box-id="<%= chat_box.id %>">
+        <div class="row">
+            <div class="col-12 text-center">
+                <%= link_to "View archive", archive_path(chat_box.id) %>
+            </div>
+        </div>
+        <%= render @messages %>
+    </div>
+</div>
+
+<%= simple_form_for(message, url: "#") do |f| %>
+    <div class="form-group row">
+        <div class="col-10">
+            <div class="pell" id="pell">
+            </div>
+            <%= f.hidden_field :body %>
+            <%= f.button :submit, style: "display: none;", id: "real-submit" %>
+        </div>
+        <div class="col-2 align-self-center">
+            <%= f.button :submit, "Send", class: "btn btn-outline-dark w-100", style: "cursor: pointer;", id: "message_submit" %>
         </div>
     </div>
-
-    <%= simple_form_for(message, url: "#", class: "message-form") do |f| %>
-        <%= f.input_field :body, as: :text, class: "message-input" %>
-        <%= f.button :submit, "Send", class: "send-message-btn" %>
-    <% end %>
-</div>
+<% end %>

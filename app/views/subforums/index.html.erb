@@ -1,73 +1,98 @@
-<div class="subforums-index">
-    
-    <div class="first-column">
-        <div class="bar">
-            Chat
+<div class="row">
+    <div class="col-12 col-lg-8">
+        <div class="card" style="margin-bottom: 0.2em;">
+            <div class="card-body">
+                <div class="card-text">
+                    Chat
+                </div>
+            </div>
         </div>
-        <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
+
+        <div>
+            <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
+        </div>
         
-        <div class="bar top">
-            Forum
+        <div class="card" style="margin-bottom: 0.2em;">
+            <div class="card-body">
+                <div class="card-text">
+                    Forum
+                </div>
+            </div>
         </div>
-        <div class="forum">
-            <% @subforums.each do |subforum| %>
-                <%= render 'preview', subforum: subforum %>
-            <% end %>
-        </div>
+        
+        <% @subforums.each do |subforum| %>
+            <%= render 'preview', subforum: subforum %>
+        <% end %>
     </div>
 
-    <div class="second-column">
-        <div class="leagues">
-            <div class="title">
-                Leagues
+    <div class="col-12 col-lg-4">
+        <div class="card" style="margin-bottom: 0.2em;">
+            <div class="card-body">
+                <div class="card-text">
+                    Leagues
+                </div>
             </div>
-            <% @leagues.each do |league| %>
-                <%= link_to league, method: :get do %>
-                    <div class="league">
-                        <div class="name">
+        </div>
+
+        <% @leagues.each do |league| %>
+            <%= link_to league, method: :get do %>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
                             <%= league.name %>
                         </div>
-                        <div class="seasons">
+                        <div class="card-text text-muted">
                             <%= pluralize(league.seasons.count, "season") %>
                         </div>
                     </div>
-                <% end %>
+                </div>
             <% end %>
+        <% end %>
+
+        <div class="card mt-2">
+            <div class="card-body">
+                <div class="card-title">
+                    Online members
+                </div>
+                <div class="card-text">
+                    <% User.online.each do |u| %>
+                        <span class="text-primary"><%= link_to u.user_name, profile_path(u.user_name), method: :get, class: "card-link" %></span>, 
+                    <% end %>
+                </div>
+            </div>
         </div>
-        <div class="online-members">
-            <div class="title">
-                Online members
-            </div>
-            <div class="members">
-                <% User.online.each do |u| %>
-                    <%= link_to u.user_name, profile_path(u.user_name), method: :get %>, 
-                <% end %>
+
+        <div class="card mt-2">
+            <div class="card-body">
+                <div class="card-text">
+                    Recent posts
+                </div>
             </div>
         </div>
-        <div class="recent-posts">
-            <div class="title">
-                Recent posts
-            </div>
-            <% @recent_posts.each do |post| %>
-                <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
-                    <div class="post">
-                        <div class="photo">
-                            <img class="preview" src=<%= get_avatar(post.most_recent.user) %>/>
+
+        <% @recent_posts.each do |post| %>
+            <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
+                <div class="card">
+                    <div class="card-body row p-2">
+                        <div class="col-3 text-center align-self-center">
+                            <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(post.most_recent.user) %>/>
                         </div>
-                        <div class="info">
-                            <div class="name">
+                        <div class="col-9">
+                            <div class="row">
                                 <%= post.title %>
                             </div>
-                            <div class="time">
-                                <%= post.updated_at.strftime("%b %d at %I:%M %p") %>
+                            <div class="row">
+                                <span class="text-muted"><%= post.updated_at.strftime("%b %d at %I:%M %p") %></span>
                             </div>
-                            <div class="sub">
-                                <%= post.subforum.title %>
+                            <div class="row">
+                                <span class="text-muted"><%= post.subforum.title %></span>
                             </div>
                         </div>
                     </div>
-                <% end %>
-            <% end%>
-        </div>
+                </div>
+            <% end %>
+        <% end %>
     </div>
-<div>
+</div>
+
+<%= javascript_pack_tag 'chat/new-message' %>

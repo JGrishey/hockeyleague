@@ -30,21 +30,29 @@ class Leaders extends React.Component {
 
         return (
             <div>
-                <div className="category">
-                    <div className="header">Skaters</div>
-                    {goals.length == 0 && <div className="no-data">No Data</div>}
-                    {goals.length > 0 && <Panel statName="goals" players={goals}/>}
-                    {assists.length > 0 && <Panel statName="assists" players={assists}/>}
-                    {points.length > 0 && <Panel statName="points" players={points}/>}
-                    {plus_minus.length > 0 && <Panel statName="plus-minus" players={plus_minus}/>}
+                <div className="card mt-4">
+                    <div className="card-header text-center">Skaters</div>
+                    <div className="card-body row">
+                        {goals.length == 0 && 
+                                <div className="card-text text-center col-12">No Data</div>
+                        }
+                        {goals.length > 0 && <Panel statName="goals" players={goals}/>}
+                        {assists.length > 0 && <Panel statName="assists" players={assists}/>}
+                        {points.length > 0 && <Panel statName="points" players={points}/>}
+                        {plus_minus.length > 0 && <Panel statName="plus-minus" players={plus_minus}/>}
+                    </div>
                 </div>
-                <div className="category">
-                    <div className="header">Goalies</div>
-                    {gaa.length == 0 && <div className="no-data">No Data</div>}
-                    {gaa.length > 0 && <Panel statName="gaa" players={gaa}/>}
-                    {wins.length > 0 && <Panel statName="wins" players={wins}/>}
-                    {sv.length > 0 && <Panel statName="sv%" players={sv}/>}
-                    {so.length > 0 && <Panel statName="shutouts" players={so}/>}
+                <div className="card mt-4">
+                    <div className="card-header text-center">Goalies</div>
+                    <div className="card-body row">
+                        {gaa.length == 0 && 
+                                <div className="card-text text-center col-12">No Data</div>
+                        }
+                        {gaa.length > 0 && <Panel statName="gaa" players={gaa}/>}
+                        {wins.length > 0 && <Panel statName="wins" players={wins}/>}
+                        {sv.length > 0 && <Panel statName="sv%" players={sv}/>}
+                        {so.length > 0 && <Panel statName="shutouts" players={so}/>}
+                    </div>
                 </div>
             </div>
         )

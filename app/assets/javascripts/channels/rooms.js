@@ -1,8 +1,9 @@
 jQuery(document).on('turbolinks:load', function() {
   const messages = $('#messages');
+  const scrolling = $("#scrolling");
   if ($('#messages').length > 0) {
 
-    const messages_to_bottom = () => messages.scrollTop(messages.prop("scrollHeight"));
+    const messages_to_bottom = () => scrolling.scrollTop(scrolling.prop("scrollHeight"));
 
     messages_to_bottom();
 
