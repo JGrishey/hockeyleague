@@ -18,7 +18,7 @@
 <div class="container mt-4 mb-4">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span><%= octicon "three-bars" %></span>
+            <span><%= octicon "three-bars", fill: "#fff" %></span>
         </button>
         <div class="collapse navbar-collapse" id="leagueNav">
             <ul class="navbar-nav">
@@ -34,7 +34,7 @@
                 <li class="nav-item text-muted">
                     <%= link_to "Schedule", schedule_league_season_path(@league, @season), method: :get, class: "nav-link" %>
                 </li>
-                <li class="nav-item font-weight-bold">
+                <li class="nav-item font-weight-bold active">
                     <%= link_to "Transactions", transactions_league_season_path(@league, @season), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
