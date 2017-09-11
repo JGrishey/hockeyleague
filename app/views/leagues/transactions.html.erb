@@ -68,7 +68,7 @@
                 Pending Trades
             </div>
             
-            <div class="card-body">
+            <div class="card-body text-center">
                 <% if @pending_trades.any? %>
                     <% @pending_trades.each do |trade| %>
                         <div class="row mt-2 p-3 border border-light border-left-0 border-right-0 justify-content-center">
@@ -111,7 +111,7 @@
 
     <div class="card mt-3 mb-3">
         <div class="card-header text-center">Approved Transactions</div>
-        <div class="card-body">
+        <div class="card-body text-center">
             <% if @approved_trades.any? %>
                 <% @approved_trades.each do |trade| %>
                     <div class="row mt-2 p-3 border border-light border-left-0 border-right-0 justify-content-center">
