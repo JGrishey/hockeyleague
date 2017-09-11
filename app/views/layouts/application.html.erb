@@ -62,9 +62,11 @@
 
         <%= link_to "Rules", pages_rules_path, method: :get, class: "nav-link" %>
 
-        <%= link_to "MHL", league_path(League.first), method: :get, class: "nav-link" %>
+        
 
         <% if user_signed_in? %>
+
+            <%= link_to "MHL", league_path(League.first), method: :get, class: "nav-link" %>
 
             <div id="notifications">
                 <%= render 'notifications/notification_dropdown' %>
