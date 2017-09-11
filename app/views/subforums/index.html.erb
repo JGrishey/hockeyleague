@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 col-lg-8">
+    <div class="col-12 col-lg-8 mb-4">
         <div class="card" style="margin-bottom: 0.2em;">
             <div class="card-body">
                 <div class="card-text">
@@ -12,7 +12,7 @@
             <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
         </div>
         
-        <div class="card" style="margin-bottom: 0.2em;">
+        <div class="card mt-4" style="margin-bottom: 0.2em;">
             <div class="card-body">
                 <div class="card-text">
                     Forum
@@ -49,7 +49,7 @@
             <% end %>
         <% end %>
 
-        <div class="card mt-2">
+        <div class="card mt-4">
             <div class="card-body">
                 <div class="card-title">
                     Online members
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="card mt-2">
+        <div class="card mt-4">
             <div class="card-body">
                 <div class="card-text">
                     Recent posts
