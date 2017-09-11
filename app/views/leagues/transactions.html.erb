@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="container mt-4 text-center">
+<div class="container mt-4">
     <nav class="navbar navbar-white bg-white navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
             <span><%= octicon "three-bars" %></span>
@@ -51,11 +51,15 @@
     </nav>
 
     <% if current_user.admin || current_user.captain?(@season) || current_user.stat_admin %>
-        <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
-            <div class="btn btn-outline-dark mt-3" style="cursor: pointer;">
-                Submit transaction
-            </div>
-        <% end %>
+        <div class="row justify-content-center">
+            <%= link_to submit_transaction_league_season_path(@league, @season), method: :get do %>
+                <div class="col">
+                    <div class="btn btn-outline-dark mt-3" style="cursor: pointer;">
+                        Submit transaction
+                    </div>
+                </div>
+            <% end %>
+        </div>
     <% end %>
 
     <% if current_user.admin %>
