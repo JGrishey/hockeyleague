@@ -35,7 +35,7 @@ class User < ApplicationRecord
     has_many :penalties
     has_many :stat_lines
 
-    has_attached_file :avatar, styles: { :small => "400x400#" }, :storage => :s3
+    has_attached_file :avatar, styles: { :small => "400x400#" }
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
     def online?

@@ -57,10 +57,12 @@
    
      <nav class="navbar navbar-light bg-white" style="background-color: #d2d2d2; margin-bottom: 0.2em;">
         <%= link_to root_path, class: "navbar-brand", method: :get do %>
-            <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/> MOOSE HOCKEY
+            <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/>
         <% end %>
 
         <%= link_to "Rules", pages_rules_path, method: :get, class: "nav-link" %>
+
+        <%= link_to "MHL", league_path(League.first), method: :get, class: "nav-link" %>
 
         <% if user_signed_in? %>
 
