@@ -29,9 +29,6 @@
                     <%= link_to "Leaders", leaders_league_path(@league), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Standings", standings_league_path(@league), method: :get, class: "nav-link" %>
-                </li>
-                <li class="nav-item text-muted">
                     <%= link_to "Players", players_league_path(@league), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
@@ -64,7 +61,7 @@
 
     <% if current_user.admin %>
         <div class="card mt-3">
-            <div class="card-header text-center">
+            <div class="card-header text-center bg-dark text-white">
                 Pending Trades
             </div>
             
@@ -110,7 +107,7 @@
     <% end %>
 
     <div class="card mt-3 mb-3">
-        <div class="card-header text-center">Approved Transactions</div>
+        <div class="card-header text-center bg-dark text-white">Approved Transactions</div>
         <div class="card-body text-center">
             <% if @approved_trades.any? %>
                 <% @approved_trades.each do |trade| %>

@@ -55,7 +55,7 @@
         </script>
     <% end %>
    
-     <nav class="navbar navbar-light bg-faded" style="background-color: #d2d2d2; margin-bottom: 0.2em;">
+     <nav class="navbar navbar-light bg-white" style="background-color: #d2d2d2; margin-bottom: 0.2em;">
         <%= link_to root_path, class: "navbar-brand", method: :get do %>
             <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/> MOOSE HOCKEY
         <% end %>
@@ -64,7 +64,9 @@
 
         <% if user_signed_in? %>
 
-            <%= render 'notifications/notification_dropdown' %>
+            <div id="notifications">
+                <%= render 'notifications/notification_dropdown' %>
+            </div>
 
             <%= link_to profile_path(current_user.user_name), method: :get, class: "nav-link" do %>
                 <img class="img-fluid rounded-circle" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>

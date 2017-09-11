@@ -6,5 +6,15 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li class="dropdown-header text-center">Notifications</li>
         <%= render current_user.notifications.where(read: false).order("created_at DESC") %>
+        <li class="divider" role="separator"></li>
+        <% if current_user.notifications.where(read: false).any? %>
+            <div class="dropdown-item">
+                <div class="text-center text-muted">
+                    <%= link_to clear_all_path, method: :post, remote: true do %>
+                        Clear all
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
     </ul>
 </div>

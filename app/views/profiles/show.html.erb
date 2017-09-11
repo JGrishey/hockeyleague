@@ -5,6 +5,11 @@
 <div class="text-center font-weight-bold text-uppercase mt-4" style="font-size: 2em;">
     <%= @user.user_name %>
 </div>
+<% if current_user.admin %>
+    <div class="text-center text-muted">
+        <%= link_to "Post history", post_history_path(@user.user_name), method: :get %>
+    </div>
+<% end %>
 <% if current_user == @user %>
     <div class="text-center text-muted">
         <%= link_to "Edit", edit_profile_path(@user.user_name), method: :get %>
@@ -14,7 +19,7 @@
 <% if @user.games.any? %>
 
     <div class="card mt-4">
-        <div class="card-header">
+        <div class="card-header bg-dark text-white">
             Current Seasons
         </div>
         <div class="card-body">
@@ -24,7 +29,7 @@
     </div>
 
     <div class="card mt-4">
-        <div class="card-header">
+        <div class="card-header bg-dark text-white">
             Recent games
         </div>
         <div class="card-body">
@@ -34,7 +39,7 @@
     </div>
 
     <div class="card mt-4">
-        <div class="card-header">
+        <div class="card-header bg-dark text-white">
             Stats
         </div>
         <div class="card-body">
@@ -44,8 +49,8 @@
     </div>
 
     <div class="card mt-4 mb-4">
-        <div class="card-header">
-            Career
+        <div class="card-header bg-dark text-white">
+            Career Totals
         </div>
         <div class="card-body">
             <div style="font-size: 0.75em;" id="career-stats">

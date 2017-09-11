@@ -31,7 +31,7 @@ class Leaders extends React.Component {
         return (
             <div>
                 <div className="card mt-4">
-                    <div className="card-header text-center">Skaters</div>
+                    <div className="card-header text-center bg-dark text-white">Skaters</div>
                     <div className="card-body row">
                         {goals.length == 0 && 
                                 <div className="card-text text-center col-12">No Data</div>
@@ -43,7 +43,7 @@ class Leaders extends React.Component {
                     </div>
                 </div>
                 <div className="card mt-4">
-                    <div className="card-header text-center">Goalies</div>
+                    <div className="card-header text-center bg-dark text-white">Goalies</div>
                     <div className="card-body row">
                         {gaa.length == 0 && 
                                 <div className="card-text text-center col-12">No Data</div>

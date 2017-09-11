@@ -122,6 +122,15 @@ class ProfilesController < ApplicationController
         end
     end
 
+    def post_history
+        if !current_user.admin
+            redirect_to root_path
+            flash[:alert] = "You do not have permission to enter that page."
+        end
+
+        @posts_comments = (@user.posts.to_a + @user.comments.to_a).sort_by {|x| x.created_at}
+    end
+
     private
 
     def profile_params

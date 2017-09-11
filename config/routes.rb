@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
     get 'profiles/show'
     get 'pages/rules'
+    get 'pages/landing'
     get 'chat_boxes/:id/archive', to: "chat_boxes#archive", as: :archive
 
     devise_for :users, :controllers => {registrations: 'registrations'}
     
-    root to: "subforums#index"
+    root to: "pages#landing"
 
     resources :subforums do
         resources :posts do
@@ -43,7 +44,6 @@ Rails.application.routes.draw do
             end
             member do
                 get 'upload'
-                get 'standings'
                 get 'players'
                 get 'leaders'
                 get 'schedule'
@@ -60,7 +60,6 @@ Rails.application.routes.draw do
         end
         member do
             get 'players'
-            get 'standings'
             get 'leaders'
             get 'schedule'
             get 'history'
@@ -76,7 +75,10 @@ Rails.application.routes.draw do
     get ':user_name', to: 'profiles#show', as: :profile
     get ':user_name/edit', to: 'profiles#edit', as: :edit_profile
     patch ':user_name/edit', to: 'profiles#update', as: :update_profile
+    get ':user_name/post_history', to: "profiles#post_history", as: :post_history
 
     get 'notifications/:id/link_through', to: 'notifications#link_through', as: :link_through
+    post 'notifications/:id/clear', to: "notifications#clear", as: :clear_notification
+    post 'notifications/clear_all', to: "notifications#clear_all", as: :clear_all
 
 end

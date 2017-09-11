@@ -9,6 +9,23 @@ class SubforumsController < ApplicationController
         @recent_posts = Post.order('updated_at DESC').first(5)
         @chatbox = ChatBox.first
         @messages = @chatbox.messages.order('created_at ASC').last(25)
+        @main_league = @leagues.first
+        @season = @main_league.current_season
+        @recent_games = @season.games
+            .where(date: 1.week.ago..1.week.from_now)
+            .order('date ASC')
+            .group_by{
+                |g| 
+                    g.date.strftime("%^b %d")
+            }
+            .to_a
+            .map{ 
+                |x| 
+                    [
+                        x[0], 
+                        x[1].group_by{|g| g.teams}.to_a
+                    ]
+            }
         respond_to do |format|
             format.html
             format.js

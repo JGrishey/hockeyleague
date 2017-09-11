@@ -1,7 +1,7 @@
 <%= render 'games/carousel', recent_games: @recent_games, league: league, season: season %>
 
 <div class="card mt-3">
-        <div class="card-header text-center">
+        <div class="card-header text-center bg-dark text-white">
             <%= league.name %> - Current Season (<%= link_to season.title, league_season_path(league, season), method: :get %>)
         </div>
         <div class="card-body text-center">
@@ -16,20 +16,17 @@
 </div>
 
 <div class="container mt-4">
-    <nav class="navbar navbar-white bg-white navbar-expand-lg rounded" style="background-color: #fff;">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
             <span><%= octicon "three-bars" %></span>
         </button>
         <div class="collapse navbar-collapse" id="leagueNav">
             <ul class="navbar-nav">
-                <li class="nav-item font-weight-bold">
+                <li class="nav-item active font-weight-bold">
                     <%= link_to "Home", league_path(league), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Leaders", leaders_league_path(league), method: :get, class: "nav-link" %>
-                </li>
-                <li class="nav-item text-muted">
-                    <%= link_to "Standings", standings_league_path(league), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Players", players_league_path(league), method: :get, class: "nav-link" %>
@@ -66,17 +63,17 @@
 
     <% if season.teams.any? %>
         <div class="card mt-2">
-            <div class="card-header text-center">
-                Standings Preview
+            <div class="card-header text-center bg-dark text-white">
+                Standings
             </div>
-            <div class="card-body" id="standings" data-data="<%= @data.to_json %>">
+            <div class="card-body" id="standings" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
             </div>
         </div>
     <% end %>
 
     <% if season.games.where(final: true).any? %>
         <div class="card mt-2">
-            <div class="card-header text-center">
+            <div class="card-header text-center bg-dark text-white">
                 Players Preview
             </div>
             <div class="card-body row text-center justify-content-center">
@@ -132,4 +129,4 @@
         </div>
     <% end %>
 </div>
-<%= javascript_pack_tag "tables/quickstandings"%>
+<%= javascript_pack_tag "tables/standings"%>

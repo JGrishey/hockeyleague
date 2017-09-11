@@ -27,6 +27,13 @@ class Game < ApplicationRecord
     validates :away_ppg, numericality: { greater_than_or_equal_to: 0, only_integer: true }
     validates :away_ppo, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 
+    def teams
+        res = [self.home_team, self.away_team].sort_by do |x|
+            x.id
+        end
+        res
+    end
+
     def home_goals
         self.home_stats.inject(0){|sum, e| sum + e.goals}
     end

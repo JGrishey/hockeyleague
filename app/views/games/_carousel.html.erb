@@ -6,40 +6,46 @@
             <% end %>
         </ol>
         <div class="carousel-inner">
-            <% recent_games.each_with_index do |(key, values), index| %>
+            <% recent_games.each_with_index do |vs, index| %>
                 <div class="<%= index == 0 ? "carousel-item active" : "carousel-item" %>">
                     <div class="row justify-content-center mt-2">
-                        <% values.each do |game| %>
-                            <%= link_to league_season_game_path(league, season, game), method: :get, class: "col-2 border border-light p-3" do %>
-                                    <div class="row">
-                                        <div class="col-6 text-center align-self-center">
-                                            <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
-                                        </div>
-
-                                        <div class="col-6 text-center align-self-center">
-                                            <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
+                        <% vs[1].each do |serie| %>
+                            <div class="col-2 border border-light p-3">
+                                <div class="row justify-content-center">
+                                    <div class="col-4 align-self-center">
+                                        <div class="row justify-content-center">
+                                            <% serie[0].each do |team| %>
+                                                <div class="col-12 align-self-center mt-2">
+                                                    <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(team) %>"/>
+                                                </div>
+                                            <% end %>
                                         </div>
                                     </div>
-                                    <div class="row mt-2">
-                                        <% if game.final %>
-                                            <div class="col-6 text-center">
-                                                <%= game.away_goals %>
-                                            </div>
+                                    <% serie[1].each_with_index do |game, index| %>
+                                        <%= link_to league_season_game_path(league, season, game), method: :get, class: "col-2 p-0 align-self-center" do %>
+                                            <div class="row">
+                                                <% if game.final %>
+                                                    <div class="col-12 text-center align-self-center mt-2">
+                                                        <%= serie[0].first == game.away_team ? game.away_goals : game.home_goals %>
+                                                    </div>
 
-                                            <div class="col-6 text-center">
-                                                <%= game.home_goals %>
-                                            </div>
-                                        <% else %>
-                                            <div class="col-12 text-center">
-                                                TBD
+                                                    <div class="col-12 text-center align-self-center mt-2">
+                                                        <%= serie[0].first == game.home_team ? game.home_goals : game.away_goals %>
+                                                    </div>
+                                                <% else %>
+                                                    <div class="col-12 text-center align-self-center mt-2">
+                                                        G<%= index+1 %>
+                                                    </div>
+                                                <% end %>
                                             </div>
                                         <% end %>
-                                    </div>
-                            <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
                         <% end %>
                     </div>
                     <div class="carousel-caption d-block mt-4 text-dark" style="position: relative; left: auto; right: auto;">
-                        <h3><%= key %></h3>
+                        <h3><%= vs[0] %></h3>
                     </div>
                 </div>
             <% end %>

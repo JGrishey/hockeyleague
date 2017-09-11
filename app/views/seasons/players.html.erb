@@ -1,7 +1,7 @@
 <%= render 'games/carousel', recent_games: @recent_games, league: @league, season: @season %>
 
 <div class="card mt-3">
-        <div class="card-header text-center">
+        <div class="card-header text-center bg-dark text-white">
             <%= @league.name %> - <%= link_to @season.title, league_season_path(@league, @season), method: :get %>
         </div>
         <div class="card-body text-center">
@@ -16,7 +16,7 @@
 </div>
 
 <div class="container mt-4 mb-4">
-    <nav class="navbar navbar-white bg-white navbar-expand-lg rounded" style="background-color: #fff;">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
             <span><%= octicon "three-bars" %></span>
         </button>
@@ -28,10 +28,7 @@
                 <li class="nav-item text-muted">
                     <%= link_to "Leaders", leaders_league_season_path(@league, @season), method: :get, class: "nav-link" %>
                 </li>
-                <li class="nav-item text-muted">
-                    <%= link_to "Standings", standings_league_season_path(@league, @season), method: :get, class: "nav-link" %>
-                </li>
-                <li class="nav-item font-weight-bold">
+                <li class="nav-item font-weight-bold active">
                     <%= link_to "Players", players_league_season_path(@league, @season), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
@@ -49,7 +46,7 @@
 
     <% if @season.games.where(final: true).any? %>
         <div class="card mt-2">
-            <div class="card-header text-center">
+            <div class="card-header text-center bg-dark text-white">
                 Players
             </div>
             <div class="card-body" id="players" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">

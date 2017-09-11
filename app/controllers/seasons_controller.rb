@@ -124,13 +124,6 @@ class SeasonsController < ApplicationController
         redirect_to league_season_path(@league, @season)
     end
 
-    def standings
-        @data = []
-        @season.teams.each do |team|
-            @data.push(team.standingsData) if team.visibility
-        end
-    end
-
     def players
         @data = []
         @season.teams.each do |team|
@@ -169,7 +162,20 @@ class SeasonsController < ApplicationController
     end
 
     def schedule
-        @games = @season.games.order('date ASC').group_by{|g| g.date.strftime("%^b %d, %Y")}
+        @games = @season.games
+        .order('date ASC')
+        .group_by{
+            |g| 
+                g.date.strftime("%^b %d")
+        }
+        .to_a
+        .map{ 
+            |x| 
+                [
+                    x[0], 
+                    x[1].group_by{|g| g.teams}.to_a
+                ]
+        }
     end
 
     def signup
@@ -350,6 +356,20 @@ class SeasonsController < ApplicationController
     end
 
     def set_games
-        @recent_games = @season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
+        @recent_games = @season.games
+        .where(date: 1.week.ago..1.week.from_now)
+        .order('date ASC')
+        .group_by{
+            |g| 
+                g.date.strftime("%^b %d")
+        }
+        .to_a
+        .map{ 
+            |x| 
+                [
+                    x[0], 
+                    x[1].group_by{|g| g.teams}.to_a
+                ]
+        }
     end
 end

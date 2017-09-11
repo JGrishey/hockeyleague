@@ -69,15 +69,7 @@ class LeaguesController < ApplicationController
         @point_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:points] : 0}
         @pim_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:pim] : 0}
     end
-
-    def standings
-        @data = []
-        @season = @league.current_season
-        @season.teams.each do |team|
-            @data.push(team.standingsData) if team.visibility
-        end
-    end
-
+    
     def players
         @data = []
         @season = @league.current_season
@@ -101,7 +93,20 @@ class LeaguesController < ApplicationController
 
     def schedule
         @season = @league.current_season
-        @games = @season.games.order('date ASC').group_by{|g| g.date.strftime("%^b %d, %Y")}
+        @games = @season.games
+        .order('date ASC')
+        .group_by{
+            |g| 
+                g.date.strftime("%^b %d")
+        }
+        .to_a
+        .map{ 
+            |x| 
+                [
+                    x[0], 
+                    x[1].group_by{|g| g.teams}.to_a
+                ]
+        }
     end
 
     def history
@@ -168,6 +173,20 @@ class LeaguesController < ApplicationController
     end
 
     def set_games
-        @recent_games = @league.current_season.games.where(date: 1.week.ago..1.week.from_now).order('date ASC').group_by{|g| g.date.strftime("%^b %d")}
+        @recent_games = @league.current_season.games
+        .where(date: 1.week.ago..1.week.from_now)
+        .order('date ASC')
+        .group_by{
+            |g| 
+                g.date.strftime("%^b %d")
+        }
+        .to_a
+        .map{ 
+            |x| 
+                [
+                    x[0], 
+                    x[1].group_by{|g| g.teams}.to_a
+                ]
+        }
     end
 end

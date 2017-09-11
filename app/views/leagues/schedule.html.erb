@@ -1,7 +1,7 @@
 <%= render 'games/carousel', recent_games: @recent_games, league: @league, season: @season %>
 
 <div class="card mt-3">
-        <div class="card-header text-center">
+        <div class="card-header text-center bg-dark text-white">
             <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season), method: :get %>)
         </div>
         <div class="card-body text-center">
@@ -16,7 +16,7 @@
 </div>
 
 <div class="container mt-4">
-    <nav class="navbar navbar-white bg-white navbar-expand-lg rounded" style="background-color: #fff;">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
             <span><%= octicon "three-bars" %></span>
         </button>
@@ -27,9 +27,6 @@
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Leaders", leaders_league_path(@league), method: :get, class: "nav-link" %>
-                </li>
-                <li class="nav-item text-muted">
-                    <%= link_to "Standings", standings_league_path(@league), method: :get, class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Players", players_league_path(@league), method: :get, class: "nav-link" %>
@@ -50,45 +47,55 @@
         </div>
     </nav>
 
-    <% @games.each do |key, values| %>
+    <% @games.each do |values| %>
         <div class="card mt-2">
-            <div class="card-header text-center">
-                <%= key %>
+            <div class="card-header text-center bg-dark text-white">
+                <%= values[0] %>
             </div>
 
-            <% values.each do |v| %>
-                <%= link_to league_season_game_path(v.season.league, v.season, v), method: :get do %>
-                    <div class="row justify-content-center p-2">
-                        <div class="col-1 text-center">
-                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v.away_team) %>"/>
+            <% values[1].each do |v| %>
+                    <div class="row justify-content-center p-2 mb-2 mt-2">
+                        <div class="col-1 text-center align-self-center">
+                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[0].first) %>"/>
                         </div>
 
                         <div class="col-3 text-center align-self-center">
-                            <%= v.away_team.name %>
+                            <%= v[0].first.name %>
                         </div>
 
-                        <% if v.final %>
-                            <div class="col-1 text-center align-self-center">
-                                <%= v.away_goals %>
+                        <div class="col-2 text-center align-self-center">
+                            <div class="row">
+                                <% v[1].each_with_index do |game, index| %>
+                                    <%= link_to league_season_game_path(@league, @season, game), method: :get, class: "col-12 text-center align-self-center" do %>
+                                        <% if game.final %>
+                                            <div class="row mt-1">
+                                                <div class="col-6 align-self-center text-center">
+                                                    <%= game.away_team == v[0].first ? game.away_goals : game.home_goals %>
+                                                </div>
+                                                <div class="col-6 align-self-center text-center">
+                                                    <%= game.home_team == v[0].second ? game.home_goals : game.away_goals %>
+                                                </div>
+                                            </div>
+                                        <% else %>
+                                            <div class="row mt-1">
+                                                <div class="col-12 text-center align-self-center">
+                                                    G<%= index + 1 %>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
                             </div>
-                            <div class="col-1 text-center align-self-center">
-                                <%= v.home_goals %>
-                            </div>
-                        <% else %>
-                            <div class="col-2 text-center align-self-center">
-                                TBD
-                            </div>
-                        <% end %>
+                        </div>
 
                         <div class="col-3 text-center align-self-center">
-                            <%= v.home_team.name %>
+                            <%= v[0].second.name %>
                         </div>
 
-                        <div class="col-1 text-center">
-                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v.home_team) %>"/>
+                        <div class="col-1 text-center align-self-center">
+                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[0].second) %>"/>
                         </div>
                     </div>
-                <% end %>
             <% end %>
         </div>
     <% end %>

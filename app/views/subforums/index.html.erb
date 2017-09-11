@@ -1,6 +1,8 @@
-<div class="row">
+<%= render 'games/carousel', league: @main_league, season: @season, recent_games: @recent_games %>
+
+<div class="row mt-4">
     <div class="col-12 col-lg-8 mb-4">
-        <div class="card" style="margin-bottom: 0.2em;">
+        <div class="card bg-dark text-white mb-3" style="margin-bottom: 0.2em;">
             <div class="card-body">
                 <div class="card-text">
                     Chat
@@ -12,7 +14,7 @@
             <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
         </div>
         
-        <div class="card mt-4" style="margin-bottom: 0.2em;">
+        <div class="card bg-dark text-white mt-4 mb-3" style="margin-bottom: 0.2em;">
             <div class="card-body">
                 <div class="card-text">
                     Forum
@@ -26,7 +28,7 @@
     </div>
 
     <div class="col-12 col-lg-4">
-        <div class="card" style="margin-bottom: 0.2em;">
+        <div class="card bg-dark text-white mb-3" style="margin-bottom: 0.2em;">
             <div class="card-body">
                 <div class="card-text">
                     Leagues
@@ -62,7 +64,7 @@
             </div>
         </div>
 
-        <div class="card mt-4">
+        <div class="card bg-dark text-white mt-4 mb-3">
             <div class="card-body">
                 <div class="card-text">
                     Recent posts

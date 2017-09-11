@@ -1,4 +1,9 @@
-<li>
-  <div class="dropdown-element"><%= link_to notification.body, link_through_path(notification) %></div>
-</li>
+<div class="dropdown-item" id="notification_<%= notification.id%>">
+    <%= link_to notification.body, link_through_path(notification) %>
+    <div class="text-center">
+        <%= link_to clear_notification_path(notification), method: :post, remote: true, id: "clear_notification_#{notification.id}" do %>
+            <%= octicon "x" %>
+        <% end %>
+    </div>
+</div>
 <li class="divider" role="separator"></li>
