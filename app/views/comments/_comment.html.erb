@@ -6,10 +6,10 @@
                 <%= link_to comment.user.user_name, profile_path(comment.user.user_name), method: :get %>
             </div>
             <div class="card-text text-center text-muted">
-                <%= comment.created_at.strftime("%I:%M %p") %>
+                <%= (comment.created_at - 4.hours).strftime("%I:%M %p") %>
             </div>
             <div class="card-text text-center text-muted">
-                <%= comment.created_at.strftime("%d %^b %Y") %>
+                <%= (comment.created_at - 4.hours).strftime("%d %^b %Y") %>
             </div>
             <% if current_user == comment.user || current_user.admin %>
                 <div class="card-link text-center text-muted">

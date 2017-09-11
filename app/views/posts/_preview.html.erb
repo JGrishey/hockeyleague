@@ -9,7 +9,7 @@
                         <%= post.title %>
                     </div>
                     <div class="row">
-                        <span class="text-muted">Last updated at <%= post.updated_at.strftime("%I:%M %p on %d %^b %Y") %> by <%= post.most_recent.user.user_name %></span>
+                        <span class="text-muted">Last updated at <%= (post.updated_at - 4.hours).strftime("%I:%M %p on %d %^b %Y") %> by <%= post.most_recent.user.user_name %></span>
                     </div>
                     <div class="row">
                         <span class="text-muted"><%= pluralize(post.comments.count, "comment") %></span>

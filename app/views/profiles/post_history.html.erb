@@ -20,7 +20,7 @@
                                 <%= simple_format(pc.content).truncate(50) %>
                             </div>
                             <div class="text-left text-muted">
-                                <%= pc.created_at.strftime("%I:%M %p %^b %d %Y") %>
+                                <%= (pc.created_at - 4.hours).strftime("%I:%M %p %^b %d %Y") %>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                 <%= simple_format(pc.content).truncate(50) %>
                             </div>
                             <div class="text-left text-muted">
-                                <%= pc.created_at.strftime("%I:%M %p %^b %d %Y") %>
+                                <%= (pc.created_at - 4.hours).strftime("%I:%M %p %^b %d %Y") %>
                             </div>
                         </div>
                     </div>
