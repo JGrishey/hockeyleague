@@ -1,9 +1,9 @@
 <div class="row mt-1 pt-2 border-bottom-0 border-left-0 border-right-0 border border-light">
     <div class="col-12">
         <div class="row justify-content-between mb-2">
-            <div class="col-3 text-left text-muted">
+            <%= link_to profile_path(message.user.user_name), method: :get, class: "col-3 text-left text-muted" do %>
                 <img class="rounded-circle" width="20" height="20" src="<%= get_avatar(message.user) %>"/> <%= message.user.user_name%>
-            </div>
+            <% end %>
             <div class="col-3 text-right text-muted">
                 <%= time_ago_in_words(message.created_at) %> ago
             </div>
