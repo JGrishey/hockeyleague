@@ -109,3 +109,10 @@ hr {
 .carousel-control-prev, .carousel-control-next {
     width: 10% !important;
 }
+
+.post, .comment {
+    img {
+        height: auto;
+        max-width: 100%;
+    }
+}
