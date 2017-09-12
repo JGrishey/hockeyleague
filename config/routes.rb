@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     get 'pages/landing'
     get 'chat_boxes/:id/archive', to: "chat_boxes#archive", as: :archive
 
-    devise_for :users, :controllers => {registrations: 'registrations'}
+    devise_for :users, :controllers => {registrations: 'registrations', sessions: 'sessions'}
     
     root to: "pages#landing"
 
