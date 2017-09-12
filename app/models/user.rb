@@ -42,6 +42,10 @@ class User < ApplicationRecord
         updated_at < 10.minutes.ago
     end
 
+    def remember_me
+        true
+    end
+
     def captain? (season)
         self.owned_teams.each do |team|
             if team.season.current && team.season == season
