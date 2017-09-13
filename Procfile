@@ -1,1 +1,1 @@
-web: bundle exec puma -p $PORT
+web: scripts/build_nginx.sh
