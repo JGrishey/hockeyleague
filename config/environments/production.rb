@@ -25,6 +25,8 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  config.force_ssl = true
+
   config.action_cable.allowed_request_origins = ['https://moosehockeyleague.herokuapp.com',
   'http://moosehockeyleague.herokuapp.com']
 
