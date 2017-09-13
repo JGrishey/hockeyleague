@@ -28,10 +28,6 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = ['https://moosehockeyleague.herokuapp.com',
   'http://moosehockeyleague.herokuapp.com']
 
-  config.to_prepare { Devise::SessionsController.force_ssl }
-  config.to_prepare { Devise::RegistrationsController.force_ssl }
-  config.to_prepare { Devise::PasswordsController.force_ssl }
-
   config.action_cable.url = "wss://moosehockeyleague.herokuapp.com/cable"
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
