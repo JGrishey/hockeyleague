@@ -30,7 +30,7 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = ['https://moosehockeyleague.herokuapp.com',
   'http://moosehockeyleague.herokuapp.com', 'https://moosehockeyleague.com']
 
-  config.action_cable.url = "wss://moosehockeyleague.herokuapp.com/cable"
+  config.action_cable.url = "wss://moosehockeyleague.com/cable"
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
