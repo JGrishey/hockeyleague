@@ -21,6 +21,8 @@
                         <%= f.input_field :user_name, required: false, class: "form-control" %>
                         <label>Username (must be gamertag)</label>
 
+                        <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+
                         <%= f.input_field :password, required: false, class: "form-control" %>
                         <label class="text-field">Password (8 min.)</label>
 

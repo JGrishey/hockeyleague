@@ -18,6 +18,8 @@
                         <%= f.input_field :email, required: false, autofocus: true, class: "form-control" %>
                         <label>Email</label>
 
+                        <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+
                         <%= f.input_field :password, required: false, class: "form-control" %>
                         <label class="text-field">Password</label>
 
