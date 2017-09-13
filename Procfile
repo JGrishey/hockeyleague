@@ -1,2 +1,1 @@
-web: bundle exec puma -p $PORT
-web: vendor/bin/heroku-php-nginx -C nginx_app.conf
+web: bin/start-nginx bundle exec unicorn -c config/unicorn.rb
