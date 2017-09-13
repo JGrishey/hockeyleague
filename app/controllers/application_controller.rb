@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    protect_from_forgery
+    protect_from_forgery with: :exception
     before_action :user_activity
     before_action :block_ip_addresses
 
