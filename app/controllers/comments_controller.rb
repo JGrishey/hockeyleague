@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
             end
             create_notification(
                 "#{@comment.user.user_name} commented on your post.",
-                @comment.user,
+                @post.user,
                 subforum_post_path(@subforum, @post)
             )
             User.find_by(user_name: "Admin").messages.create!(

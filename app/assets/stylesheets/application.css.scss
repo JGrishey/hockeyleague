@@ -10,7 +10,7 @@
 body {
     font-family: "Roboto", sans-serif !important;
     width: 100%;
-    background-color: #ececec;
+    background-color: rgb(200,200,200);
 }
 
 // links (a)
@@ -63,6 +63,7 @@ a, a:focus, a:hover {
     max-height: 50px;
     overflow: scroll;
     outline: none;
+    background-color: #ececec;
 }
 
 #messages {
