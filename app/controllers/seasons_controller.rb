@@ -179,6 +179,10 @@ class SeasonsController < ApplicationController
     end
 
     def signup
+        if current_user.signed_up_for(@season)
+            redirect_to root_path
+            flash[:alert] = "You already signed up!"
+        end
         @signup = Signup.new
     end
 

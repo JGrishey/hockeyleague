@@ -51,10 +51,12 @@
             <% end %>
         <% end %>
 
-        <%= link_to signup_league_season_path(@main_league, @season), class: "card mt-4 bg-dark text-white mb-3" do %>
-            <div class="card-body">
-                Sign up for Season 33
-            </div>
+        <% if !current_user.signed_up_for(@season) %>
+            <%= link_to signup_league_season_path(@main_league, @season), class: "card mt-4 bg-dark text-white mb-3" do %>
+                <div class="card-body">
+                    Sign up for Season 33
+                </div>
+            <% end %>
         <% end %>
 
         <div class="card mt-4">

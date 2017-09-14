@@ -46,6 +46,10 @@ class User < ApplicationRecord
         true
     end
 
+    def signed_up_for (season)
+        self.seasons_signed_up.include?(season)
+    end
+
     def captain? (season)
         self.owned_teams.each do |team|
             if team.season.current && team.season == season
