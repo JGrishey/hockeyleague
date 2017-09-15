@@ -102,12 +102,6 @@ class SeasonsController < ApplicationController
 
         @season.trades.destroy_all
 
-
-        data["teams"].each do |team|
-            temp_team = @season.teams.build(name: team, captain_id: current_user.id, salary_cap: 115)
-            temp_team.save
-        end
-
         data["games"].each do |game|
            temp_game = @season.games.build(away_id: @season.teams.find_by(name: game["away"]).id, home_id: @season.teams.find_by(name: game["home"]).id, date: DateTime.strptime(game["date"], "%m-%d-%Y %I:%M %p"))
            temp_game.save

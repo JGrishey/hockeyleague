@@ -78,6 +78,18 @@ a, a:focus, a:hover {
     img {
         max-width: 50%;
     }
+
+    
+}
+
+.messages {
+    @media (max-width: 991px) {
+        font-size: 1em;
+    }
+
+    @media (min-width: 992px) {
+        font-size: 0.75em;
+    }
 }
 // separate stylesheet into media queries
 
