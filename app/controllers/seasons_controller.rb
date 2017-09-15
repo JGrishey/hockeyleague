@@ -186,6 +186,7 @@ class SeasonsController < ApplicationController
             tp = TeamPlayer.new
             tp.team = @season.teams.find_by(name: "Unplaced Players")
             tp.player = @signup.player
+            tp.salary = 0
             tp.save
             flash[:success] = "You're signed up!"
             redirect_to league_season_path(@league, @season)
