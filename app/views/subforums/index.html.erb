@@ -1,6 +1,19 @@
 <%= render 'games/carousel', league: @main_league, season: @season, recent_games: @recent_games %>
 
 <div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-danger text-white">
+            <div class="card-header text-center font-weight-bold text-uppercase">
+                Announcement
+            </div>
+            <%= link_to signup_league_season_path(@main_league, @season), class: "card-body text-center", method: :get do %>
+                Sign up for Season 33!
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
     <div class="col-12 col-lg-8 mb-4">
         <div class="card bg-dark text-white mb-3" style="margin-bottom: 0.2em;">
             <div class="card-body">
@@ -52,7 +65,7 @@
         <% end %>
 
         <% if !current_user.signed_up_for(@season) %>
-            <%= link_to signup_league_season_path(@main_league, @season), class: "card mt-4 bg-dark text-white mb-3" do %>
+            <%= link_to signup_league_season_path(@main_league, @season), class: "card mt-4 bg-dark text-white mb-3", method: :get do %>
                 <div class="card-body">
                     Sign up for Season 33
                 </div>
