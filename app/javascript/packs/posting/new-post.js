@@ -63,13 +63,16 @@ $(document).ready(() => {
                     }
                 },
                 {
-                    name: 'html',
-                    title: 'Code',
+                    name: 'iframe',
+                    title: 'iframe',
                     icon: '<b>&lt/&gt</b>',
                     result: () => {
                         document.getElementsByClassName("pell-content")[0].focus();
-                        const input = window.prompt('Enter the code');
-                        if (input) pell.exec('insertHTML', input)
+                        const input = window.prompt('Enter the iframe src. (i.e. https://gfycat.com/ifr/ArcticAllBaldeagle)');
+
+                        const iframe = `<div style='position:relative;padding-bottom:57%'><iframe src='${input}' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>`
+
+                        if (input) pell.exec('insertHTML', iframe)
                         document.getElementsByClassName("pell-content")[0].focus();
                     }
                 },
