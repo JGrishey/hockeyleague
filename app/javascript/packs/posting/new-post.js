@@ -1,4 +1,5 @@
 import pell from 'pell';
+const sanitizeHtml = require('sanitize-html');
 
 $(document).ready(() => {
     if (document.getElementById("pell")) {
@@ -58,6 +59,17 @@ $(document).ready(() => {
                     name: 'heading2',
                     result: () => {
                         pell.exec('formatBlock', '<H2>');
+                        document.getElementsByClassName("pell-content")[0].focus();
+                    }
+                },
+                {
+                    name: 'html',
+                    title: 'Code',
+                    icon: '<b>&lt/&gt</b>',
+                    result: () => {
+                        document.getElementsByClassName("pell-content")[0].focus();
+                        const input = window.prompt('Enter the code');
+                        if (input) pell.exec('insertHTML', input)
                         document.getElementsByClassName("pell-content")[0].focus();
                     }
                 },
