@@ -5,7 +5,6 @@ $(document).ready(() => {
 })
 
 const refreshPartial = () => {
-    console.log("Hello");
     $.ajax({
         url: "chat_boxes/timestamps"
     })

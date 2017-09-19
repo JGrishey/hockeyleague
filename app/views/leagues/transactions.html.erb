@@ -68,21 +68,25 @@
             <div class="card-body text-center">
                 <% if @pending_trades.any? %>
                     <% @pending_trades.each do |trade| %>
-                        <div class="row mt-2 p-3 border border-light border-left-0 border-right-0 justify-content-center">
+                        <div class="text-center font-weight-bold text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 p-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
+                        <div class="row mt-2 p-3 justify-content-center">
                             <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
-                                <div class="col-6 col-lg-3 mb-3">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <img class="img-responsive" width="30" src="<%= get_logo(@season.teams.find(key)) %>"/> <%= @season.teams.find(key).name %>
+                                <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
+                                    <div class="text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row">
+                                        <div class="col-4 align-self-center text-left">
+                                            <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
                                         </div>
-                                        <% value.each do |v| %>
-                                            <div class="row">
-                                                <div class="col-12 p-2">
-                                                    <img class="mr-1 img-responsive" width="25" style="opacity: 0.5;" src="<%= get_logo(@season.teams.find(v.origin_id))%>"/> <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> - $<%= v.team_player.salary %>
-                                                </div>
-                                            </div>
-                                        <% end %>
+                                        <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
+                                            <%= @season.teams.find(key).name %>
+                                        </div>
                                     </div>
+                                    <% value.each do |v| %>
+                                        <div class="row">
+                                            <div class="col-12 p-2 text-left">
+                                                <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> (<%= v.team_player.salary %> BOD)
+                                            </div>
+                                        </div>
+                                    <% end %>
                                 </div>
                             <% end %>
 
@@ -111,24 +115,28 @@
         <div class="card-body text-center">
             <% if @approved_trades.any? %>
                 <% @approved_trades.each do |trade| %>
-                    <div class="row mt-2 p-3 border border-light border-left-0 border-right-0 justify-content-center">
-                        <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
-                            <div class="col-6 col-lg-3 mb-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <img class="img-responsive" width="30" src="<%= get_logo(@season.teams.find(key)) %>"/> <%= @season.teams.find(key).name %>
+                    <div class="text-center font-weight-bold text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 p-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
+                        <div class="row mt-2 p-3 justify-content-center">
+                            <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
+                                <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
+                                    <div class="text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row">
+                                        <div class="col-4 align-self-center text-left">
+                                            <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
+                                        </div>
+                                        <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
+                                            <%= @season.teams.find(key).name %>
+                                        </div>
                                     </div>
                                     <% value.each do |v| %>
                                         <div class="row">
-                                            <div class="col-12 p-2">
-                                                <img class="mr-1 img-responsive" width="25" style="opacity: 0.5;" src="<%= get_logo(@season.teams.find(v.origin_id))%>"/> <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> - $<%= v.team_player.salary %>
+                                            <div class="col-12 p-2 text-left">
+                                                <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> (<%= v.team_player.salary %> BOD)
                                             </div>
                                         </div>
                                     <% end %>
                                 </div>
-                            </div>
-                        <% end %>
-                    </div>
+                            <% end %>
+                        </div>
                 <% end %>
             <% else %>
                 <div class="card-text">
