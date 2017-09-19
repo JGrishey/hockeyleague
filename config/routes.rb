@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'pages/rules'
     get 'pages/landing'
     get 'chat_boxes/:id/archive', to: "chat_boxes#archive", as: :archive
+    get 'chat_boxes/timestamps'
 
     devise_for :users, :controllers => {registrations: 'registrations', sessions: 'sessions'}
     
