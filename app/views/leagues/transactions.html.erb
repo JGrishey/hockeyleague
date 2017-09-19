@@ -72,14 +72,14 @@
                         <div class="row mt-2 p-3 justify-content-center">
                             <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
                                 <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
-                                    <div class="text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row">
+                                    <%= link_to league_season_team_path(@league, @season, Team.find(key)), class: "text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row", method: :get do %>
                                         <div class="col-4 align-self-center text-left">
                                             <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
                                         </div>
                                         <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
                                             <%= @season.teams.find(key).name %>
                                         </div>
-                                    </div>
+                                    <% end %>
                                     <% value.each do |v| %>
                                         <div class="row">
                                             <div class="col-12 p-2 text-left">
@@ -119,14 +119,14 @@
                         <div class="row mt-2 p-3 justify-content-center">
                             <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
                                 <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
-                                    <div class="text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row">
+                                    <%= link_to league_season_team_path(@league, @season, Team.find(key)), class: "text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row", method: :get do %>
                                         <div class="col-4 align-self-center text-left">
                                             <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
                                         </div>
                                         <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
                                             <%= @season.teams.find(key).name %>
                                         </div>
-                                    </div>
+                                    <% end %>
                                     <% value.each do |v| %>
                                         <div class="row">
                                             <div class="col-12 p-2 text-left">
