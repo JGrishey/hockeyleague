@@ -26,15 +26,18 @@ $(document).ready(() => {
                 },
                 styleWithCSS: true,
                 actions: [
-                    {
+                    {   
                         name: 'image',
+                        icon: '&#128247;',
+                        title: 'Image',
                         result: () => {
+                            document.getElementsByClassName("pell-content")[0].focus();
                             const url = window.prompt('Enter the image URL')
                             if (url) pell.exec('insertImage', url)
                             document.getElementsByClassName("pell-content")[0].innerHTML = "";
                             document.getElementsByClassName("pell-content")[0].focus();
                         }
-                    }
+                    },
                 ],
                 classes: {
                     actionbar: 'pell-actionbar',

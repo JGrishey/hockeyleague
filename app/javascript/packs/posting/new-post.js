@@ -82,7 +82,17 @@ $(document).ready(() => {
                     'olist',
                     'ulist',
                     'line',
-                    'image',
+                    {   
+                        name: 'image',
+                        icon: '&#128247;',
+                        title: 'Image',
+                        result: () => {
+                            document.getElementsByClassName("pell-content")[0].focus();
+                            const url = window.prompt('Enter the image URL')
+                            if (url) pell.exec('insertImage', url)
+                            document.getElementsByClassName("pell-content")[0].focus();
+                        }
+                    },
                     'link'
                 ],
                 classes: {
