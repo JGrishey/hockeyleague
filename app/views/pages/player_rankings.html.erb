@@ -1,19 +1,21 @@
-<div class="w-100 bg-white">
-    <div class="card bg-dark text-white font-weight-bold text-center text-uppercase mt-4 mb-3">
-        <div class="card-body">
-            Player Rankings
+<div class="row bg-white mt-4">
+    <div class="col-12 text-center">
+        <div class="card bg-dark text-white font-weight-bold text-center text-uppercase mt-2 mb-3">
+            <div class="card-body">
+                Player Rankings
+            </div>
         </div>
-    </div>
 
-    <div class="row mb-3 justify-content-center">
-        <div class="col-12 col-lg-6 text-center">
-            Player Ratings developed by Grish x 13 and WindyCityWeb. Complete personal opinion. Do not take these seriously.
-            These will be reevaluated during the seasons. Only players signed up for the current season are on the list. If you have a 0,
-            then we don't know enough about you.
+        <div class="row mb-3 justify-content-center">
+            <div class="col-12 col-lg-6 text-center">
+                Player Ratings developed by Grish x 13 and WindyCityWeb. Complete personal opinion. Do not take these seriously.
+                These will be reevaluated during the seasons. Only players signed up for the current season are on the list. If you have a 0,
+                then we don't know enough about you.
+            </div>
         </div>
+
+        <div id="ratings" data-data="<%= @ratings.to_json %>"/>
+
+        <%= javascript_pack_tag "players/ratings" %>
     </div>
-
-    <div id="ratings" data-data="<%= @ratings.to_json %>"/>
-
-    <%= javascript_pack_tag "players/ratings" %>
 </div>

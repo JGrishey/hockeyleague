@@ -24,7 +24,7 @@ class Ratings extends React.Component {
             <div>
                 {players.map((player, index) => {
                     return (
-                        <div key={index} className="row justify-content-center">
+                        <div key={index} className="row justify-content-center p-3">
                             <div className="col-2 col-lg-1 text-left bg-white align-self-center p-3 ">
                                 <a href={"/" + player["user_name"] }>
                                     <img className="img-fluid rounded-circle" src={player["user_avatar"] === "nil" ? "https://badgeville.com/images/default-user.png" : player["user_avatar"]}/>
