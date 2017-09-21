@@ -49,7 +49,7 @@
 
     <div class="card mt-2">
         <div class="card-body row justify-content-center">
-            <% season.teams.each do |team| %>
+            <% season.teams.order('name ASC').each do |team| %>
                 <% if team.visibility %>
                     <div class="col-1 align-self-center">
                         <%= link_to league_season_team_path(league, season, team), method: :get do %>
