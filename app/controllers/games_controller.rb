@@ -212,7 +212,7 @@ class GamesController < ApplicationController
     end
 
     def set_game
-        @game = Game.find(params[:id])
+        @game = Game.find(params[:id]).includes(:stat_lines)
     end
 
     def set_season

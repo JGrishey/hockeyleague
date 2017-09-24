@@ -58,7 +58,7 @@ class SeasonsController < ApplicationController
     def show
         @data = []
         playerstats = []
-        @season.teams.each do |team|
+        @season.teams.includes(:players).each do |team|
             @data.push(team.standingsData) if team.visibility
             team.players.each do |player|
                 playerstats.push(player.getSeasonStats(@season))
@@ -120,7 +120,7 @@ class SeasonsController < ApplicationController
 
     def players
         @data = []
-        @season.teams.each do |team|
+        @season.teams.includes(:players).each do |team|
             team.players.each do |player|
                 stats = player.getSeasonStats(@season)
                 stats[:games_played] > 0 ? @data.push(stats) : ()
@@ -131,7 +131,7 @@ class SeasonsController < ApplicationController
     def leaders
         skaters = []
         goalies = []
-        @season.teams.each do |team|
+        @season.teams.includes(:players).each do |team|
             team.players.each do |player|
                 stats = player.getSeasonStats(@season)
                 

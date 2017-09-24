@@ -143,7 +143,7 @@ class User < ApplicationRecord
         goals_against = 0
         shots_against = 0
         shutouts = 0
-
+        
         self.stat_lines.each do |stats|
             if stats.game.season == season && stats.game.final
                 plus_minus += stats.plus_minus if stats.plus_minus
