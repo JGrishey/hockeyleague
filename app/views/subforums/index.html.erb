@@ -108,7 +108,7 @@
         <% @recent_posts.each do |post| %>
             <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
                 <div class="card">
-                    <div class="card-body p-2">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-3 text-center align-self-center">
                                 <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(post.most_recent.user) %>/>
