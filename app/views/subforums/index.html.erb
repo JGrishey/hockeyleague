@@ -113,14 +113,14 @@
                             <div class="col-3 text-center align-self-center">
                                 <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(post.most_recent.user) %>/>
                             </div>
-                            <div class="col-9 p-2">
-                                <div class="row">
+                            <div class="col-9 text-left">
+                                <div>
                                     <%= post.title %>
                                 </div>
-                                <div class="row">
+                                <div>
                                     <span class="text-muted"><%= (post.updated_at - 4.hours).strftime("%b %d at %I:%M %p") %></span>
                                 </div>
-                                <div class="row">
+                                <div>
                                     <span class="text-muted"><%= post.subforum.title %></span>
                                 </div>
                             </div>
