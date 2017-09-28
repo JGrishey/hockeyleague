@@ -77,6 +77,7 @@ module ApplicationHelper
 
     def banner_options
         [
+            [nil, "https://nhl.bamcontent.com/images/actionshots/8470638.jpg"],
             ["", "https://nhl.bamcontent.com/images/actionshots/8470638.jpg"],
             ["Ryan Getzlaf", "https://nhl.bamcontent.com/images/actionshots/8470612.jpg"],
             ["Cam Fowler", "https://nhl.bamcontent.com/images/actionshots/8475764.jpg"],
