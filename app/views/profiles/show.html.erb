@@ -1,4 +1,4 @@
-<img class="img-responsive mt-3" style="max-width: 100%; max-height: 100%;" src="<%= @user.banner %>"/>
+<img class="img-responsive mt-3" style="max-width: 100%; max-height: 100%;" src="<%= @user.banner ? @user.banner : 'https://nhl.bamcontent.com/images/actionshots/8470638.jpg' %>"/>
 <div class="profile-avatar">
     <img class="avtr" src=<%= get_avatar(@user) %>/>
 </div>
