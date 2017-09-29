@@ -11,7 +11,11 @@
 body {
     font-family: "Inter UI", sans-serif !important;
     width: 100%;
-    background-color: rgb(200,200,200);
+    background-color: #e1e1e1;
+}
+
+.bg-main {
+    background-color: #e1e1e1 !important;
 }
 
 // links (a)
@@ -138,3 +142,52 @@ hr {
         max-width: 100%;
     }
 }
+
+// Sidebar
+
+@media (min-width: 1200px)
+{
+    .side-navigation {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 992px)
+{
+    .side-navigation {
+        max-width: 960px;
+    }
+}
+@media (min-width: 768px)
+{
+    .side-navigation {
+        max-width: 720px;
+    }
+}
+@media (min-width: 576px)
+{
+    .side-navigation {
+        max-width: 540px;
+    }
+}
+
+.side-navigation {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 1.0s;
+}
+
+.text-m-link {
+    color: rgba(0,0,0,0.5);
+}
+
+.text-m-link:hover {
+    color: rgba(0,0,0,1.0);
+}
+

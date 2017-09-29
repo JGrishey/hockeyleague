@@ -55,31 +55,78 @@
         </script>
     <% end %>
    
-     <nav class="navbar navbar-light bg-white" style="background-color: #d2d2d2; margin-bottom: 0.2em;">
+     <nav class="navbar navbar-light bg-main p-4">
+
         <%= link_to root_path, class: "navbar-brand", method: :get do %>
-            <img class="img-fluid" width="30" height="30" src=<%= image_path("MooseLogo.png") %>/>
+            MOOSE
         <% end %>
-
-        <%= link_to "Rules", pages_rules_path, method: :get, class: "nav-link" %>
-
-        
 
         <% if user_signed_in? %>
 
-            <%= link_to "MHL", league_path(League.first), method: :get, class: "nav-link" %>
-
-            <div id="notifications">
-                <%= render 'notifications/notification_dropdown' %>
-            </div>
-
-            <%= link_to profile_path(current_user.user_name), method: :get, class: "nav-link" do %>
+            <%= link_to profile_path(current_user.user_name), method: :get, class: "ml-auto mr-5" do %>
                 <img class="img-fluid rounded-circle" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
             <% end %>
 
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"nav-link" %>
+            <div onclick="openNavigation()" class="nav-link" style="cursor: pointer;">
+                <%= octicon "three-bars", fill: "#000", width: "30", height: "30" %>
+            </div>
 
         <% end %>
     </nav>
+
+    <% if user_signed_in? %>
+
+        <div id="sideNavigation" class="side-navigation">
+            <div class="p-4">
+                <div class="text-right mb-3" style="cursor: pointer;" onclick="closeNavigation()">
+                    <%= octicon "x", fill: "#000", opacity: "0.8", width: "40", height: "40" %>
+                </div>
+
+                <div class="text-center">
+                    <h6 class="text-weight-normal"><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "text-m-link" %></div>
+                </div>
+
+                <div class="row ml-3 mr-3">
+                    <div class="col-6 text-left">
+                        <div class="mb-4">
+                            <h5 class="mb-3 font-weight-normal">Administrative</h5>
+                            <h6 class="font-weight-normal"><%= link_to "Rules", pages_rules_path, method: :get, class: "text-m-link" %></h6>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="mb-3 font-weight-normal">Leagues</h5>
+                            <% League.all.each do |league| %>
+                                <h6 class="font-weight-normal"><%= link_to league.name, league_path(league), method: :get, class: "text-m-link" %></h6>
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-4">
+                            <h5 class="mb-3 font-weight-normal">Forums</h5>
+                            <% Subforum.all.each do |subforum| %>
+                                <h6 class="font-weight-normal"><%= link_to subforum.title, subforum_path(subforum), method: :get, class: "text-m-link" %></h6>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+
+                <%= link_to profile_path(current_user.user_name), method: :get, class: "mb-4" do %>
+                    <div class="text-center w-25 m-auto mb-2">
+                        <img class="img-fluid rounded-circle" src="<%= get_avatar(current_user) %>"/>
+                    </div>
+                    <h5 class="text-center">
+                        <%= current_user.user_name %>
+                    </h5>
+                <% end %>
+
+                <div class="ml-3 mr-3 mt-4">
+                    <div id="notifications">
+                        <%= render 'notifications/notifications' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <% end %>
 
     <div class="container mb-3">
         <%= yield %>

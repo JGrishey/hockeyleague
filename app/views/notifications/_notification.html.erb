@@ -1,9 +1,14 @@
-<div class="dropdown-item" id="notification_<%= notification.id%>">
-    <%= link_to notification.body, link_through_path(notification) %>
-    <div class="text-center">
-        <%= link_to clear_notification_path(notification), method: :post, remote: true, id: "clear_notification_#{notification.id}" do %>
+<div class="row mb-2">
+    <%= link_to link_through_path(notification), class: "col-11 align-self-center" do %>
+        <div class="card rounded-0" id="notification_<%= notification.id%>">
+            <div class="card-body">
+                <%= notification.body %>
+            </div>
+        </div>
+    <% end %> 
+    <%= link_to clear_notification_path(notification), method: :post, remote: true, id: "clear_notification_#{notification.id}", class: "col-1 align-self-center" do %>
+        <div class="text-center">
             <%= octicon "x" %>
-        <% end %>
-    </div>
+        </div>
+    <% end %>
 </div>
-<li class="divider" role="separator"></li>

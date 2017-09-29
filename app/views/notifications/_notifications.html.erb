@@ -1,0 +1,2 @@
+<h5 class="text-center font-weight-normal">Notifications (<%= current_user.notifications.where(read: false).count %>)</h5>
+<%= render current_user.notifications.where(read: false).order("created_at DESC") %>

@@ -1,4 +1,4 @@
-<div class="card mb-2" style="max-height: 400px; overflow: scroll;" id="scrolling">
+<div class="card mb-2 rounded-0" style="max-height: 400px; overflow: scroll;" id="scrolling">
     <div class="card-body messages">
         <div class="row">
             <div class="col-12 text-center">
@@ -16,13 +16,13 @@
 <%= simple_form_for(message, url: "#") do |f| %>
     <div class="form-group row">
         <div class="col-10">
-            <div class="pell" id="pell">
+            <div class="pell rounded-0" id="pell">
             </div>
             <%= f.hidden_field :body %>
             <%= f.button :submit, style: "display: none;", id: "real-submit" %>
         </div>
         <div class="col-2 align-self-center">
-            <%= f.button :submit, "Send", class: "btn btn-outline-dark w-100", style: "cursor: pointer;", id: "message_submit" %>
+            <%= f.button :submit, "Send", class: "btn btn-outline-dark w-100 rounded-0", style: "cursor: pointer;", id: "message_submit" %>
         </div>
     </div>
 <% end %>
