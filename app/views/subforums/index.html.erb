@@ -2,20 +2,15 @@
 
 <div class="row mt-4">
     <div class="col-12">
-        <div class="card bg-danger text-white rounded-0">
-            <div class="card-header text-center font-weight-bold text-uppercase">
-                Announcement
-            </div>
-            <div class="card-body text-center">
-                <div class="text-center mb-3">
-                    <%= link_to "Sign up for Season 33!", signup_league_season_path(@main_league, @season), method: :get %>
-                </div>
-                <div class="text-center mb-3">
-                    Draft is Monday, October 16th. Season starts October 22nd. Signups close October 8th!
-                </div>
-                <%= link_to "Who's signed up?", signups_league_path(@main_league), method: :get %>
-            </div>
-        </div>
+        <h4>Important Information</h4>
+        <hr></hr>
+        <h6>Signup Close: <strong>Sunday, October 8th</strong></h6>
+        <h6>Draft Date: <strong>Monday, October 16th</strong></h6>
+        <h6>Season Start: <strong>Sunday, October 22nd</strong></h6>
+
+        <% if !current_user.signed_up_for(@season) %>
+            <%= link_to "Sign up for Season 33!", signup_league_season_path(@main_league, @season), method: :get %>
+        <% end %>
     </div>
 </div>
 
