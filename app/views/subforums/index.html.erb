@@ -10,8 +10,10 @@
 
         <h6><%= link_to "Current RFA's and Keepers", pages_protected_players_path, method: :get, class: "text-dark" %></h6>
 
+        <h6><%= link_to "Who's signed up?", signups_league_path(@main_league), method: :get %></h6>
+
         <% if !current_user.signed_up_for(@season) %>
-            <%= link_to "Sign up for Season 33!", signup_league_season_path(@main_league, @season), method: :get %>
+            <%= link_to "Sign up for Season 33!", signup_league_season_path(@main_league, @season), method: :get, class: "text-dark" %>
         <% end %>
     </div>
 </div>
