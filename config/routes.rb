@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'pages/rules'
     get 'pages/landing'
     get 'pages/player_rankings'
+    get 'pages/protected_players'
     get 'chat_boxes/:id/archive', to: "chat_boxes#archive", as: :archive
     get 'chat_boxes/timestamps'
 

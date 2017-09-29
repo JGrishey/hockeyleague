@@ -34,4 +34,7 @@ class PagesController < ApplicationController
         @ratings = @ratings.sort_by {|p| -p[:rating].to_f }
     end
 
+    def protected_players
+
+    end
 end
