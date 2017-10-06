@@ -11,15 +11,23 @@
 body {
     font-family: "Inter UI", sans-serif !important;
     width: 100%;
-    background-color: #e1e1e1;
+    background-color: #ECECEC;
 }
 
 .bg-main {
-    background-color: #e1e1e1 !important;
+    background-color: #ECECEC !important;
 }
 
-.bg-red {
-    background-color: #e1253b !important;
+.bg-accent {
+    background-color: #003459 !important;
+}
+
+.border-accent {
+    border-color: #003459 !important;
+}
+
+.bg-dark {
+    background-color: #003459 !important;
 }
 
 // links (a)
@@ -68,19 +76,50 @@ a, a:focus, a:hover {
     }
 }
 
-.pell-content-chat {
-    max-height: 50px;
-    overflow: scroll;
+.pell {
+    box-shadow: none;
+}
+
+.pell-chat {
+    max-height: 74px;
+    overflow: hidden;
+}
+
+.pell-actionbar-chat {
+    padding: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+    text-align: center;
+    vertical-align: middle;
     outline: none;
-    background-color: #ececec;
+    border: 0;
+}
+
+.pell-content-chat {
+    overflow: scroll;
+    max-height: 74px;
+    outline: none;
+    background-color: #fff !important;
 }
 
 .pell-content {
-    background-color: #ececec;
+    background-color: #fff;
 }
 
 .pell-button {
     width: 50px !important;
+}
+
+.pell-button-chat {
+    padding: 0;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    background: transparent;
 }
 
 #messages {
@@ -103,6 +142,10 @@ a, a:focus, a:hover {
     @media (min-width: 992px) {
         font-size: 0.75em;
     }
+}
+
+.messages-container {
+    box-shadow: 0 2px 3px hsla(0,0%,4%,.1), 0 0 0 1px hsla(0,0%,4%,.1);
 }
 // separate stylesheet into media queries
 
@@ -149,6 +192,14 @@ hr {
 
 // Sidebar
 
+.side-navigation {
+    z-index: 2000 !important;
+}
+
+@media (max-width: 992px) {
+    .container { width: 100%; max-width: none; }
+}
+
 @media (min-width: 1200px)
 {
     .side-navigation {
@@ -188,10 +239,10 @@ hr {
 }
 
 .text-m-link {
-    color: rgba(0,0,0,0.5);
+    color: rgba(255,255,255,0.5);
 }
 
 .text-m-link:hover {
-    color: rgba(0,0,0,1.0);
+    color: rgba(255,255,255,1.0);
 }
 

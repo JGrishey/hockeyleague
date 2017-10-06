@@ -1,43 +1,33 @@
 <%= render 'games/carousel', league: @main_league, season: @season, recent_games: @recent_games %>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <h4>Important Information</h4>
-        <hr></hr>
-        <h6>Signup Close: <strong>Sunday, October 8th</strong></h6>
-        <h6>Draft Date: <strong>Monday, October 16th</strong></h6>
-        <h6>Season Start: <strong>Sunday, October 22nd</strong></h6>
-
-        <h6><%= link_to "Current RFA's and Keepers", pages_protected_players_path, method: :get, class: "text-dark" %></h6>
-
-        <h6><%= link_to "Who's signed up?", signups_league_path(@main_league), method: :get %></h6>
-
-        <% if !current_user.signed_up_for(@season) %>
-            <%= link_to "Sign up for Season 33!", signup_league_season_path(@main_league, @season), method: :get, class: "text-dark" %>
-        <% end %>
+<div class="card rounded-0 border-accent">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-lg-4 text-center">
+                <h6>Signup Close: <strong>Sunday, October 8th</strong></h6>
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+                <h6>Draft Date: <strong>Monday, October 16th</strong></h6>
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+                <h6>Season Start: <strong>Sunday, October 22nd</strong></h6>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="row mt-4">
     <div class="col-12 col-lg-8 mb-4">
-        <div class="card bg-dark text-white mb-3 rounded-0" style="margin-bottom: 0.2em;">
-            <div class="card-body">
-                <div class="card-text">
-                    Chat
-                </div>
-            </div>
+        <div class="text-left mb-2 border border-accent border-top-0 border-left-0 border-right-0">
+            <h2>Chat</h2>
         </div>
 
         <div id="chatbox">
             <%= render 'chat_boxes/chatbox', chat_box: @chatbox, messages: @messages, message: Message.new %>
         </div>
-        
-        <div class="card rounded-0 bg-dark text-white mt-4 mb-3" style="margin-bottom: 0.2em;">
-            <div class="card-body">
-                <div class="card-text">
-                    Forum
-                </div>
-            </div>
+
+        <div class="text-left mt-4 mb-2 border border-accent border-top-0 border-left-0 border-right-0">
+            <h2>Forum</h2>
         </div>
         
         <% @subforums.each do |subforum| %>
@@ -46,44 +36,51 @@
     </div>
 
     <div class="col-12 col-lg-4">
-        <div class="card bg-dark rounded-0 text-white mb-3" style="margin-bottom: 0.2em;">
-            <div class="card-body">
-                <div class="card-text">
-                    Leagues
-                </div>
-            </div>
+        <div class="text-left mb-2 border border-accent border-top-0 border-left-0 border-right-0">
+            <h2>Leagues</h2>
         </div>
 
         <% @leagues.each do |league| %>
             <%= link_to league, method: :get do %>
-                <div class="card rounded-0">
+                <div class="card rounded-0 border-accent">
                     <div class="card-body">
-                        <div class="card-title">
-                            <%= league.name %>
-                        </div>
-                        <div class="card-text text-muted">
-                            <%= pluralize(league.seasons.count, "season") %>
-                        </div>
+                        <%= league.name %> - <%= league.current_season.title %>
                     </div>
                 </div>
             <% end %>
         <% end %>
 
+        <%= link_to signups_league_path(@main_league), method: :get do %>
+            <div class="card rounded-0 mt-4 border-accent">
+                <div class="card-body">
+                     Who's signed up?
+                </div>
+            </div>
+        <% end %>
+
+        <%= link_to pages_protected_players_path, method: :get do %>
+            <div class="card rounded-0 mt-4 border-accent">
+                <div class="card-body">
+                    Current RFAs and Keepers
+                </div>
+            </div>
+        <% end %>
+
         <% if !current_user.signed_up_for(@season) %>
-            <%= link_to signup_league_season_path(@main_league, @season), class: "card rounded-0 mt-4 bg-dark text-white mb-3", method: :get do %>
+            <%= link_to signup_league_season_path(@main_league, @season), class: "card rounded-0 mt-4 bg-accent border-accent text-white mb-3", method: :get do %>
                 <div class="card-body">
                     Sign up for Season 33
                 </div>
             <% end %>
         <% end %>
 
-        <%= link_to pages_player_rankings_path, class:"card mt-4 rounded-0", method: :get do %>
+        <%= link_to pages_player_rankings_path, class:"card mt-4 rounded-0 border-accent", method: :get do %>
             <div class="card-body justify-content-center text-center">
                 <img class="img-fluid" src="<%= asset_path("PlayerRatings.png") %>"/>
             </div>
         <% end %>
 
-        <div class="card mt-4 rounded-0">
+        <div class="card mt-4 rounded-0 border-accent">
             <div class="card-body">
                 <div class="card-title">
                     Online members
@@ -96,17 +93,13 @@
             </div>
         </div>
 
-        <div class="card bg-dark text-white mt-4 mb-3 rounded-0">
-            <div class="card-body">
-                <div class="card-text">
-                    Recent posts
-                </div>
-            </div>
+        <div class="text-left mt-4 mb-2 border border-accent border-top-0 border-left-0 border-right-0">
+            <h2>Recent Posts</h2>
         </div>
 
         <% @recent_posts.each do |post| %>
             <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
-                <div class="card rounded-0 mb-2">
+                <div class="card rounded-0 border-accent mb-1">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-3 text-center align-self-center">

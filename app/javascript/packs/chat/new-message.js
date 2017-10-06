@@ -28,7 +28,7 @@ $(document).ready(() => {
                 actions: [
                     {   
                         name: 'image',
-                        icon: '&#128247;',
+                        icon: '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-camera-128.png" width="30" height="30"/>',
                         title: 'Image',
                         result: () => {
                             document.getElementsByClassName("pell-content")[0].focus();
@@ -40,9 +40,9 @@ $(document).ready(() => {
                     },
                 ],
                 classes: {
-                    actionbar: 'pell-actionbar',
-                    button: 'pell-button',
-                    content: 'pell-content pell-content-chat'
+                    actionbar: 'pell-actionbar pell-actionbar-chat col-1',
+                    button: 'pell-button-chat',
+                    content: 'pell-content pell-content-chat col-11'
                 }
             })
         }

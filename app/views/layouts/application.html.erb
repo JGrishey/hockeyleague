@@ -55,33 +55,12 @@
         </script>
     <% end %>
 
-    <div class="container">
-   
-        <nav class="navbar navbar-light bg-main p-4">
+    <% if user_signed_in? %>
 
-            <%= link_to root_path, class: "navbar-brand", method: :get do %>
-                <img height="75" width="75" src="<%= image_path("MooseLogo.png")%>"/> Moose Hockey League
-            <% end %>
-
-            <% if user_signed_in? %>
-
-                <%= link_to profile_path(current_user.user_name), method: :get, class: "ml-auto mr-5" do %>
-                    <img class="img-fluid rounded-circle" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
-                <% end %>
-
-                <div onclick="openNavigation()" class="nav-link" style="cursor: pointer;">
-                    <%= octicon "three-bars", fill: "#000", width: "30", height: "30" %>
-                </div>
-
-            <% end %>
-        </nav>
-
-        <% if user_signed_in? %>
-
-            <div id="sideNavigation" class="side-navigation">
+            <div id="sideNavigation" class="side-navigation bg-accent text-white">
                 <div class="p-4">
                     <div class="text-right mb-3" style="cursor: pointer;" onclick="closeNavigation()">
-                        <%= octicon "x", fill: "#000", opacity: "0.8", width: "40", height: "40" %>
+                        <%= octicon "x", fill: "#fff", opacity: "0.8", width: "40", height: "40" %>
                     </div>
 
                     <div class="text-center">
@@ -129,6 +108,32 @@
 
         <% end %>
 
+    <nav class="navbar sticky-top navbar-light bg-main">
+
+        <%= link_to root_path, class: "navbar-brand", method: :get do %>
+            Moose Hockey League
+        <% end %>
+
+        <% if user_signed_in? %>
+
+            <%= link_to profile_path(current_user.user_name), method: :get, class: "ml-auto mr-5" do %>
+                <img class="img-fluid rounded-circle mr-2" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
+            <% end %>
+
+            <div onclick="openNavigation()" class="nav-link" style="cursor: pointer;">
+                <%= octicon "three-bars", fill: "#22242e", width: "30", height: "30" %>
+            </div>
+
+        <% end %>
+    </nav>
+
+    <div class="text-center mb-4" style="z-index: 1500; position: relative;">
+        <%= link_to root_path, method: :get do %>
+            <img width="75" height="75" style="margin-top: -35px; z-index: 1500;" src="<%= image_path("MooseLogo.png") %>"/>
+        <% end %>
+    </div>
+
+    <div class="container">
         <%= yield %>
     </div>
 </body>

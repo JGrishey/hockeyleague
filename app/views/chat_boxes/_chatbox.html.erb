@@ -1,4 +1,4 @@
-<div class="card mb-2 rounded-0" style="max-height: 400px; overflow: scroll;" id="scrolling">
+<div class="card rounded-0 border-top-0 border-left-0 border-right-0 border-bottom-0 messages-container" style="max-height: 400px; overflow: scroll;" id="scrolling">
     <div class="card-body messages">
         <div class="row">
             <div class="col-12 text-center">
@@ -14,15 +14,17 @@
 </div>
 
 <%= simple_form_for(message, url: "#") do |f| %>
-    <div class="form-group row">
-        <div class="col-10">
-            <div class="pell rounded-0" id="pell">
+    <div class="form-group row mt-2">
+        <div class="col-10 mr-0 ml-0 pr-0">
+            <div class="pell pell-chat rounded-0 row ml-0 mr-0 border border-accent" id="pell">
             </div>
             <%= f.hidden_field :body %>
             <%= f.button :submit, style: "display: none;", id: "real-submit" %>
         </div>
-        <div class="col-2 align-self-center">
-            <%= f.button :submit, "Send", class: "btn btn-outline-dark w-100 rounded-0", style: "cursor: pointer;", id: "message_submit" %>
+        <div class="col-2 align-self-center mr-0 ml-0 pl-0">
+            <%= button_tag(type: 'submit', class: "btn bg-white w-100 rounded-0 border-accent border-left-0", style: "cursor: pointer; height: 74px;", id: "message_submit") do %>
+                <%= octicon "mail", height: "30", width: "30", fill: "#003459" %>
+            <% end %>
         </div>
     </div>
 <% end %>
