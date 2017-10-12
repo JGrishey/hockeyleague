@@ -55,85 +55,40 @@
         </script>
     <% end %>
 
-    <% if user_signed_in? %>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-main pt-4 pb-4 nav-border">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <div id="sideNavigation" class="side-navigation bg-accent text-white">
-                <div class="p-4">
-                    <div class="text-right mb-3" style="cursor: pointer;" onclick="closeNavigation()">
-                        <%= octicon "x", fill: "#fff", opacity: "0.8", width: "40", height: "40" %>
-                    </div>
-
-                    <div class="text-center">
-                        <h6 class="text-weight-normal"><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "text-m-link" %></div>
-                    </div>
-
-                    <div class="row ml-3 mr-3">
-                        <div class="col-6 text-left">
-                            <div class="mb-4">
-                                <h5 class="mb-3 font-weight-normal">Administrative</h5>
-                                <h6 class="font-weight-normal"><%= link_to "Rules", pages_rules_path, method: :get, class: "text-m-link" %></h6>
-                            </div>
-                            <div class="mb-4">
-                                <h5 class="mb-3 font-weight-normal">Leagues</h5>
-                                <% League.all.each do |league| %>
-                                    <h6 class="font-weight-normal"><%= link_to league.name, league_path(league), method: :get, class: "text-m-link" %></h6>
-                                <% end %>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="mb-4">
-                                <h5 class="mb-3 font-weight-normal">Forums</h5>
-                                <% Subforum.all.each do |subforum| %>
-                                    <h6 class="font-weight-normal"><%= link_to subforum.title, subforum_path(subforum), method: :get, class: "text-m-link" %></h6>
-                                <% end %>
-                            </div>
-                        </div>
-                    </div>
-
-                    <%= link_to profile_path(current_user.user_name), method: :get, class: "mb-4" do %>
-                        <div class="text-center w-25 m-auto mb-2">
-                            <img class="img-fluid rounded-circle" src="<%= get_avatar(current_user) %>"/>
-                        </div>
-                        <h5 class="text-center">
-                            <%= current_user.user_name %>
-                        </h5>
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav mr-auto">
+                    <%= link_to root_path, class: "navbar-brand ml-0 d-none d-lg-inline-block", method: :get do %>
+                        Moose Hockey League
                     <% end %>
 
-                    <div class="ml-3 mr-3 mt-4">
-                        <div id="notifications">
-                            <%= render 'notifications/notifications' %>
-                        </div>
-                    </div>
+                    <%= link_to "Rules", pages_rules_path, class: "nav-link", method: :get %>
                 </div>
 
-        <% end %>
-
-    <nav class="navbar sticky-top navbar-light bg-main">
-
-        <%= link_to root_path, class: "navbar-brand", method: :get do %>
-            Moose Hockey League
-        <% end %>
-
-        <% if user_signed_in? %>
-
-            <%= link_to profile_path(current_user.user_name), method: :get, class: "ml-auto mr-5" do %>
-                <img class="img-fluid rounded-circle mr-2" width="30" height="30" src="<%= get_avatar(current_user) %>"/> <%= current_user.user_name %>
-            <% end %>
-
-            <div onclick="openNavigation()" class="nav-link" style="cursor: pointer;">
-                <%= octicon "three-bars", fill: "#22242e", width: "30", height: "30" %>
+                <% if user_signed_in? %>
+                    <span id="notifications">
+                        <%= render 'notifications/notifications'%>
+                    </span>
+                    <%= render 'profiles/profile_dropdown' %>
+                <% end %>
             </div>
-
-        <% end %>
+        </div>
     </nav>
 
-    <div class="text-center mb-4" style="z-index: 1500; position: relative;">
-        <%= link_to root_path, method: :get do %>
-            <img width="75" height="75" style="margin-top: -35px; z-index: 1500;" src="<%= image_path("MooseLogo.png") %>"/>
-        <% end %>
-    </div>
-
     <div class="container">
+        
+
+        <div class="text-center mb-4" style="z-index: 1500; position: relative;">
+            <%= link_to root_path, method: :get do %>
+                <img width="75" height="75" style="margin-top: -45px; z-index: 1500;" src="<%= image_path("MooseLogo.png") %>"/>
+            <% end %>
+        </div>
+
         <%= yield %>
     </div>
 </body>

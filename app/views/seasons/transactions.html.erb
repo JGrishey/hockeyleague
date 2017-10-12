@@ -56,47 +56,34 @@
         </div>
     <% end %>
 
-    <% if current_user.admin %>
+<% if current_user.admin %>
         <div class="card mt-3">
             <div class="card-header text-center bg-dark text-white">
                 Pending Trades
             </div>
             
-            <div class="card-body text-center">
+            <div class="card-body">
                 <% if @pending_trades.any? %>
                     <% @pending_trades.each do |trade| %>
-                        <div class="text-center font-weight-bold text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 p-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
-                        <div class="row mt-2 p-3 justify-content-center">
-                            <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
-                                <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
-                                    <%= link_to league_season_team_path(@league, @season, Team.find(key)), class: "text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row", method: :get do %>
-                                        <div class="col-4 align-self-center text-left">
-                                            <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
-                                        </div>
-                                        <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
-                                            <%= @season.teams.find(key).name %>
-                                        </div>
-                                    <% end %>
-                                    <% value.each do |v| %>
-                                        <div class="row">
-                                            <div class="col-12 p-2 text-left">
-                                                <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> (<%= v.team_player.salary %> BOD)
-                                            </div>
-                                        </div>
-                                    <% end %>
-                                </div>
+                        <div class="text-muted text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 pb-2 mb-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
+                        <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
+                            <% names = [] %>
+                            <% value.each do |v| %>
+                                <% names.push(v.team_player.player.user_name) %>
                             <% end %>
+                            <p class="text-left">
+                                <strong><%= @season.teams.find(key).name %> </strong>receive: <%= names.to_sentence %>
+                            </p>
+                        <% end %>
 
-                            <div class="col-12 mt-2 justify-content-center">
-                                <%= link_to approve_transaction_league_season_path(@league, @season, trade_id: trade.id), method: :post do %>
-                                    <button class="btn btn-outline-dark" style="cursor: pointer;">Approve Transaction</button>
-                                <% end %>
-                                <%= link_to decline_transaction_league_season_path(@league, @season, trade_id: trade.id), method: :post do %>
-                                    <button class="btn btn-outline-dark" style="cursor: pointer;">Decline Transaction</button>
-                                <% end %>
-                            </div>
+                        <div class="text-center mt-2">
+                            <%= link_to approve_transaction_league_season_path(@league, @season, trade_id: trade.id), method: :post do %>
+                                <button class="btn btn-outline-dark" style="cursor: pointer;">Approve Transaction</button>
+                            <% end %>
+                            <%= link_to decline_transaction_league_season_path(@league, @season, trade_id: trade.id), method: :post do %>
+                                <button class="btn btn-outline-dark" style="cursor: pointer;">Decline Transaction</button>
+                            <% end %>
                         </div>
-                        
                     <% end %>
                 <% else %>
                     <div class="card-text">
@@ -109,31 +96,19 @@
 
     <div class="card mt-3 mb-3">
         <div class="card-header text-center bg-dark text-white">Approved Transactions</div>
-        <div class="card-body text-center">
+        <div class="card-body">
             <% if @approved_trades.any? %>
                 <% @approved_trades.each do |trade| %>
-                    <div class="text-center font-weight-bold text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 p-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
-                    <div class="row mt-2 p-3 justify-content-center">
-                        <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
-                            <div class="col-6 col-lg-3 mb-3 ml-2 align-self-center">
-                                <%= link_to league_season_team_path(@league, @season, Team.find(key)), class: "text-center border border-top-0 border-left-0 border-right-0 border-dark p-2 row", method: :get do %>
-                                    <div class="col-4 align-self-center text-left">
-                                        <img class="img-fluid" src="<%= get_logo(@season.teams.find(key)) %>"/>
-                                    </div>
-                                    <div class="col-8 align-self-center text-left font-weight-bold text-uppercase">
-                                        <%= @season.teams.find(key).name %>
-                                    </div>
-                                <% end %>
-                                <% value.each do |v| %>
-                                    <div class="row">
-                                        <div class="col-12 p-2 text-left">
-                                            <img class="mr-1 img-responsive rounded-circle" width="30" src="<%= get_avatar(v.team_player.player) %>"/> <%= v.team_player.player.user_name %> (<%= v.team_player.salary %> BOD)
-                                        </div>
-                                    </div>
-                                <% end %>
-                            </div>
+                    <div class="text-muted text-uppercase border border-secondary border-top-0 border-left-0 border-right-0 pb-2 mb-2"><%= trade.updated_at.strftime("%^b %d, %Y") %></div>
+                    <% trade.movements.group_by{|m| m.destination_id}.each do |key, value| %>
+                        <% names = [] %>
+                        <% value.each do |v| %>
+                            <% names.push(v.team_player.player.user_name) %>
                         <% end %>
-                    </div>
+                        <p class="text-left">
+                            <strong><%= @season.teams.find(key).name %> </strong>receive: <%= names.to_sentence %>
+                        </p>
+                    <% end %>
                 <% end %>
             <% else %>
                 <div class="card-text">

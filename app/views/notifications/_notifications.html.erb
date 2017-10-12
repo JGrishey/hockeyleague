@@ -1,2 +1,10 @@
-<h5 class="text-center font-weight-normal">Notifications (<%= current_user.notifications.where(read: false).count %>)</h5>
-<%= render current_user.notifications.where(read: false).order("created_at DESC") %>
+<div class="dropdown align-self-center ml-auto">
+    <button class="" type="button" id="notiDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= current_user.notifications.where(read: false).count %> <%= octicon "bell" %>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" style="width: 300px;">
+        <a class="dropdown-item disabled text-muted text-center">Your Notifications</a>
+        <div class="dropdown-divider"></div>
+        <%= render current_user.notifications.where(read: false).order("created_at DESC") %>
+    </div>
+</div>

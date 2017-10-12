@@ -170,4 +170,11 @@ module ApplicationHelper
             ["Connor Hellebucyk", "https://nhl.bamcontent.com/images/actionshots/8476945.jpg"],
         ]
     end
+
+    def move_player (season, player_name, dest, salary = 0)
+        player = User.find_by(user_name: player_name)
+        tp = player.getCurrentTeamPlayer(season)
+        destination = season.teams.find_by(name: dest)
+        tp.update_attributes(team_id: destination.id, salary: salary)
+    end
 end

@@ -11,11 +11,21 @@
 body {
     font-family: "Inter UI", sans-serif !important;
     width: 100%;
-    background-color: #ECECEC;
+    background-color: #fafafa;
+}
+
+@media (max-width: 991px) {
+    body {
+        font-size: 1.5em !important;
+    }
 }
 
 .bg-main {
-    background-color: #ECECEC !important;
+    background-color: #fff !important;
+}
+
+.nav-border {
+    border-bottom: 1px solid rgba(0,0,0,.0975);
 }
 
 .bg-accent {
@@ -28,6 +38,24 @@ body {
 
 .bg-dark {
     background-color: #003459 !important;
+}
+
+.chat-message {
+    p {
+        display: inline;
+    }
+
+    a {
+        display: inline;
+    }
+
+    img {
+        display: block;
+    }
+
+    .img-inline {
+        display: inline-block;
+    }
 }
 
 // links (a)
@@ -152,6 +180,20 @@ a, a:focus, a:hover {
 //
 //  Smaller than a tablet
 //
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.dropdown {
+    button {
+        cursor: pointer;
+        outline: none;
+        border: none;
+        background: transparent;
+    }
+}
 
 .notification-dropdown {
     display: inline-block;

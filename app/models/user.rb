@@ -109,6 +109,16 @@ class User < ApplicationRecord
         team
     end
 
+    def getCurrentTeamPlayer (season)
+        team = nil
+        self.team_players.each do |tp|
+            if tp.team.season == season
+                team = tp
+            end
+        end
+        team
+    end
+
     def getLeagues
         leagues = []
         self.seasons.each do |season|
