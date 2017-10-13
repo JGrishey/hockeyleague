@@ -9,7 +9,7 @@ class PostsController < ApplicationController
     end
 
     def show
-        @comments = @post.comments.order('created_at ASC')
+        @comments = @post.comments.order('created_at ASC').page(params[:page])
     end
 
     def new

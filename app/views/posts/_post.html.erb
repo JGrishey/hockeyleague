@@ -47,6 +47,10 @@
 
 <div id="comments">
     <%= render @comments.order('created_at ASC'), post: post, subforum: subforum %>
+
+    <div class="text-center mt-4">
+        <%= will_paginate @comments %>
+    </div>
 </div>
 
 <div class="mt-4">

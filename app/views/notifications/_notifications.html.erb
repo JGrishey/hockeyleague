@@ -1,4 +1,4 @@
-<div class="dropdown align-self-center ml-auto">
+<div class="dropdown align-self-center ml-auto w-100">
     <button class="" type="button" id="notiDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <%= current_user.notifications.where(read: false).count %> <%= octicon "bell" %>
     </button>
