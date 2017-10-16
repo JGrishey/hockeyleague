@@ -271,8 +271,21 @@ class SeasonsController < ApplicationController
 
             @trade.update_attributes(pending: false, approved: true)
 
+            announcement = ""
+            announcement += "<h5>Transaction Annoucement!</h5><hr></hr>"
+
+            @trade.movements.group_by{|m| m.destination_id}.each do |key, value|
+                names = [] 
+                value.each do |v|
+                    names.push(v.team_player.player.user_name)
+                end
+                announcement += "<p class='text-left'>"
+                announcement += "<strong>#{@season.teams.find(key).name} </strong>receive: #{names.to_sentence}"
+                announcement += "</p>"
+            end
+
             User.find_by(user_name: "Admin").messages.create!(
-                body: "A transaction has just been approved in #{@league.name}. Check it out!",
+                body: announcement.html_safe,
                 chat_box_id: ChatBox.first.id)
 
             redirect_to transactions_league_season_path(@league, @season)

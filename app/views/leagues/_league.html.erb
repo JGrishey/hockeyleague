@@ -61,6 +61,27 @@
         </div>
     </div>
 
+    <div class="row mt-2">
+        <% if season.teams.find_by(name: "Waivers") %>
+                <div class="col-12 col-lg-6">
+                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Waivers")), method: :get, class: "card" do %>
+                        <div class="card-body text-center">
+                            <h3>Waivers</h3>
+                        </div>
+                    <% end %>
+                </div>
+        <% end %>
+        <% if season.teams.find_by(name: "Free Agents") %>
+                <div class="col-12 col-lg-6">
+                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Free Agents")), method: :get, class: "card" do %>
+                        <div class="card-body text-center">
+                            <h3>Free Agents</h3>
+                        </div>
+                    <% end %>
+                </div>
+        <% end %>
+    </div>
+
     <% if season.teams.any? %>
         <div class="card mt-2">
             <div class="card-header text-center bg-dark text-white">
