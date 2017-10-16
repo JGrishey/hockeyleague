@@ -44,7 +44,7 @@ class PagesController < ApplicationController
         @unplaced = @season.signups.select{|s| s.player.getCurrentTeamPlayer(@season).team.name == "Unplaced Players"}.sort_by{|s| s.player.user_name}
     end
 
-    def draft_update
+    def draftupdate
         @season = Season.first
         @teams = @season.teams.includes(:team_players)
         @unplaced = @season.signups.select{|s| s.player.getCurrentTeamPlayer(@season).team.name == "Unplaced Players"}.sort_by{|s| s.player.user_name}
