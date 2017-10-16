@@ -1,6 +1,6 @@
 $(document).ready(() => {
     if (document.getElementById("unplaced")) {
-        setInterval(refreshPartial, 60000)
+        setInterval(refreshPartial, 15000)
     }
 })
 
