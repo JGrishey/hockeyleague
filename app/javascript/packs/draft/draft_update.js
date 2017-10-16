@@ -6,6 +6,6 @@ $(document).ready(() => {
 
 const refreshPartial = () => {
     $.ajax({
-        url: "pages/draft_update"
+        url: "/pages/draftupdate"
     })
 }
