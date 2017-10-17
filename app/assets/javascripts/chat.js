@@ -2,11 +2,10 @@ $(document).on("turbolinks:load", () => {
     $('#scrolling').scrollTop($('#scrolling').scrollHeight);
 })
 
-
 $(document).on('turbolinks:request-start', function() {
     window.scrollTo(0, 0);
     $("#loader").show();
-    console.log("turbolinks loaded")
+    console.log("request starting")
 });
 
 $(document).on('turbolinks:render', function() {
@@ -16,5 +15,5 @@ $(document).on('turbolinks:render', function() {
 
 $(document).on('turbolinks:load', function() {
     $("#loader").hide();
-    console.log("rendered")
+    console.log("loaded")
 });

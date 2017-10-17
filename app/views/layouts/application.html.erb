@@ -11,6 +11,8 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <meta name="turbolinks-cache-control" content="no-cache">
+
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({
@@ -80,6 +82,10 @@
                     <% end %>
 
                     <%= link_to "Rules", pages_rules_path, class: "nav-link" %>
+
+                    <% if user_signed_in? %>
+                        <%= link_to "MHL", league_path(League.first), class: "nav-link" %>
+                    <% end %>
                 </div>
 
                 <% if user_signed_in? %>

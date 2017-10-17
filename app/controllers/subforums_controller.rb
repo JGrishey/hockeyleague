@@ -89,7 +89,7 @@ class SubforumsController < ApplicationController
 
     def show
         @subforum = Subforum.find(params[:id])
-        @posts = @subforum.posts
+        @posts = @subforum.posts.order('created_at DESC').page(params[:page])
     end
 
     private

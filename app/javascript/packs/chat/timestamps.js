@@ -1,11 +1,15 @@
 $(document).on("turbolinks:load", () => {
     if (document.getElementById("messages")) {
-        setInterval(refreshPartial, 60000)
+        let refresh = setInterval(refreshPartial, 60000)
+    } else {
+        if (!(typeof refresh === 'undefined')) {
+            clearInterval(refresh)
+        }
     }
 })
 
 const refreshPartial = () => {
     $.ajax({
-        url: "chat_boxes/timestamps"
+        url: "/chat_boxes/timestamps"
     })
 }
