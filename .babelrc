@@ -12,7 +12,6 @@
 
   "plugins": [
     "syntax-dynamic-import",
-    ["transform-class-properties", { "spec": true }],
-    "transform-react-jsx"
+    ["transform-class-properties", { "spec": true }]
   ]
 }
