@@ -22,7 +22,7 @@
                                         </div>
                                     </div>
                                     <% serie[1].each_with_index do |game, index| %>
-                                        <%= link_to league_season_game_path(league, season, game), method: :get, class: "col-2 p-0 align-self-center" do %>
+                                        <%= link_to league_season_game_path(league, season, game), class: "col-2 p-0 align-self-center" do %>
                                             <div class="row">
                                                 <% if game.final %>
                                                     <div class="col-12 text-center align-self-center mt-2">

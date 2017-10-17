@@ -1,6 +1,6 @@
 <div class="team-schedule">
     <div class="header">
-        <%= link_to league_season_team_path(@team.season.league, @team.season, @team), method: :get do %>
+        <%= link_to league_season_team_path(@team.season.league, @team.season, @team) do %>
             <img class="logo" src="<%= get_logo(@team) %>"/> <%= @team.name %> <%= @team.season.title %> Schedule
         <% end %>
     </div>
@@ -12,7 +12,7 @@
                 </div>
 
                 <% values.each do |v| %>
-                    <%= link_to league_season_game_path(v.season.league, v.season, v), method: :get do %>
+                    <%= link_to league_season_game_path(v.season.league, v.season, v) do %>
                         <div class="game">
                             <img class="logo" src="<%= get_logo(v.away_team) %>"/>
                             <div class="team">

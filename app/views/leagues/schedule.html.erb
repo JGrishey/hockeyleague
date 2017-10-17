@@ -2,7 +2,7 @@
 
 <div class="card mt-3">
         <div class="card-header text-center bg-dark text-white">
-            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season), method: :get %>)
+            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
         </div>
         <div class="card-body text-center">
             Welcome to the <%= @league.name %>. We are currently in <%= @season.title %>.
@@ -23,25 +23,25 @@
         <div class="collapse navbar-collapse" id="leagueNav">
             <ul class="navbar-nav">
                 <li class="nav-item text-muted">
-                    <%= link_to "Home", league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Home", league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Leaders", leaders_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Leaders", leaders_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Players", players_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Players", players_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item font-weight-bold active">
-                    <%= link_to "Schedule", schedule_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Schedule", schedule_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Transactions", transactions_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Transactions", transactions_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Signups", signups_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "Signups", signups_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "History", history_league_path(@league), method: :get, class: "nav-link" %>
+                    <%= link_to "History", history_league_path(@league), class: "nav-link" %>
                 </li>
             </ul>
         </div>
@@ -66,7 +66,7 @@
                         <div class="col-2 text-center align-self-center">
                             <div class="row">
                                 <% v[1].each_with_index do |game, index| %>
-                                    <%= link_to league_season_game_path(@league, @season, game), method: :get, class: "col-12 text-center align-self-center" do %>
+                                    <%= link_to league_season_game_path(@league, @season, game), class: "col-12 text-center align-self-center" do %>
                                         <% if game.final %>
                                             <div class="row mt-1">
                                                 <div class="col-6 align-self-center text-center">

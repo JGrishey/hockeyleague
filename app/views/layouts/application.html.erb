@@ -21,6 +21,10 @@
 </head>
 
 <body>
+    <div class="loader" id="loader">
+        <div class="one"></div>
+        <div class="two"></div>
+    </div>
     <% if alert %>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -71,11 +75,11 @@
 
             <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav mr-auto">
-                    <%= link_to root_path, class: "navbar-brand ml-0 d-none d-lg-inline-block", method: :get do %>
+                    <%= link_to root_path, class: "navbar-brand ml-0 d-none d-lg-inline-block" do %>
                         Moose Hockey League
                     <% end %>
 
-                    <%= link_to "Rules", pages_rules_path, class: "nav-link", method: :get %>
+                    <%= link_to "Rules", pages_rules_path, class: "nav-link" %>
                 </div>
 
                 <% if user_signed_in? %>
@@ -92,7 +96,7 @@
         
 
         <div class="text-center mb-4" style="z-index: 1500; position: relative;">
-            <%= link_to root_path, method: :get do %>
+            <%= link_to root_path do %>
                 <img width="75" height="75" style="margin-top: -45px; z-index: 1500;" src="<%= image_path("MooseLogo.png") %>"/>
             <% end %>
         </div>

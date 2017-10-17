@@ -57,9 +57,6 @@ gem 'devise'
 # Bootstrap CSS
 gem 'bootstrap'
 
-# Thin Server on Local Machine
-gem 'thin'
-
 # Pagination
 gem 'will_paginate', '>= 3.1'
 
@@ -70,10 +67,9 @@ gem 'simple_form'
 gem 'paperclip', "~> 5.0.0"
 gem 'aws-sdk', "~> 2.3"
 
-# Markdown
-gem 'redcarpet'
-
 group :development, :test do
+    # Thin Server on Local Machine
+    gem 'thin'
     gem 'rspec-rails', '~> 3.5'
     gem 'capybara'
     gem 'factory_girl_rails', '~> 4.0'

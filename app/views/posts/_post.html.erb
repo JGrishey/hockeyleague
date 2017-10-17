@@ -21,7 +21,7 @@
             </div>
             <% if current_user == post.user || current_user.admin %>
                 <div class="card-link text-center text-muted">
-                    <%= link_to "Edit", edit_subforum_post_path(subforum, post), method: :get %>
+                    <%= link_to "Edit", edit_subforum_post_path(subforum, post) %>
                 </div>
                 <div class="text-center text-muted">
                     <%= link_to subforum_post_path(subforum, post), method: :delete, data: {confirm: "Are you sure?"} do %>

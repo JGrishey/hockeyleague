@@ -1,4 +1,4 @@
-$(document).ready(() => {
+$(document).on("turbolinks:load", () => {
     if (document.getElementById("messages")) {
         setInterval(refreshPartial, 60000)
     }

@@ -2,50 +2,9 @@
 
 <div class="card  border-accent">
     <div class="card-body">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12 col-lg-4 text-center">
-                <span id="timer"></span>
-                <script>
-                    // Set the date we're counting down to
-                    var countDownDate = new Date("Oct 16, 2017 21:00:00").getTime();
-
-                    Number.prototype.zeroPad = function(length) {
-                        length = length || 2; // defaults to 2 if no parameter is passed
-                        return (new Array(length).join('0')+this).slice(length*-1);
-                    };
-
-                    // Update the count down every 1 second
-                    var x = setInterval(function() {
-
-                    // Get todays date and time
-                    var now = new Date().getTime();
-
-                    // Find the distance between now an the count down date
-                    var distance = countDownDate - now;
-
-                    // Time calculations for days, hours, minutes and seconds
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    // Display the result in the element with id="demo"
-                    document.getElementById("timer").innerHTML = "<strong>" + days.zeroPad() + ":" + hours.zeroPad() + ":"
-                    + minutes.zeroPad() + ":" + seconds.zeroPad() + "</strong>" + " until the draft.";
-
-                    // If the count down is finished, write some text 
-                    if (distance < 0) {
-                        clearInterval(x);
-                        document.getElementById("timer").innerHTML = "<a href='https://moosehockeyleague.com/pages/draft'>Draft Link</a>";
-                    }
-                    }, 1000);
-                    </script>
-            </div>
-            <div class="col-12 col-lg-4 text-center">
-                Draft Date: <strong>Monday, October 16th</strong>
-            </div>
-            <div class="col-12 col-lg-4 text-center">
-                Season Start: <strong>Sunday, October 22nd</strong>
+                <h3>Season starts on Sunday!</h3>
             </div>
         </div>
     </div>
@@ -76,7 +35,7 @@
         </div>
 
         <% @leagues.each do |league| %>
-            <%= link_to league, method: :get do %>
+            <%= link_to league do %>
                 <div class="card border-accent">
                     <div class="card-body">
                         <%= league.name %> - <%= league.current_season.title %>
@@ -85,7 +44,7 @@
             <% end %>
         <% end %>
 
-        <%= link_to signups_league_path(@main_league), method: :get do %>
+        <%= link_to signups_league_path(@main_league) do %>
             <div class="card  mt-4 border-accent">
                 <div class="card-body">
                      Who's signed up?
@@ -93,7 +52,7 @@
             </div>
         <% end %>
 
-        <%= link_to pages_protected_players_path, method: :get do %>
+        <%= link_to pages_protected_players_path do %>
             <div class="card  mt-4 border-accent">
                 <div class="card-body">
                     Current RFAs and Keepers
@@ -102,14 +61,14 @@
         <% end %>
 
         <% if !current_user.signed_up_for(@season) %>
-            <%= link_to signup_league_season_path(@main_league, @season), class: "card  mt-4 bg-accent border-accent text-white mb-3", method: :get do %>
+            <%= link_to signup_league_season_path(@main_league, @season), class: "card  mt-4 bg-accent border-accent text-white mb-3" do %>
                 <div class="card-body">
                     Waiver for Season 33
                 </div>
             <% end %>
         <% end %>
 
-        <%= link_to pages_player_rankings_path, class:"card mt-4  border-accent", method: :get do %>
+        <%= link_to pages_player_rankings_path, class:"card mt-4  border-accent" do %>
             <div class="card-body justify-content-center text-center">
                 <img class="img-fluid" src="<%= asset_path("PlayerRatings.png") %>"/>
             </div>
@@ -122,7 +81,7 @@
                 </div>
                 <div class="card-text">
                     <% User.online.each do |u| %>
-                        <span class="text-primary"><%= link_to u.user_name, profile_path(u.user_name), method: :get, class: "card-link" %></span>, 
+                        <span class="text-primary"><%= link_to u.user_name, profile_path(u.user_name), class: "card-link" %></span>, 
                     <% end %>
                 </div>
             </div>
@@ -133,7 +92,7 @@
         </div>
 
         <% @recent_posts.each do |post| %>
-            <%= link_to subforum_post_path(post.subforum, post), method: :get do %>
+            <%= link_to subforum_post_path(post.subforum, post) do %>
                 <div class="card border-accent mb-1">
                     <div class="card-body">
                         <div class="row">

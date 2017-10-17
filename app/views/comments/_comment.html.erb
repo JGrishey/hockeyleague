@@ -3,7 +3,7 @@
         <div class="col-2">
             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(comment.user) %>/>
             <div class="card-text text-center">
-                <%= link_to comment.user.user_name, profile_path(comment.user.user_name), method: :get %>
+                <%= link_to comment.user.user_name, profile_path(comment.user.user_name) %>
             </div>
             <div class="card-text text-center text-muted">
                 <%= (comment.created_at - 4.hours).strftime("%I:%M %p") %>
@@ -13,7 +13,7 @@
             </div>
             <% if current_user == comment.user || current_user.admin %>
                 <div class="card-link text-center text-muted">
-                    <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment), method: :get %>
+                    <%= link_to "Edit", edit_subforum_post_comment_path(subforum, post, comment) %>
                 </div>
                 <div class="text-center">
                     <%= link_to subforum_post_comment_path(subforum, post, comment), method: :delete, data: {confirm: "Are you sure?"} do %>

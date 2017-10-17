@@ -12,24 +12,24 @@
             <div class="row justify-content-center">
                 <% if game.home_team.captain == current_user || current_user.admin %>
                     <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
-                        <%= link_to enter_home_stats_league_season_game_path(season.league, season, game), method: :get do %>
+                        <%= link_to enter_home_stats_league_season_game_path(season.league, season, game) do %>
                             <button class="btn btn-outline-info" style="cursor: pointer;">Enter Home Stats</button>
                         <% end %>
                     </div>
                     <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
-                        <%= link_to submit_home_players_league_season_game_path(season.league, season, game), method: :get do %>
+                        <%= link_to submit_home_players_league_season_game_path(season.league, season, game) do %>
                             <button class="btn btn-outline-info" style="cursor: pointer;">Enter Home Players</button>
                         <% end %>
                     </div>
                 <% end %>
                 <% if game.away_team.captain == current_user || current_user.admin %>
                     <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
-                        <%= link_to enter_away_stats_league_season_game_path(season.league, season, game), method: :get do %>
+                        <%= link_to enter_away_stats_league_season_game_path(season.league, season, game) do %>
                             <button class="btn btn-outline-info" style="cursor: pointer;">Enter Away Stats</button>
                         <% end %>
                     </div>
                     <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
-                        <%= link_to submit_away_players_league_season_game_path(season.league, season, game), method: :get do %>
+                        <%= link_to submit_away_players_league_season_game_path(season.league, season, game) do %>
                             <button class="btn btn-outline-info" style="cursor: pointer;">Enter Away Players</button>
                         <% end %>
                     </div>
@@ -50,12 +50,12 @@
     <div class="card-body">
         <div class="row justify-content-center">
             <div class="col text-center align-self-center">
-                <%= link_to league_season_team_path(season.league, season, game.away_team), method: :get do %>
+                <%= link_to league_season_team_path(season.league, season, game.away_team) do %>
                     <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
                 <% end %>
             </div>
             <div class="col text-center align-self-center font-weight-bold text-uppercase">
-                <%= link_to game.away_team.name, league_season_team_path(season.league, season, game.away_team), method: :get %>
+                <%= link_to game.away_team.name, league_season_team_path(season.league, season, game.away_team) %>
             </div>
             <% if game.final %>
                 <div class="col text-center align-self-center font-weight-bold">
@@ -68,10 +68,10 @@
                 </div>
             <% end %>
             <div class="col text-center align-self-center font-weight-bold text-uppercase">
-                <%= link_to game.home_team.name, league_season_team_path(season.league, season, game.home_team), method: :get %>
+                <%= link_to game.home_team.name, league_season_team_path(season.league, season, game.home_team) %>
             </div>
             <div class="col text-center align-self-center">
-                <%= link_to league_season_team_path(season.league, season, game.home_team), method: :get do %>
+                <%= link_to league_season_team_path(season.league, season, game.home_team) do %>
                     <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
                 <% end %>
             </div>
@@ -124,7 +124,7 @@
                 <div class="col-3">
                     <div class="row">
                         <div class="col-4 text-center align-self-center">
-                            <%= link_to league_season_team_path(season.league, season, game.away_team), method: :get do %>
+                            <%= link_to league_season_team_path(season.league, season, game.away_team) do %>
                                 <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.away_team) %>"/>
                             <% end %>
                         </div>
@@ -160,7 +160,7 @@
                 <div class="col-3">
                     <div class="row">
                         <div class="col-4 text-center align-self-center">
-                            <%= link_to league_season_team_path(season.league, season, game.home_team), method: :get do %>
+                            <%= link_to league_season_team_path(season.league, season, game.home_team) do %>
                                 <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(game.home_team) %>"/>
                             <% end %>
                         </div>

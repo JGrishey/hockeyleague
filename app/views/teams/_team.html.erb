@@ -28,7 +28,7 @@
         </div>
         <% if current_user.admin %>
             <div class="text-center text-muted">
-                <%= link_to "Edit team", edit_league_season_team_path(@league, @season, @team), method: :get %>
+                <%= link_to "Edit team", edit_league_season_team_path(@league, @season, @team) %>
             </div>
         <% end %>
     </div>
@@ -38,7 +38,7 @@
     <div class="card-body">
         <div class="row">
             <% @team.players.each do |player| %>
-                <%= link_to profile_path(player.user_name), method: :get, class: "col-6 col-lg-3 p-5 text-center" do %>
+                <%= link_to profile_path(player.user_name), class: "col-6 col-lg-3 p-5 text-center" do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(player) %>/>
                             <% if player == @team.captain %><img class="team-photo img-responsive" width="70" src="http://www.unixstickers.com/image/cache/data/stickers/C/C%20language.sh-600x600.png"/><% end %>

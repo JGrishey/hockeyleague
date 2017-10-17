@@ -2,7 +2,7 @@
 
 <div class="card mt-3">
         <div class="card-header text-center bg-dark text-white">
-            <%= league.name %> - Current Season (<%= link_to season.title, league_season_path(league, season), method: :get %>)
+            <%= league.name %> - Current Season (<%= link_to season.title, league_season_path(league, season) %>)
         </div>
         <div class="card-body text-center">
             Welcome to the <%= league.name %>. We are currently in <%= season.title %>.
@@ -23,25 +23,25 @@
         <div class="collapse navbar-collapse" id="leagueNav">
             <ul class="navbar-nav">
                 <li class="nav-item active font-weight-bold">
-                    <%= link_to "Home", league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Home", league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Leaders", leaders_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Leaders", leaders_league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Players", players_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Players", players_league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Schedule", schedule_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Schedule", schedule_league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Transactions", transactions_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Transactions", transactions_league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "Signups", signups_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "Signups", signups_league_path(league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
-                    <%= link_to "History", history_league_path(league), method: :get, class: "nav-link" %>
+                    <%= link_to "History", history_league_path(league), class: "nav-link" %>
                 </li>
             </ul>
         </div>
@@ -52,7 +52,7 @@
             <% season.teams.order('name ASC').each do |team| %>
                 <% if team.visibility %>
                     <div class="col-1 align-self-center">
-                        <%= link_to league_season_team_path(league, season, team), method: :get do %>
+                        <%= link_to league_season_team_path(league, season, team) do %>
                             <img class="img-responsive hoverimg" style="max-height: 100%; max-width: 100%" src="<%= get_logo(team) %>"/>
                         <% end %>
                     </div>
@@ -64,7 +64,7 @@
     <div class="row mt-2">
         <% if season.teams.find_by(name: "Waivers") %>
                 <div class="col-12 col-lg-6">
-                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Waivers")), method: :get, class: "card" do %>
+                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Waivers")), class: "card" do %>
                         <div class="card-body text-center">
                             <h3>Waivers</h3>
                         </div>
@@ -73,7 +73,7 @@
         <% end %>
         <% if season.teams.find_by(name: "Free Agents") %>
                 <div class="col-12 col-lg-6">
-                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Free Agents")), method: :get, class: "card" do %>
+                    <%= link_to league_season_team_path(league, season, season.teams.find_by(name: "Free Agents")), class: "card" do %>
                         <div class="card-body text-center">
                             <h3>Free Agents</h3>
                         </div>
@@ -100,7 +100,7 @@
             <div class="card-body row text-center justify-content-center">
                 <div class="col-12 col-lg-3 p-3 text-center justify-content-center">
                     <div class="text-center font-weight-bold text-uppercase">Goals</div>
-                    <%= link_to profile_path(@goal_leader[:name]), method: :get do %>
+                    <%= link_to profile_path(@goal_leader[:name]) do %>
                         <div class="picture text-center justify-content-center" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @goal_leader[:name]))%>/>
                             <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @goal_leader[:name]).getCurrentTeam(season))%>"/>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-12 col-lg-3 p-3">
                     <div class="text-center font-weight-bold text-uppercase">Assists</div>
-                    <%= link_to profile_path(@assist_leader[:name]), method: :get do %>
+                    <%= link_to profile_path(@assist_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @assist_leader[:name]))%>/>
                             <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @assist_leader[:name]).getCurrentTeam(season))%>"/>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-12 col-lg-3 p-3">
                     <div class="text-center font-weight-bold text-uppercase">Points</div>
-                    <%= link_to profile_path(@point_leader[:name]), method: :get do %>
+                    <%= link_to profile_path(@point_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @point_leader[:name]))%>/>
                             <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @point_leader[:name]).getCurrentTeam(season))%>"/>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-12 col-lg-3 p-3">
                     <div class="text-center font-weight-bold text-uppercase">PIM</div>
-                    <%= link_to profile_path(@pim_leader[:name]), method: :get do %>
+                    <%= link_to profile_path(@pim_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @pim_leader[:name]))%>/>
                             <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @pim_leader[:name]).getCurrentTeam(season))%>"/>
