@@ -53,10 +53,10 @@ class User < ApplicationRecord
     def captain? (season)
         self.owned_teams.each do |team|
             if team.season.current && team.season == season
-                true
+                return true
             end
         end
-        false
+        return false
     end
 
     def inSeason (season)

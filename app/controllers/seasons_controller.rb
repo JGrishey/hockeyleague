@@ -60,8 +60,10 @@ class SeasonsController < ApplicationController
         playerstats = []
         @season.teams.includes(:players).each do |team|
             @data.push(team.standingsData) if team.visibility
-            team.players.each do |player|
-                playerstats.push(player.getSeasonStats(@season))
+            team.players.includes(:games).each do |player|
+                if player.games.any?
+                    playerstats.push(player.getSeasonStats(@season))
+                end
             end
         end
 
