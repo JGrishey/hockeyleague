@@ -44,22 +44,6 @@
             <% end %>
         <% end %>
 
-        <%= link_to signups_league_path(@main_league) do %>
-            <div class="card  mt-4 border-accent">
-                <div class="card-body">
-                     Who's signed up?
-                </div>
-            </div>
-        <% end %>
-
-        <%= link_to pages_protected_players_path do %>
-            <div class="card  mt-4 border-accent">
-                <div class="card-body">
-                    Current RFAs and Keepers
-                </div>
-            </div>
-        <% end %>
-
         <% if !current_user.signed_up_for(@season) %>
             <%= link_to signup_league_season_path(@main_league, @season), class: "card  mt-4 bg-accent border-accent text-white mb-3" do %>
                 <div class="card-body">

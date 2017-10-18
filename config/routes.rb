@@ -53,6 +53,7 @@ Rails.application.routes.draw do
                 get 'players'
                 get 'leaders'
                 get 'schedule'
+                get 'rosters'
                 get 'signup'
                 get 'signups'
                 get 'transactions'
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
             get 'schedule'
             get 'history'
             get 'signups'
+            get 'rosters'
             get 'transactions'
         end
     end

@@ -2,10 +2,10 @@
 
 <div class="card mt-3">
         <div class="card-header text-center bg-dark text-white">
-            <%= @league.name %> - <%= link_to @season.title, league_season_path(@league, @season) %>
+            <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
         </div>
         <div class="card-body text-center">
-            Welcome to the <%= @league.name %>. You're viewing <%= @season.title %>.
+            Welcome to the <%= @league.name %>. We are currently in <%= @season.title %>.
         </div>
         <% if !current_user.seasons_signed_up.include?(@season) && @season.current %>
             <div class="card-footer text-center text-muted">
@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="container mt-4 mb-4">
+<div class="container mt-4">
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg rounded" style="background-color: #fff;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#leagueNav" aria-controls="#leagueNav" aria-expanded="false" aria-label="Toggle navigation">
             <span><%= octicon "three-bars", fill: "#fff" %></span>
@@ -25,13 +25,13 @@
                 <li class="nav-item text-muted">
                     <%= link_to "Home", league_season_path(@league, @season), class: "nav-link" %>
                 </li>
-                <li class="nav-item text-muted">
+                <li class="nav-item font-weight-bold active">
                     <%= link_to "Rosters", rosters_league_season_path(@league, @season), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Leaders", leaders_league_season_path(@league, @season), class: "nav-link" %>
                 </li>
-                <li class="nav-item font-weight-bold active">
+                <li class="nav-item text-muted">
                     <%= link_to "Players", players_league_season_path(@league, @season), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
@@ -47,15 +47,26 @@
         </div>
     </nav>
 
-    <% if @season.games.where(final: true).any? %>
-        <div class="card mt-2">
-            <div class="card-header text-center bg-dark text-white">
-                Players
-            </div>
-            <div class="card-body" id="players" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
-            </div>
+    <div class="text-center bg-white rounded">
+        <div class="row justify-content-center mt-4">
+            <% @season.teams.includes(:team_players).where(visibility: true).each do |t| %>
+                <div class="col-12 mt-2 col-lg-5 mb-2 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="img-fluid w-25 mb-2" src="<%= get_logo(t) %>"/>
+                            <h3><%= t.name %></h3>
+                            <p class="text-muted">Cap hit: <%= t.salary_hit %> / <%= t.salary_cap %> BOD</p>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <% t.team_players.order('salary DESC').includes(:player).each do |tp| %>
+                                            <tr><td><%= tp.player.user_name %></td> <td><%= tp.salary %></td><tr>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
         </div>
-    <% end %>
+    </div>
 </div>
-
-<%= javascript_pack_tag "tables/players" %>

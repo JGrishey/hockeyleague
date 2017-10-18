@@ -25,13 +25,13 @@
                 <li class="nav-item text-muted">
                     <%= link_to "Home", league_path(@league), class: "nav-link" %>
                 </li>
-                <li class="nav-item text-muted">
+                <li class="nav-item font-weight-bold active">
                     <%= link_to "Rosters", rosters_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
                     <%= link_to "Leaders", leaders_league_path(@league), class: "nav-link" %>
                 </li>
-                <li class="nav-item font-weight-bold active">
+                <li class="nav-item text-muted">
                     <%= link_to "Players", players_league_path(@league), class: "nav-link" %>
                 </li>
                 <li class="nav-item text-muted">
@@ -50,15 +50,26 @@
         </div>
     </nav>
 
-    <% if @season.games.where(final: true).any? %>
-        <div class="card mt-2">
-            <div class="card-header text-center bg-dark text-white">
-                Players
-            </div>
-            <div class="card-body" style="font-size: 0.75em;" id="players" data-data="<%= @data.to_json %>">
-            </div>
+    <div class="text-center bg-white rounded">
+        <div class="row justify-content-center mt-4">
+            <% @season.teams.where(visibility: true).includes(:team_players).each do |t| %>
+                <div class="col-12 mt-2 col-lg-5 mb-2 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="img-fluid w-25 mb-2" src="<%= get_logo(t) %>"/>
+                            <h3><%= t.name %></h3>
+                            <p class="text-muted">Cap hit: <%= t.salary_hit %> / <%= t.salary_cap %> BOD</p>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <% t.team_players.order('salary DESC').includes(:player).each do |tp| %>
+                                            <tr><td><%= tp.player.user_name %></td> <td><%= tp.salary %></td><tr>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
         </div>
-    <% end %>
+    </div>
 </div>
-
-<%= javascript_pack_tag "tables/players" %>

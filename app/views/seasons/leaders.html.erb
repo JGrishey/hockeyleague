@@ -25,6 +25,9 @@
                 <li class="nav-item text-muted">
                     <%= link_to "Home", league_season_path(@league, @season), class: "nav-link" %>
                 </li>
+                <li class="nav-item text-muted">
+                    <%= link_to "Rosters", rosters_league_season_path(@league, @season), class: "nav-link" %>
+                </li>
                 <li class="nav-item font-weight-bold active">
                     <%= link_to "Leaders", leaders_league_season_path(@league, @season), class: "nav-link" %>
                 </li>

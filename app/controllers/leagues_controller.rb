@@ -81,6 +81,10 @@ class LeaguesController < ApplicationController
         end
     end
 
+    def rosters
+        @season = @league.current_season
+    end
+
     def destroy
         if !current_user.admin
             redirect_to root_path
