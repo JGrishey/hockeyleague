@@ -123,9 +123,11 @@ class SeasonsController < ApplicationController
     def players
         @data = []
         @season.teams.includes(:players).each do |team|
-            team.players.each do |player|
-                stats = player.getSeasonStats(@season)
-                stats[:games_played] > 0 ? @data.push(stats) : ()
+            team.players.includes(:games).each do |player|
+                if player.games.any?
+                    stats = player.getSeasonStats(@season)
+                    stats[:games_played] > 0 ? @data.push(stats) : ()
+                end
             end
         end
     end
@@ -134,15 +136,17 @@ class SeasonsController < ApplicationController
         skaters = []
         goalies = []
         @season.teams.includes(:players).each do |team|
-            team.players.each do |player|
-                stats = player.getSeasonStats(@season)
-                
-                if stats[:games_played] > 0
-                    skaters.push(stats)
-                end
+            team.players.includes(:games).each do |player|
+                if player.games.any?
+                    stats = player.getSeasonStats(@season)
+                    
+                    if stats[:games_played] > 0
+                        skaters.push(stats)
+                    end
 
-                if stats[:goalie_games] > 0
-                    goalies.push(stats)
+                    if stats[:goalie_games] > 0
+                        goalies.push(stats)
+                    end
                 end
             end
         end
