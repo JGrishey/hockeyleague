@@ -1,7 +1,7 @@
 <%= render 'games/carousel', recent_games: @recent_games, league: @league, season: @season %>
 
 <div class="card mt-3">
-        <div class="card-header text-center">
+        <div class="card-header text-center bg-dark text-white">
             <%= @league.name %> - Current Season (<%= link_to @season.title, league_season_path(@league, @season) %>)
         </div>
         <div class="card-body text-center">

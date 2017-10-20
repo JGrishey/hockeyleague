@@ -21,7 +21,31 @@ body {
 }
 
 .bg-main {
-    background-color: #fff !important;
+    background-color: #24292e !important;
+}
+
+.border-main {
+    border-color: #24292e !important;
+}
+
+.bg-blue {
+    background-color: #003459 !important;
+}
+
+.bg-green {
+    background-color: #32746D !important;
+}
+
+.border-green {
+    border-color: #32746D !important;
+}
+
+.border-blue {
+    border-color: #003459 !important;
+}
+
+.border-gray {
+    border: 1px solid rgba(0,0,0,.0975) !important;
 }
 
 .nav-border {
@@ -170,10 +194,6 @@ a, a:focus, a:hover {
     @media (min-width: 992px) {
         font-size: 0.75em;
     }
-}
-
-.messages-container {
-    box-shadow: 0 2px 3px hsla(0,0%,4%,.1), 0 0 0 1px hsla(0,0%,4%,.1);
 }
 // separate stylesheet into media queries
 

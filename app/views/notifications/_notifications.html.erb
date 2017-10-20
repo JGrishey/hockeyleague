@@ -1,8 +1,8 @@
 <div class="dropdown align-self-center ml-auto w-100">
-    <button class="" type="button" id="notiDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <%= current_user.notifications.where(read: false).count %> <%= octicon "bell" %>
+    <button class="text-white" type="button" id="notiDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= current_user.notifications.where(read: false).count %> <%= octicon "bell", fill: "#fff" %>
     </button>
-    <div class="dropdown-menu dropdown-menu-right" style="width: 300px;">
+    <div class="dropdown-menu dropdown-menu-right" style="width: 400px;">
         <a class="dropdown-item disabled text-muted text-center">Your Notifications</a>
         <div class="dropdown-divider"></div>
         <%= render current_user.notifications.where(read: false).order("created_at DESC") %>

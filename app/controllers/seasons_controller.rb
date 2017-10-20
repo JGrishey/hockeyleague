@@ -98,23 +98,10 @@ class SeasonsController < ApplicationController
         @season.games.each do |game|
             game.destroy
         end
-        @season.teams.each do |team|
-            team.destroy
-        end
-
-        @season.trades.destroy_all
 
         data["games"].each do |game|
            temp_game = @season.games.build(away_id: @season.teams.find_by(name: game["away"]).id, home_id: @season.teams.find_by(name: game["home"]).id, date: DateTime.strptime(game["date"], "%m-%d-%Y %I:%M %p"))
            temp_game.save
-        end
-
-        unplaced_players = @season.teams.build(name: "Unplaced Players", captain_id: current_user.id, visibility: false, salary_cap: 20000)
-        unplaced_players.save
-
-        @season.signups.each do |s|
-            tp = TeamPlayer.new(team_id: unplaced_players.id, user_id: s.user_id, salary: 0)
-            tp.save
         end
 
         redirect_to league_season_path(@league, @season)
