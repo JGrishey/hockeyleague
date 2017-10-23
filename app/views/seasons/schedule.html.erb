@@ -56,7 +56,7 @@
             <% values[1].each do |v| %>
                     <div class="row justify-content-center p-2 mt-2 mb-2">
                         <div class="col-1 text-center align-self-center">
-                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[0].first) %>"/>
+                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[1].first.away_team) %>"/>
                         </div>
 
                         <div class="col-3 text-center align-self-center">
@@ -93,7 +93,7 @@
                         </div>
 
                         <div class="col-1 text-center align-self-center">
-                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[0].second) %>"/>
+                            <img class="img-responsive" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(v[1].first.home_team) %>"/>
                         </div>
                     </div>
             <% end %>
