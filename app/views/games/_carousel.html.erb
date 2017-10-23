@@ -27,11 +27,11 @@
                                             <div class="row">
                                                 <% if game.final %>
                                                     <div class="col-12 text-center align-self-center mt-2">
-                                                        <%= serie[0].first == game.away_team ? game.away_goals : game.home_goals %>
+                                                        <%= serie[1].first.away_team == game.away_team ? game.away_goals : game.home_goals %>
                                                     </div>
 
                                                     <div class="col-12 text-center align-self-center mt-2">
-                                                        <%= serie[0].first == game.home_team ? game.home_goals : game.away_goals %>
+                                                        <%= serie[1].first.home_team == game.home_team ? game.home_goals : game.away_goals %>
                                                     </div>
                                                 <% else %>
                                                     <div class="col-12 text-center align-self-center mt-2">
