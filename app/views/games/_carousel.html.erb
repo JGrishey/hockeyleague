@@ -14,11 +14,12 @@
                                 <div class="row justify-content-center">
                                     <div class="col-4 align-self-center">
                                         <div class="row justify-content-center">
-                                            <% serie[0].each do |team| %>
-                                                <div class="col-12 align-self-center mt-2">
-                                                    <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(team) %>"/>
-                                                </div>
-                                            <% end %>
+                                            <div class="col-12 align-self-center mt-2">
+                                                <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(serie[1].first.away_team) %>"/>
+                                            </div>
+                                            <div class="col-12 align-self-center mt-2">
+                                                <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(serie[1].first.home_team) %>"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <% serie[1].each_with_index do |game, index| %>
