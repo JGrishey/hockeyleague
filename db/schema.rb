@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906213836) do
+ActiveRecord::Schema.define(version: 20171021185700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,8 +183,10 @@ ActiveRecord::Schema.define(version: 20170906213836) do
     t.integer "pim", default: 0
     t.integer "ppg", default: 0
     t.integer "shg", default: 0
+    t.bigint "season_id"
     t.index ["game_id"], name: "index_stat_lines_on_game_id"
     t.index ["game_player_id"], name: "index_stat_lines_on_game_player_id"
+    t.index ["season_id"], name: "index_stat_lines_on_season_id"
     t.index ["team_id"], name: "index_stat_lines_on_team_id"
     t.index ["user_id"], name: "index_stat_lines_on_user_id"
   end
@@ -299,6 +301,7 @@ ActiveRecord::Schema.define(version: 20170906213836) do
   add_foreign_key "signups", "users"
   add_foreign_key "stat_lines", "game_players"
   add_foreign_key "stat_lines", "games"
+  add_foreign_key "stat_lines", "seasons"
   add_foreign_key "stat_lines", "teams"
   add_foreign_key "stat_lines", "users"
   add_foreign_key "team_players", "teams"
@@ -306,4 +309,29 @@ ActiveRecord::Schema.define(version: 20170906213836) do
   add_foreign_key "teams", "seasons"
   add_foreign_key "trades", "seasons"
   add_foreign_key "users", "teams"
+
+  create_view "season_player_stats",  sql_definition: <<-SQL
+      SELECT stat_lines.id,
+      stat_lines."position",
+      stat_lines.plus_minus,
+      stat_lines.shots,
+      stat_lines.fow,
+      stat_lines.fot,
+      stat_lines.hits,
+      stat_lines.shots_against,
+      stat_lines.goals_against,
+      stat_lines.created_at,
+      stat_lines.updated_at,
+      stat_lines.game_id,
+      stat_lines.user_id,
+      stat_lines.team_id,
+      stat_lines.game_player_id,
+      stat_lines.goals,
+      stat_lines.assists,
+      stat_lines.pim,
+      stat_lines.ppg,
+      stat_lines.shg
+     FROM stat_lines;
+  SQL
+
 end

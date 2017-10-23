@@ -55,6 +55,7 @@
                     <%= f.fields_for :game_players, @game.home_players do |gpbuilder| %>
                         <%= gpbuilder.fields_for :stat_line_attributes, gpbuilder.object.stat_line do |builder| %>
                             <%= builder.hidden_field :game_player_id, :value => gpbuilder.object.id %>
+                            <%= builder.hidden_field :season_id, :value => @game.season.id %>
                             <%= builder.hidden_field :game_id, :value => @game.id %>
                             <%= builder.hidden_field :team_id, :value => @game.home_team.id %>
                             <%= builder.hidden_field :position, :value => gpbuilder.object.position %>

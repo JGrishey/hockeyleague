@@ -85,3 +85,7 @@ gem 'webpacker', '~> 3.0'
 # Post Liking
 
 gem 'acts_as_votable'
+
+# Database Views
+
+gem 'scenic'
