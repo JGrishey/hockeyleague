@@ -101,7 +101,7 @@
                 Players Preview
             </div>
             <div class="card-body row text-center justify-content-center">
-                <div class="col-12 col-lg-3 p-3 text-center justify-content-center">
+                <div class="col-12 col-lg-3 p-4 text-center justify-content-center">
                     <div class="text-center font-weight-bold text-uppercase">Goals</div>
                     <%= link_to profile_path(@goal_leader[:name]) do %>
                         <div class="picture text-center justify-content-center" style="margin: 0 auto;">
@@ -111,9 +111,9 @@
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @goal_leader[:name] %></div>
                     <% end %>
                     <div class="text-center font-weight-bold text-uppercase mt-2">Goals</div>
-                    <div class="text-center font-weight-bold"><%= @goal_leader[:goals] %></div>
+                    <div class="text-center font-weight-bold"><%= @goal_leader["goals"] %></div>
                 </div>
-                <div class="col-12 col-lg-3 p-3">
+                <div class="col-12 col-lg-3 p-4">
                     <div class="text-center font-weight-bold text-uppercase">Assists</div>
                     <%= link_to profile_path(@assist_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
@@ -123,9 +123,9 @@
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @assist_leader[:name] %></div>
                     <% end %>
                     <div class="text-center font-weight-bold text-uppercase mt-2">Assists</div>
-                    <div class="text-center font-weight-bold"><%= @assist_leader[:assists] %></div>
+                    <div class="text-center font-weight-bold"><%= @assist_leader["assists"] %></div>
                 </div>
-                <div class="col-12 col-lg-3 p-3">
+                <div class="col-12 col-lg-3 p-4">
                     <div class="text-center font-weight-bold text-uppercase">Points</div>
                     <%= link_to profile_path(@point_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
@@ -135,9 +135,9 @@
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @point_leader[:name] %></div>
                     <% end %>
                     <div class="text-center font-weight-bold text-uppercase mt-2">Points</div>
-                    <div class="text-center font-weight-bold"><%= @point_leader[:points] %></div>
+                    <div class="text-center font-weight-bold"><%= @point_leader["points"] %></div>
                 </div>
-                <div class="col-12 col-lg-3 p-3">
+                <div class="col-12 col-lg-3 p-4">
                     <div class="text-center font-weight-bold text-uppercase">PIM</div>
                     <%= link_to profile_path(@pim_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
@@ -147,7 +147,7 @@
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @pim_leader[:name] %></div>
                     <% end %>
                     <div class="text-center font-weight-bold text-uppercase mt-2">PIM</div>
-                    <div class="text-center font-weight-bold"><%= @pim_leader[:pim] %></div>
+                    <div class="text-center font-weight-bold"><%= @pim_leader["pim"] %></div>
                 </div>
             </div>
         </div>

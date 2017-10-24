@@ -1,0 +1,2 @@
+class SeasonTeamStat < ApplicationRecord
+end

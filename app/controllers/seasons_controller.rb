@@ -57,20 +57,20 @@ class SeasonsController < ApplicationController
 
     def show
         @data = []
-        playerstats = []
-        @season.teams.includes(:players).each do |team|
+        @season.teams.each do |team|
             @data.push(team.standingsData) if team.visibility
-            team.players.includes(:games).each do |player|
-                if player.games.any?
-                    playerstats.push(player.getSeasonStats(@season))
-                end
-            end
         end
 
-        @goal_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:goals] : 0}
-        @assist_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:assists] : 0}
-        @point_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:points] : 0}
-        @pim_leader = playerstats.max_by{ |p| p[:games_played] > 0 ? p[:pim] : 0}
+        sql_stats = SeasonPlayerStat.all.where(season_id: @season.id).as_json.each do |s|
+            u = User.find(s["user_id"])
+            s[:name] = u.user_name
+            s[:avatar] = u.get_avatar
+        end
+
+        @goal_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["goals"] : 0}
+        @assist_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["assists"] : 0}
+        @point_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["points"] : 0}
+        @pim_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["pim"] : 0}
     end
 
     def destroy
@@ -108,44 +108,24 @@ class SeasonsController < ApplicationController
     end
 
     def players
-        @data = []
-        @season.teams.includes(:players).each do |team|
-            team.players.includes(:games).each do |player|
-                if player.games.any?
-                    stats = player.getSeasonStats(@season)
-                    stats[:games_played] > 0 ? @data.push(stats) : ()
-                end
-            end
-        end
+        @sql_stats = SeasonPlayerStat.all.where(season_id: @season.id).as_json.each{|s| s[:name] = User.find(s["user_id"]).user_name}
     end
 
     def leaders
-        skaters = []
-        goalies = []
-        @season.teams.includes(:players).each do |team|
-            team.players.includes(:games).each do |player|
-                if player.games.any?
-                    stats = player.getSeasonStats(@season)
-                    
-                    if stats[:games_played] > 0
-                        skaters.push(stats)
-                    end
-
-                    if stats[:goalie_games] > 0
-                        goalies.push(stats)
-                    end
-                end
-            end
+        sql_stats = SeasonPlayerStat.all.where(season_id: @season.id).as_json.each do |s|
+            u = User.find(s["user_id"])
+            s[:name] = u.user_name
+            s[:avatar] = u.get_avatar
         end
 
-        @goal_leaders = skaters.sort_by { |s| -s[:goals]}
-        @assist_leaders = skaters.sort_by{|s| -s[:assists]}
-        @point_leaders = skaters.sort_by{|s| -s[:points]}
-        @plusminus_leaders = skaters.sort_by{|s| -s[:"plus-minus"]}
-        @gaa_leaders = goalies.sort_by{|s| s[:gaa]}
-        @sv_leaders = goalies.sort_by{|s| -s[:"sv%"]}
-        @win_leaders = goalies.sort_by{|s| -s[:wins]}
-        @so_leaders = goalies.sort_by{|s| -s[:shutouts]}
+        @goal_leaders = sql_stats.sort_by { |s| -s["goals"]}
+        @assist_leaders = sql_stats.sort_by{|s| -s["assists"]}
+        @point_leaders = sql_stats.sort_by{|s| -s["points"]}
+        @plusminus_leaders = sql_stats.sort_by{|s| -s["plus_minus"]}
+        @gaa_leaders = sql_stats.sort_by{|s| s["gaa"]}
+        @sv_leaders = sql_stats.sort_by{|s| -s["sv_per"]}
+        @gp_leaders = sql_stats.sort_by{|s| s["goalie_games"]}
+        @so_leaders = sql_stats.sort_by{|s| -s["so"]}
     end
 
     def schedule

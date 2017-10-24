@@ -22,18 +22,32 @@ class Panel extends React.Component {
             <div className="p-3">
                 <a href={"/" + player["name"]}>
                     <div className="picture" style={{margin: "0 auto"}}>
-                        <img className="img-responsive rounded-circle" style={{maxWidth: "100%", maxHeight: "100%"}} src={player["avatar"] === "nil" ? "https://badgeville.com/images/default-user.png" : player["avatar"]}/>
-                        <img className="team-photo" width="70" src={player["team_logo"]}/>
+                        <img className="img-responsive rounded-circle p-3" style={{maxWidth: "100%", maxHeight: "100%"}} src={player["avatar"] === "nil" ? "https://badgeville.com/images/default-user.png" : player["avatar"]}/>
                     </div>
                     <div className="text-center font-weight-bold text-uppercase">
                         {player["name"]}
                     </div>
                     <div className="text-center font-weight-bold text-uppercase">
-                        {this.state.name}
+                        {
+                            this.state.name === "sv_per" &&
+                            <span>{"SV%"}</span>
+                        }
+                        {
+                            this.state.name === "goalie_games" &&
+                            <span>{"GAMES PLAYED"}</span>
+                        }
+                        {
+                            this.state.name === "plus_minus" &&
+                            <span>{"+/-"}</span>
+                        }
+                        {
+                            this.state.name != "sv_per" && this.state.name != "goalie_games" && this.state.name != "plus_minus" &&
+                            <span>{this.state.name}</span>
+                        }
                     </div>
                     <div className="text-center font-weight-bold">
                         {
-                            this.state.name === "sv%" &&
+                            this.state.name === "sv_per" &&
                             <span>{player[this.state.name.toLowerCase()].toFixed(3)}</span>              
                         }
                         {
@@ -41,11 +55,11 @@ class Panel extends React.Component {
                             <span>{player[this.state.name.toLowerCase()].toFixed(2)}</span>  
                         }
                         {
-                            this.state.name === "plus-minus" &&
+                            this.state.name === "plus_minus" &&
                             <span>{player[this.state.name.toLowerCase()] > 0 ? "+" + player[this.state.name.toLowerCase()] : player[this.state.name.toLowerCase()]}</span>
                         }
                         {
-                            (this.state.name != "sv%" && this.state.name != "gaa" && this.state.name != "plus-minus") &&
+                            (this.state.name != "sv_per" && this.state.name != "gaa" && this.state.name != "plus_minus") &&
                             <span>{player[this.state.name.toLowerCase()]}</span>
                         }
                     </div>
@@ -63,10 +77,27 @@ class Panel extends React.Component {
 
         return (
             <div className="col-12 col-lg-6">
-                <div className="text-center font-weight-bold text-uppercase">{name}</div>
+                <div className="text-center font-weight-bold text-uppercase">
+                        {
+                            name === "sv_per" &&
+                            <span>{"SV%"}</span>
+                        }
+                        {
+                            name === "goalie_games" &&
+                            <span>{"GAMES PLAYED"}</span>
+                        }
+                        {
+                            name === "plus_minus" &&
+                            <span>{"+/-"}</span>
+                        }
+                        {
+                            name != "sv_per" && name != "goalie_games" && name != "plus_minus" &&
+                            <span>{name}</span>
+                        }
+                </div>
 
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-6 p-4">
                         { content }
                     </div>
 
@@ -92,7 +123,7 @@ class Panel extends React.Component {
                                             </div>
                                             <div className="col-3 text-left align-top">
                                                 {
-                                                    name === "sv%" &&
+                                                    name === "sv_per" &&
                                                     <span style={{fontSize: "0.9em"}}>{player[name.toLowerCase()].toFixed(3)}</span>              
                                                 }
                                                 {
@@ -100,11 +131,11 @@ class Panel extends React.Component {
                                                     <span>{player[name.toLowerCase()].toFixed(2)}</span>  
                                                 }
                                                 {
-                                                    name === "plus-minus" &&
+                                                    name === "plus_minus" &&
                                                     <span>{player[name.toLowerCase()] > 0 ? "+" + player[name.toLowerCase()] : player[name.toLowerCase()]}</span>
                                                 }
                                                 {
-                                                    (name != "sv%" && name != "gaa" && name != "plus-minus") &&
+                                                    (name != "sv_per" && name != "gaa" && name != "plus_minus") &&
                                                     <span>{player[name.toLowerCase()]}</span>
                                                 }
                                             </div>

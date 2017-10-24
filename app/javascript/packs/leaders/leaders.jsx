@@ -19,14 +19,14 @@ class Leaders extends React.Component {
             points: getData("point"),
             plus_minus: getData("plusminus"),
             gaa: getData("gaa"),
-            wins: getData("win"),
+            gp: getData("gp"),
             sv: getData("sv"),
             so: getData("so")
         }
     }
 
     render () {
-        const { goals, assists, points, plus_minus, gaa, wins, sv, so } = this.state
+        const { goals, assists, points, plus_minus, gaa, gp, sv, so } = this.state
 
         return (
             <div>
@@ -39,7 +39,7 @@ class Leaders extends React.Component {
                         {goals.length > 0 && <Panel statName="goals" players={goals}/>}
                         {assists.length > 0 && <Panel statName="assists" players={assists}/>}
                         {points.length > 0 && <Panel statName="points" players={points}/>}
-                        {plus_minus.length > 0 && <Panel statName="plus-minus" players={plus_minus}/>}
+                        {plus_minus.length > 0 && <Panel statName="plus_minus" players={plus_minus}/>}
                     </div>
                 </div>
                 <div className="card mt-4">
@@ -49,9 +49,9 @@ class Leaders extends React.Component {
                                 <div className="card-text text-center col-12">No Data</div>
                         }
                         {gaa.length > 0 && <Panel statName="gaa" players={gaa}/>}
-                        {wins.length > 0 && <Panel statName="wins" players={wins}/>}
-                        {sv.length > 0 && <Panel statName="sv%" players={sv}/>}
-                        {so.length > 0 && <Panel statName="shutouts" players={so}/>}
+                        {gp.length > 0 && <Panel statName="goalie_games" players={gp}/>}
+                        {sv.length > 0 && <Panel statName="sv_per" players={sv}/>}
+                        {so.length > 0 && <Panel statName="so" players={so}/>}
                     </div>
                 </div>
             </div>
