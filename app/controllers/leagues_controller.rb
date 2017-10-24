@@ -119,14 +119,14 @@ class LeaguesController < ApplicationController
             s[:avatar] = u.get_avatar
         end
 
-        @goal_leaders = sql_stats.sort_by { |s| -s["goals"]}
-        @assist_leaders = sql_stats.sort_by{|s| -s["assists"]}
-        @point_leaders = sql_stats.sort_by{|s| -s["points"]}
-        @plusminus_leaders = sql_stats.sort_by{|s| -s["plus_minus"]}
-        @gaa_leaders = sql_stats.sort_by{|s| s["gaa"]}
-        @sv_leaders = sql_stats.sort_by{|s| -s["sv_per"]}
-        @gp_leaders = sql_stats.sort_by{|s| s["goalie_games"]}
-        @so_leaders = sql_stats.sort_by{|s| -s["so"]}
+        @goal_leaders = sql_stats.sort_by { |s| s["goals"] ? 0 - s["goals"] : 0}
+        @assist_leaders = sql_stats.sort_by{|s| s["assists"] ? 0 - s["assists"] : 0}
+        @point_leaders = sql_stats.sort_by{|s| s["points"] ? 0 - s["points"] : 0}
+        @plusminus_leaders = sql_stats.sort_by{|s| s["plus_minus"] ? 0 - s["plus_minus"] : 0}
+        @gaa_leaders = sql_stats.sort_by{|s| s["gaa"] ? s["gaa"] : 0}
+        @sv_leaders = sql_stats.sort_by{|s| s["sv_per"] ? 0 - s["sv_per"] : 0}
+        @gp_leaders = sql_stats.sort_by{|s| s["goalie_games"] ? s["goalie_games"] : 0}
+        @so_leaders = sql_stats.sort_by{|s| s["so"] ? 0 - s["so"] : 0}
     end
 
     def signups
