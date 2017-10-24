@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023232808) do
+ActiveRecord::Schema.define(version: 20171024005557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,27 @@ ActiveRecord::Schema.define(version: 20171023232808) do
   add_foreign_key "trades", "seasons"
   add_foreign_key "users", "teams"
 
+  create_view "season_team_stats",  sql_definition: <<-SQL
+      SELECT games.id,
+      games.home_id,
+      games.away_id,
+      games.date,
+      games.created_at,
+      games.updated_at,
+      games.season_id,
+      games.home_toa_minutes,
+      games.away_toa_minutes,
+      games.home_toa_seconds,
+      games.away_toa_seconds,
+      games.home_ppg,
+      games.away_ppg,
+      games.home_ppo,
+      games.away_ppo,
+      games.final,
+      games.overtime
+     FROM games;
+  SQL
+
   create_view "season_player_stats",  sql_definition: <<-SQL
       SELECT stat_lines.user_id,
       games.season_id,
@@ -337,7 +358,7 @@ ActiveRecord::Schema.define(version: 20171023232808) do
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN 1
               ELSE NULL::integer
           END) AS games_played,
-      (((sum(
+      COALESCE((((sum(
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.goals
               ELSE NULL::integer
@@ -345,7 +366,7 @@ ActiveRecord::Schema.define(version: 20171023232808) do
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.assists
               ELSE NULL::integer
-          END)))::double precision / (NULLIF(count(*), 0))::double precision) AS p_per,
+          END)))::double precision / (NULLIF(count(*), 0))::double precision), (0)::double precision) AS p_per,
       count(
           CASE
               WHEN ((stat_lines."position")::text = 'G'::text) THEN 1
@@ -365,18 +386,18 @@ ActiveRecord::Schema.define(version: 20171023232808) do
       sum(stat_lines.shg) AS shg,
       sum(stat_lines.shots) AS shots,
       sum(stat_lines.hits) AS hits,
-      ((sum(stat_lines.goals))::double precision / (NULLIF(sum(stat_lines.shots), 0))::double precision) AS sh_per,
+      COALESCE(((sum(stat_lines.goals))::double precision / (NULLIF(sum(stat_lines.shots), 0))::double precision), (0)::double precision) AS sh_per,
       sum(stat_lines.fow) AS fow,
       sum(stat_lines.fot) AS fot,
-      ((sum(stat_lines.fow))::double precision / (NULLIF(sum(stat_lines.fot), 0))::double precision) AS fo_per,
+      COALESCE(((sum(stat_lines.fow))::double precision / (NULLIF(sum(stat_lines.fot), 0))::double precision), (0)::double precision) AS fo_per,
       sum(stat_lines.goals_against) AS ga,
       sum(stat_lines.shots_against) AS sa,
-      (((sum(stat_lines.shots_against) - sum(stat_lines.goals_against)))::double precision / (NULLIF(sum(stat_lines.shots_against), 0))::double precision) AS sv_per,
-      ((sum(stat_lines.goals_against))::double precision / (NULLIF(count(
+      COALESCE((((sum(stat_lines.shots_against) - sum(stat_lines.goals_against)))::double precision / (NULLIF(sum(stat_lines.shots_against), 0))::double precision), (0)::double precision) AS sv_per,
+      COALESCE(((sum(stat_lines.goals_against))::double precision / (NULLIF(count(
           CASE
               WHEN ((stat_lines."position")::text = 'G'::text) THEN 1
               ELSE NULL::integer
-          END), 0))::double precision) AS gaa,
+          END), 0))::double precision), (0)::double precision) AS gaa,
       count(
           CASE
               WHEN ((stat_lines.goals_against = 0) AND ((stat_lines."position")::text = 'G'::text)) THEN 1
@@ -397,27 +418,6 @@ ActiveRecord::Schema.define(version: 20171023232808) do
     WHERE (games.final = true)
     GROUP BY stat_lines.user_id, games.season_id
     ORDER BY stat_lines.user_id, games.season_id;
-  SQL
-
-  create_view "season_team_stats",  sql_definition: <<-SQL
-      SELECT games.id,
-      games.home_id,
-      games.away_id,
-      games.date,
-      games.created_at,
-      games.updated_at,
-      games.season_id,
-      games.home_toa_minutes,
-      games.away_toa_minutes,
-      games.home_toa_seconds,
-      games.away_toa_seconds,
-      games.home_ppg,
-      games.away_ppg,
-      games.home_ppo,
-      games.away_ppo,
-      games.final,
-      games.overtime
-     FROM games;
   SQL
 
 end
