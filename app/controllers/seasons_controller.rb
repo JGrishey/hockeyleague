@@ -118,7 +118,7 @@ class SeasonsController < ApplicationController
             s[:avatar] = u.get_avatar
         end
 
-        @goal_leaders = sql_stats.sort_by {|s| s["games_played"]}.sort_by{|s| -s["goals"]}.first(5)
+        @goal_leaders = sql_stats.select{|s| s["games_played"] != nil}.sort_by{|s| -s["goals"]}.first(5)
         @assist_leaders = sql_stats.select{|s| s["games_played"] != nil}.sort_by{|s| -s["assists"]}.first(5)
         @point_leaders = sql_stats.select{|s| s["games_played"] != nil}.sort_by{|s| -s["points"]}.first(5)
         @plusminus_leaders = sql_stats.select{|s| s["games_played"] != nil}.sort_by{ |s| -s["plus_minus"]}.first(5)
