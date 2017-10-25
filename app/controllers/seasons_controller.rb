@@ -67,10 +67,10 @@ class SeasonsController < ApplicationController
             s[:avatar] = u.get_avatar
         end
 
-        @goal_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["goals"] : 0}
-        @assist_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["assists"] : 0}
-        @point_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["points"] : 0}
-        @pim_leader = sql_stats.max_by{ |p| p["games_played"] > 0 ? p["pim"] : 0}
+        @goal_leader = sql_stats.select{|s| s["games_played"] != nil}.max_by{ |p| p["goals"]}
+        @assist_leader = sql_stats.select{|s| s["games_played"] != nil}.max_by{ |p| p["assists"]}
+        @point_leader = sql_stats.select{|s| s["games_played"] != nil}.max_by{ |p| p["points"]}
+        @pim_leader = sql_stats.select{|s| s["games_played"] != nil}.max_by{ |p| p["pim"]}
     end
 
     def destroy
