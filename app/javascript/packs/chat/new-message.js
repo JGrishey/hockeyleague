@@ -30,7 +30,7 @@ $(document).ready(() => {
                 element: document.getElementById('pell'),
                 onChange: html => {
                     if (document.getElementById('message_body')) {
-                        document.getElementById('message_body').value = parser.render(html)
+                        document.getElementById('message_body').value = html
                     }
                 },
                 styleWithCSS: true,
