@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<% if game.home_team.captain == current_user || game.away_team.captain == current_user || current_user.admin %>
+<% if game.home_team.captain == current_user || game.away_team.captain == current_user || current_user.admin || current_user.stat_admin %>
     <div class="card mt-2">
         <div class="card-body">
             <div class="row justify-content-center">
@@ -34,7 +34,7 @@
                         <% end %>
                     </div>
                 <% end %>
-                <% if !game.final && current_user.admin || current_user.stat_admin %>
+                <% if !game.final && (current_user.admin || current_user.stat_admin) %>
                     <div class="col-12 col-lg text-center justify-content-center mt-1 mb-1">
                         <%= link_to make_final_league_season_game_path(season.league, season, game), method: :post do %>
                             <button class="btn btn-outline-info" style="cursor: pointer;">Make Final</button>

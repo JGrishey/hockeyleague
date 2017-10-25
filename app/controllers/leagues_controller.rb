@@ -54,7 +54,7 @@ class LeaguesController < ApplicationController
 
     def show
         @data = []
-        @league.current_season.teams.includes(:players).each do |team|
+        @league.current_season.teams.each do |team|
             @data.push(team.standingsData) if team.visibility
         end
 
