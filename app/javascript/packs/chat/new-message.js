@@ -1,5 +1,14 @@
 import pell from 'pell';
 
+import Parser from "simple-text-parser"
+
+let parser = new Parser()
+
+parser.addRule(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+    (tag) => {
+        return "<a href='" + tag + "'>" + tag + "</a>"
+    })
+
 $(document).ready(() => {
     if (document.getElementsByClassName("pell-content").length == 0) {
         if (document.getElementById("pell")) {
@@ -21,7 +30,7 @@ $(document).ready(() => {
                 element: document.getElementById('pell'),
                 onChange: html => {
                     if (document.getElementById('message_body')) {
-                        document.getElementById('message_body').value = html
+                        document.getElementById('message_body').value = parser.render(html)
                     }
                 },
                 styleWithCSS: true,

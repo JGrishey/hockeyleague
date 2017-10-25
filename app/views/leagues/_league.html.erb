@@ -86,12 +86,7 @@
     </div>
 
     <% if season.teams.any? %>
-        <div class="card mt-2">
-            <div class="card-header text-center bg-dark text-white">
-                Standings
-            </div>
-            <div class="card-body" id="standings" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
-            </div>
+        <div class="mt-2" id="standings" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
         </div>
     <% end %>
 
@@ -106,7 +101,6 @@
                     <%= link_to profile_path(@goal_leader[:name]) do %>
                         <div class="picture text-center justify-content-center" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @goal_leader[:name]))%>/>
-                            <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @goal_leader[:name]).getCurrentTeam(season))%>"/>
                         </div>
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @goal_leader[:name] %></div>
                     <% end %>
@@ -118,7 +112,6 @@
                     <%= link_to profile_path(@assist_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @assist_leader[:name]))%>/>
-                            <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @assist_leader[:name]).getCurrentTeam(season))%>"/>
                         </div>
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @assist_leader[:name] %></div>
                     <% end %>
@@ -130,7 +123,6 @@
                     <%= link_to profile_path(@point_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @point_leader[:name]))%>/>
-                            <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @point_leader[:name]).getCurrentTeam(season))%>"/>
                         </div>
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @point_leader[:name] %></div>
                     <% end %>
@@ -142,7 +134,6 @@
                     <%= link_to profile_path(@pim_leader[:name]) do %>
                         <div class="picture" style="margin: 0 auto;">
                             <img class="img-responsive rounded-circle" style="max-height: 100%; max-width: 100%;" src=<%= get_avatar(User.find_by(user_name: @pim_leader[:name]))%>/>
-                            <img class="team-photo img-responsive" width="70" src="<%= get_logo(User.find_by(user_name: @pim_leader[:name]).getCurrentTeam(season))%>"/>
                         </div>
                         <div class="text-center font-weight-bold text-uppercase mt-4"><%= @pim_leader[:name] %></div>
                     <% end %>

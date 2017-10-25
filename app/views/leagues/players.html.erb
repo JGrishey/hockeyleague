@@ -51,12 +51,7 @@
     </nav>
 
     <% if @season.games.where(final: true).any? %>
-        <div class="card mt-2">
-            <div class="card-header text-center bg-dark text-white">
-                Players
-            </div>
-            <div class="card-body" style="font-size: 0.75em;" id="players" data-data="<%= @sql_stats.to_json %>">
-            </div>
+        <div class="mt-2" style="font-size: 0.75em;" id="players" data-data="<%= @sql_stats.to_json %>">
         </div>
     <% end %>
 </div>

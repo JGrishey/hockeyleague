@@ -85,12 +85,7 @@
     </div>
 
     <% if @season.teams.any? %>
-        <div class="card mt-2">
-            <div class="card-header text-center bg-dark text-white">
-                Standings
-            </div>
-            <div class="card-body" id="standings" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
-            </div>
+        <div class="mt-2" id="standings" style="font-size: 0.75em;" data-data="<%= @data.to_json %>">
         </div>
     <% end %>
 

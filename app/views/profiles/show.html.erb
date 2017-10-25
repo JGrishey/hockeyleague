@@ -30,16 +30,6 @@
 
     <div class="card mt-4">
         <div class="card-header bg-dark text-white">
-            Recent games
-        </div>
-        <div class="card-body">
-            <div id="recent" style="font-size: 0.75em;">
-            </div>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-header bg-dark text-white">
             Stats
         </div>
         <div class="card-body">
@@ -58,20 +48,17 @@
         </div>
     </div>
 
-    <div id="recent-games" data-data="<%= @game_data.to_json %>"></div>
-
-    <div id="current-data" data-data="<%= @current_stats.to_json %>"></div>
+    <div id="current-data" data-data="<%= @sql_stats.select{|s| Season.find(s["season_id"]).current}.to_json %>"></div>
 
     <div id="career-data" data-data="<%= @career_stats.to_json %>"></div>
 
     <% @leagues.each do |league| %>
-        <div id="<%= league.name %>" class="league-data" data-data="<%= @stats.select{ |s| s[:league_id] == league.id }.to_json %>"></div>
+        <div id="<%= league.name %>" class="league-data" data-data="<%= @sql_stats.select{ |s| s[:league] == league.name }.to_json %>"></div>
     <% end %>
 
     <%= javascript_pack_tag "players/stats" %>
     <%= javascript_pack_tag "players/career-stats"%>
     <%= javascript_pack_tag "players/current-stats" %>
-    <%= javascript_pack_tag "players/recent-games"%>
 
 <% end %>
 

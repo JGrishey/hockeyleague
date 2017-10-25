@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024005557) do
+ActiveRecord::Schema.define(version: 20171025000600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,12 +353,12 @@ ActiveRecord::Schema.define(version: 20171024005557) do
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.assists
               ELSE NULL::integer
           END)) AS points,
-      count(
+      NULLIF(count(
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN 1
               ELSE NULL::integer
-          END) AS games_played,
-      COALESCE((((sum(
+          END), 0) AS games_played,
+      (((sum(
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.goals
               ELSE NULL::integer
@@ -366,12 +366,12 @@ ActiveRecord::Schema.define(version: 20171024005557) do
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.assists
               ELSE NULL::integer
-          END)))::double precision / (NULLIF(count(*), 0))::double precision), (0)::double precision) AS p_per,
-      count(
+          END)))::double precision / (NULLIF(count(*), 0))::double precision) AS p_per,
+      NULLIF(count(
           CASE
               WHEN ((stat_lines."position")::text = 'G'::text) THEN 1
               ELSE NULL::integer
-          END) AS goalie_games,
+          END), 0) AS goalie_games,
       sum(
           CASE
               WHEN ((stat_lines."position")::text <> 'G'::text) THEN stat_lines.plus_minus
@@ -386,18 +386,18 @@ ActiveRecord::Schema.define(version: 20171024005557) do
       sum(stat_lines.shg) AS shg,
       sum(stat_lines.shots) AS shots,
       sum(stat_lines.hits) AS hits,
-      COALESCE(((sum(stat_lines.goals))::double precision / (NULLIF(sum(stat_lines.shots), 0))::double precision), (0)::double precision) AS sh_per,
+      ((sum(stat_lines.goals))::double precision / (NULLIF(sum(stat_lines.shots), 0))::double precision) AS sh_per,
       sum(stat_lines.fow) AS fow,
       sum(stat_lines.fot) AS fot,
-      COALESCE(((sum(stat_lines.fow))::double precision / (NULLIF(sum(stat_lines.fot), 0))::double precision), (0)::double precision) AS fo_per,
+      ((sum(stat_lines.fow))::double precision / (NULLIF(sum(stat_lines.fot), 0))::double precision) AS fo_per,
       sum(stat_lines.goals_against) AS ga,
       sum(stat_lines.shots_against) AS sa,
-      COALESCE((((sum(stat_lines.shots_against) - sum(stat_lines.goals_against)))::double precision / (NULLIF(sum(stat_lines.shots_against), 0))::double precision), (0)::double precision) AS sv_per,
-      COALESCE(((sum(stat_lines.goals_against))::double precision / (NULLIF(count(
+      (((sum(stat_lines.shots_against) - sum(stat_lines.goals_against)))::double precision / (NULLIF(sum(stat_lines.shots_against), 0))::double precision) AS sv_per,
+      ((sum(stat_lines.goals_against))::double precision / (NULLIF(count(
           CASE
               WHEN ((stat_lines."position")::text = 'G'::text) THEN 1
               ELSE NULL::integer
-          END), 0))::double precision), (0)::double precision) AS gaa,
+          END), 0))::double precision) AS gaa,
       count(
           CASE
               WHEN ((stat_lines.goals_against = 0) AND ((stat_lines."position")::text = 'G'::text)) THEN 1

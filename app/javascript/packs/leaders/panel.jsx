@@ -45,7 +45,7 @@ class Panel extends React.Component {
                             <span>{this.state.name}</span>
                         }
                     </div>
-                    <div className="text-center font-weight-bold">
+                    <h2 className="text-center font-weight-bold">
                         {
                             this.state.name === "sv_per" &&
                             <span>{player[this.state.name.toLowerCase()].toFixed(3)}</span>              
@@ -62,7 +62,7 @@ class Panel extends React.Component {
                             (this.state.name != "sv_per" && this.state.name != "gaa" && this.state.name != "plus_minus") &&
                             <span>{player[this.state.name.toLowerCase()]}</span>
                         }
-                    </div>
+                    </h2>
                 </a>
             </div>
         )
@@ -76,8 +76,8 @@ class Panel extends React.Component {
         let content = this.renderPlayer(selected)
 
         return (
-            <div className="col-12 col-lg-6">
-                <div className="text-center font-weight-bold text-uppercase">
+            <div className="col-12 col-lg-6 p-3">
+                <h3 className="text-left font-weight-bold text-uppercase">
                         {
                             name === "sv_per" &&
                             <span>{"SV%"}</span>
@@ -94,7 +94,7 @@ class Panel extends React.Component {
                             name != "sv_per" && name != "goalie_games" && name != "plus_minus" &&
                             <span>{name}</span>
                         }
-                </div>
+                </h3>
 
                 <div className="row">
                     <div className="col-6 p-4">
@@ -112,7 +112,7 @@ class Panel extends React.Component {
                                         <div className="row">
                                             <div className="col-9 align-self-center">
                                                 <div className="progress align-self-center">
-                                                    <div className={player["name"] === selected["name"] ? "progress-bar bg-primary" : "progess-bar bg-dark"} 
+                                                    <div className={player["name"] === selected["name"] ? "progress-bar bg-blue" : "progess-bar bg-dark"} 
                                                         role="progressbar" 
                                                         style={{height: "5px", width: player[name.toLowerCase()] > 0 ? player[name.toLowerCase()] / maxStat * 100 + "%" : "0"}}
                                                         aria-valuenow={ player[name.toLowerCase()] > 0 ? player[name.toLowerCase()].toString() : "0"}

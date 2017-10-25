@@ -28,7 +28,7 @@ class Standings extends React.Component {
                             Header: "Name",
                             id: "name",
                             accessor: d => (<div><a href={"/leagues/" + d.league_id + "/seasons/" + d.season_id + "/teams/" + d.team_id}>{d.name}</a></div>),
-                            minWidth: actualWidth >= 992 ? docWidth / (100 / 15) : 150,
+                            width: 210,
                             headerStyle: {whiteSpace: "normal"}
                         },
                         {
@@ -36,35 +36,35 @@ class Standings extends React.Component {
                             accessor: "gp",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "W",
                             accessor: "wins",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "L",
                             accessor: "losses",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "OTL",
                             accessor: "otl",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "P",
                             accessor: "pts",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "P%",
@@ -72,21 +72,21 @@ class Standings extends React.Component {
                             accessor: d => d["pts%"].toFixed(3),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "GF",
                             accessor: "gf",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "GA",
                             accessor: "ga",
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "GF/GP",
@@ -94,7 +94,7 @@ class Standings extends React.Component {
                             accessor: d => d.gfpg.toFixed(2),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "GA/GP",
@@ -102,7 +102,7 @@ class Standings extends React.Component {
                             accessor: d => d.gapg.toFixed(2),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "PP%",
@@ -110,7 +110,7 @@ class Standings extends React.Component {
                             accessor: d => d["pp%"].toFixed(1),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "PK%",
@@ -118,7 +118,7 @@ class Standings extends React.Component {
                             accessor: d => d["pk%"].toFixed(1),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "SHOTS/GP",
@@ -126,7 +126,7 @@ class Standings extends React.Component {
                             accessor: d => d.shfpg.toFixed(1),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "SA/GP",
@@ -134,7 +134,7 @@ class Standings extends React.Component {
                             accessor: d => d.shapg.toFixed(1),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                         {
                             Header: "FOW%",
@@ -142,7 +142,7 @@ class Standings extends React.Component {
                             accessor: d => d["fow%"].toFixed(1),
                             style: {"textAlign": "center"},
                             headerStyle: {whiteSpace: "normal"},
-                            maxWidth: actualWidth >= 992 ? docWidth / (100 / (85 / 15)) : 50
+                            width: 60
                         },
                     ]}
                     className="-striped -highlight"
