@@ -3,7 +3,7 @@
     <%= f.hidden_field :team_id, value: @game.home_team.id %>
     <div class="row justify-content-center mb-3">
         <div class="col-5">
-            <%= f.select :user_id, @game.home_team.players.collect{ |p| [p.user_name, p.id]} + @game.season.teams.find_by(name: "Waivers").players.collect{|p| [p.user_name + " (Waiver)", p.id]} + @game.season.teams.find_by(name: "Free Agents").players.collect{|p| [p.user_name + " (Waiver)", p.id]}, {}, {class: "form-control"} %>
+            <%= f.select :user_id, @game.home_team.players.order('LOWER(user_name) ASC').collect{ |p| [p.user_name, p.id]} + @game.season.teams.find_by(name: "Waivers").players.order('LOWER(user_name) ASC').collect{|p| [p.user_name + " (Waiver)", p.id]} + @game.season.teams.find_by(name: "Free Agents").players.order('LOWER(user_name) ASC').collect{|p| [p.user_name + " (Waiver)", p.id]}, {}, {class: "form-control"} %>
         </div>
         <div class="col-5">
             <%= f.select :position, ["LW", "C", "RW", "LD", "RD", "G"], {}, {class: "form-control"} %>
