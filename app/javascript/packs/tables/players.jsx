@@ -87,8 +87,8 @@ class Players extends React.Component {
                         },
                         {
                             Header: "P/GP",
-                            id: "p/gp",
-                            accessor: d => d["games_played"] == 0 ? (d["points"] / d["games_played"]).toFixed(2) : (0).toFixed(2),
+                            id: "p_per",
+                            accessor: d => d["games_played"] != 0 ? (d["p_per"]).toFixed(2) : (0).toFixed(2),
                             maxWidth: 56,
                             style: {"textAlign": "center"}
                         },
