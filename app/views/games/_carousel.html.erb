@@ -9,13 +9,13 @@
                 <% end %>
             <% else %>
                 <% recent_games.each_with_index do |(key, values), index| %>
-                    <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= past_game.include? recent_games[index] ? "active" : "" %>"></li>
+                    <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= past_game[0] == key ? "active" : "" %>"></li>
                 <% end %>
             <% end %>
         </ol>
         <div class="carousel-inner">
             <% recent_games.each_with_index do |vs, index| %>
-                <div class="<%= index == 0 ? "carousel-item active" : "carousel-item" %>">
+                <div class="<%= vs[0] == past_game[0] ? "carousel-item active" : "carousel-item" %>">
                     <div class="row justify-content-center mt-2 ml-5 mr-5">
                         <% vs[1].each do |serie| %>
                             <div class="col-3 col-lg-3 p-2 ml-1 mr-1 mb-2 border border-main">
