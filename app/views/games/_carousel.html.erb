@@ -2,7 +2,7 @@
     <div class="carousel slide mt-2 mb-2 border border-main rounded-0" id="gameCarousel" data-ride="carousel" data-interval="false" style="background-color: #fff;">
         <ol class="carousel-indicators">
             <% todays_games = recent_games.select { |(key, values)| Date.strptime(key, "%a %b %d") == Date.today } %>
-            <% past_game = recent_games.select{ |key, values| Date.strptime(key, "%a %b %d") <= Date.today }.sort_by {|key, values| Date.strptime(key, "%a %b %d") }.first %>
+            <% past_game = recent_games.select{ |key, values| Date.strptime(key, "%a %b %d") <= Date.today }.sort_by {|key, values| Date.strptime(key, "%a %b %d") }.last %>
             <% if todays_games.any? %>
                 <% recent_games.each_with_index do |(key, values), index| %>
                     <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= todays_games.include? recent_games[index] ? "active" : "" %>"></li>
@@ -18,7 +18,7 @@
                 <div class="<%= index == 0 ? "carousel-item active" : "carousel-item" %>">
                     <div class="row justify-content-center mt-2 ml-5 mr-5">
                         <% vs[1].each do |serie| %>
-                            <div class="col-3 col-lg-2 p-2 ml-1 mr-1 mb-2 border border-main">
+                            <div class="col-3 col-lg-3 p-2 ml-1 mr-1 mb-2 border border-main">
                                 <h4 class="text-center pb-2 border border-top-0 border-right-0 border-left-0 border-main">
                                     <img style="max-height: 40px;" src="<%= get_logo(serie[1].first.away_team) %>"/> <img style="max-height: 40px;" src="<%= get_logo(serie[1].first.home_team) %>"/>
                                 </h4>
@@ -26,18 +26,17 @@
                                     <%= link_to league_season_game_path(league, season, game), class: "col-2 p-0 align-self-center" do %>
                                         <h6 class="text-center">
                                             <% if game.final %>
-                                                <strong>Game <%= index + 1 %>: </strong>
                                                 <% if game.home_goals > game.away_goals %>
                                                     <%= game.home_goals %>
                                                     -
-                                                    <%= game.away_goals %> <%= serie[1].first.home_team.abbreviation %>
+                                                    <%= game.away_goals %> <%= game.home_team.abbreviation %>
                                                     <% if game.overtime %>
                                                          (OT)
                                                     <% end %>
                                                 <% else %>
                                                     <%= game.away_goals %> 
                                                     -
-                                                    <%= game.home_goals %> <%= serie[1].first.away_team.abbreviation %>
+                                                    <%= game.home_goals %> <%= game.away_team.abbreviation %>
                                                     <% if game.overtime %>
                                                          (OT)
                                                     <% end %>

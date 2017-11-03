@@ -98,7 +98,7 @@ class GamesController < ApplicationController
         .order('date ASC')
         .group_by{
             |g| 
-                g.date.strftime("%^b %d")
+                g.date.strftime("%^a %^b %d")
         }
         .to_a
         .map{ 
