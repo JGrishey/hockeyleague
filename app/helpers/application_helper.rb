@@ -56,7 +56,7 @@ module ApplicationHelper
     def get_avatar (user)
         if user
             if user.avatar.exists?
-                user.avatar.url(:small)
+                user.avatar.url
             else
                 image_path("default-user.png")
             end

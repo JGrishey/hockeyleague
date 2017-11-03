@@ -15,7 +15,7 @@ class Team < ApplicationRecord
     has_many :goals
     has_many :penalties
 
-    has_attached_file :logo, styles: {:medium => "300x300>"}, default_style: :medium
+    has_attached_file :logo, styles: {:original => "300x300>"}, default_style: :original
     validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
 
     def abbreviation
