@@ -1,47 +1,53 @@
 <% if recent_games.any? %>
-    <div class="carousel slide mt-2 mb-2 border border-main rounded-0" id="gameCarousel" data-ride="carousel" style="background-color: #fff;">
+    <div class="carousel slide mt-2 mb-2 border border-main rounded-0" id="gameCarousel" data-ride="carousel" data-interval="false" style="background-color: #fff;">
         <ol class="carousel-indicators">
-            <% recent_games.each_with_index do |(key, values), index| %>
-                <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= index == 0 ? "active" : "" %>"></li>
+            <% todays_games = recent_games.select { |(key, values)| Date.strptime(key, "%a %b %d") == Date.today } %>
+            <% past_game = recent_games.select{ |key, values| Date.strptime(key, "%a %b %d") <= Date.today }.sort_by {|key, values| Date.strptime(key, "%a %b %d") }.first %>
+            <% if todays_games.any? %>
+                <% recent_games.each_with_index do |(key, values), index| %>
+                    <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= todays_games.include? recent_games[index] ? "active" : "" %>"></li>
+                <% end %>
+            <% else %>
+                <% recent_games.each_with_index do |(key, values), index| %>
+                    <li data-target="#gameCarousel" data-slide-to="<%= index %>" class="<%= past_game.include? recent_games[index] ? "active" : "" %>"></li>
+                <% end %>
             <% end %>
         </ol>
         <div class="carousel-inner">
             <% recent_games.each_with_index do |vs, index| %>
                 <div class="<%= index == 0 ? "carousel-item active" : "carousel-item" %>">
-                    <div class="row justify-content-center mt-2">
+                    <div class="row justify-content-center mt-2 ml-5 mr-5">
                         <% vs[1].each do |serie| %>
-                            <div class="col-5 col-lg-2 border border-light p-3 mr-4 ml-4 mb-4">
-                                <div class="row justify-content-center">
-                                    <div class="col-4 align-self-center">
-                                        <div class="row justify-content-center">
-                                            <div class="col-12 align-self-center mt-2">
-                                                <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(serie[1].first.away_team) %>"/>
-                                            </div>
-                                            <div class="col-12 align-self-center mt-2">
-                                                <img class="img-responsive align-self-center" style="max-height: 100%; max-width: 100%;" src="<%= get_logo(serie[1].first.home_team) %>"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <% serie[1].each_with_index do |game, index| %>
-                                        <%= link_to league_season_game_path(league, season, game), class: "col-2 p-0 align-self-center" do %>
-                                            <div class="row">
-                                                <% if game.final %>
-                                                    <div class="col-12 text-center align-self-center mt-2">
-                                                        <%= serie[1].first.away_team == game.away_team ? game.away_goals : game.home_goals %>
-                                                    </div>
-
-                                                    <div class="col-12 text-center align-self-center mt-2">
-                                                        <%= serie[1].first.home_team == game.home_team ? game.home_goals : game.away_goals %>
-                                                    </div>
+                            <div class="col-3 col-lg-2 p-2 ml-1 mr-1 mb-2 border border-main">
+                                <h4 class="text-center pb-2 border border-top-0 border-right-0 border-left-0 border-main">
+                                    <img style="max-height: 40px;" src="<%= get_logo(serie[1].first.away_team) %>"/> <img style="max-height: 40px;" src="<%= get_logo(serie[1].first.home_team) %>"/>
+                                </h4>
+                                <% serie[1].each_with_index do |game, index| %>
+                                    <%= link_to league_season_game_path(league, season, game), class: "col-2 p-0 align-self-center" do %>
+                                        <h6 class="text-center">
+                                            <% if game.final %>
+                                                <strong>Game <%= index + 1 %>: </strong>
+                                                <% if game.home_goals > game.away_goals %>
+                                                    <%= game.home_goals %>
+                                                    -
+                                                    <%= game.away_goals %> <%= serie[1].first.home_team.abbreviation %>
+                                                    <% if game.overtime %>
+                                                         (OT)
+                                                    <% end %>
                                                 <% else %>
-                                                    <div class="col-12 text-center align-self-center mt-2">
-                                                        G<%= index+1 %>
-                                                    </div>
+                                                    <%= game.away_goals %> 
+                                                    -
+                                                    <%= game.home_goals %> <%= serie[1].first.away_team.abbreviation %>
+                                                    <% if game.overtime %>
+                                                         (OT)
+                                                    <% end %>
                                                 <% end %>
-                                            </div>
-                                        <% end %>
+                                            <% else %>
+                                                <strong>Game <%= index+1 %></strong>
+                                            <% end %>
+                                        </h6>
                                     <% end %>
-                                </div>
+                                <% end %>
                             </div>
                         <% end %>
                     </div>
