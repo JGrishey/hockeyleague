@@ -35,7 +35,7 @@ class User < ApplicationRecord
     has_many :penalties
     has_many :stat_lines
 
-    has_attached_file :avatar, styles: { :original => "400x400#" }, default_style: :original
+    has_attached_file :avatar, styles: { :original => "300x300#" }, default_style: :original
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
     def online?
