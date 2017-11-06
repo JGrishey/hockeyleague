@@ -38,6 +38,7 @@ Rails.application.routes.draw do
             end
             resources :games do
                 member do
+                    # Manual
                     get 'enter_home_stats'
                     get 'enter_away_stats'
                     get 'submit_home_players'
