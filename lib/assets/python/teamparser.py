@@ -10,7 +10,7 @@ parser.add_argument('--image')
 
 args = parser.parse_args()
 
-image = BytesIO(base64.b64decode(args.image))
+image = BytesIO(base64.b64decode(open(args.image).read()))
 
 import numpy as np
 

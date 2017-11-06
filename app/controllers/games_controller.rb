@@ -199,8 +199,9 @@ class GamesController < ApplicationController
     end
 
     def process_team_stats
-        team_image = Base64.strict_encode64(params[:team_stats][:image].read())
-        team_stats = JSON.parse(`python ./lib/assets/python/teamparser.py --image #{team_image}`)[0]
+        File.open("teams.txt", "w") { |f| f.write(Base64.strict_encode64(params[:team_stats][:image].read())) }
+        team_stats = JSON.parse(`python ./lib/assets/python/teamparser.py --image teams.txt`)[0]
+        `rm teams.txt`
         home_toa = team_stats["toa_h"].split(":")
         away_toa = team_stats["toa_a"].split(":")
         home_pp = team_stats["pp_h"].split("/")
@@ -221,21 +222,25 @@ class GamesController < ApplicationController
     end
 
     def process_home_image
-        skater_image = Base64.strict_encode64(params[:home_images][:skater_image].read())
-        goalie_image = Base64.strict_encode64(params[:home_images][:goalie_image].read())
+        File.open("skater.txt", "w") { |f| f.write(Base64.strict_encode64(params[:home_images][:skater_image].read())) }
+        File.open("goalie.txt", "w") { |f| f.write(Base64.strict_encode64(params[:home_images][:goalie_image].read())) }
 
-        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image #{skater_image}`)
-        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image #{goalie_image}`)
+        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image skater.txt`)
+        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image goalie.txt`)
+
+        `rm skater.txt goalie.txt`
 
         redirect_to enter_home_player_names_league_season_game_path(@season.league, @season, @game, skater_stats: @skater_stats, goalie_stats: @goalie_stats)
     end
 
     def process_away_image
-        skater_image = Base64.strict_encode64(params[:away_images][:skater_image].read())
-        goalie_image = Base64.strict_encode64(params[:away_images][:goalie_image].read())
+        File.open("skater.txt", "w") { |f| f.write(Base64.strict_encode64(params[:away_images][:skater_image].read())) }
+        File.open("goalie.txt", "w") { |f| f.write(Base64.strict_encode64(params[:away_images][:goalie_image].read())) }
 
-        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image #{skater_image}`)
-        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image #{goalie_image}`)
+        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image skater.txt`)
+        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image goalie.txt`)
+
+        `rm skater.txt goalie.txt`
 
         redirect_to enter_away_player_names_league_season_game_path(@season.league, @season, @game, skater_stats: @skater_stats, goalie_stats: @goalie_stats)
     end
