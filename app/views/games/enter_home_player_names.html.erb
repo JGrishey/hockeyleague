@@ -1,3 +1,4 @@
+<h3 class="text-center mb-4">Enter Skater and Goalie Users (<%= @game.home_team.abbreviation %>) for <%= @game.away_team.name %> @ <%= @game.home_team.name %>: <%= @game.date.strftime("%I:%M %p") %></h3>
 <%= form_for(:names, :url => url_for(:action => "process_home_names", :controller => "games"), method: :post) do |f| %>
     <% @skater_stats.each do |ss| %>
         <%= f.hidden_field :skater_stats, multiple: true, value: ss.to_json %>

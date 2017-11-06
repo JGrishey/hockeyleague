@@ -1,3 +1,5 @@
+<h2 class="text-center mb-4">Enter Team Stats for <%= @game.away_team.name %> @ <%= @game.home_team.name %>: <%= @game.date.strftime("%I:%M %p") %></h2>
+
 <%= form_for(:team_stats, :url => url_for(:action => "process_team_stats", :controller => "games"), method: :post) do |f| %>
     <div class="form-group row justify-content-center border border-main p-3">
         <div class="col-4">

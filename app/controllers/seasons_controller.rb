@@ -245,7 +245,7 @@ class SeasonsController < ApplicationController
             @trade.update_attributes(pending: false, approved: true)
 
             announcement = ""
-            announcement += "<h5>Transaction Annoucement!</h5><hr></hr>"
+            announcement += "<h5>Transaction Announcement!</h5><hr></hr>"
 
             @trade.movements.group_by{|m| m.destination_id}.each do |key, value|
                 names = [] 
