@@ -6,6 +6,7 @@ verify_ssl = true
 numpy = "*"
 Pillow = "*"
 requests = "*"
+pytesseract = "*"
 
 [requires]
 python_version = "3.6"
