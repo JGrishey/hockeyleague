@@ -23,4 +23,5 @@ const refreshPartial = () => {
     $.ajax({
         url: "/chat_boxes/timestamps"
     })
+    console.log("hello")
 }

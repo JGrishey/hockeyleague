@@ -44,6 +44,19 @@ Rails.application.routes.draw do
                     get 'submit_away_players'
                     post 'process_home_stats'
                     post 'process_away_stats'
+
+                    # Image inputting
+                    get 'enter_team_stats'
+                    post 'process_team_stats'
+                    get 'enter_home_image'
+                    get 'enter_home_player_names'
+                    post 'process_home_image'
+                    post 'process_home_names'
+                    get 'enter_away_image'
+                    get 'enter_away_player_names'
+                    post 'process_away_image'
+                    post 'process_away_names'
+
                     post 'add_players'
                     post 'make_final'
                 end

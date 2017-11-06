@@ -198,6 +198,186 @@ class GamesController < ApplicationController
         redirect_to league_season_game_path(@season.league, @season, @game)
     end
 
+    def process_team_stats
+        team_image = Base64.strict_encode64(params[:team_stats][:image].read())
+        team_stats = JSON.parse(`python ./lib/assets/python/teamparser.py --image #{team_image}`)[0]
+        home_toa = team_stats["toa_h"].split(":")
+        away_toa = team_stats["toa_a"].split(":")
+        home_pp = team_stats["pp_h"].split("/")
+        away_pp = team_stats["pp_a"].split("/")
+        overtime = params[:team_stats][:overtime]
+        @game.update_attributes(
+            home_toa_minutes: home_toa[0].to_i,
+            home_toa_seconds: home_toa[1].to_i,
+            away_toa_minutes: away_toa[0].to_i,
+            away_toa_seconds: away_toa[1].to_i,
+            home_ppg: home_pp[0].to_i,
+            home_ppo: home_pp[1].to_i,
+            away_ppg: away_pp[0].to_i,
+            away_ppo: away_pp[1].to_i,
+            overtime: overtime
+        )
+        redirect_to enter_home_image_league_season_game_path(@season.league, @season, @game)
+    end
+
+    def process_home_image
+        skater_image = Base64.strict_encode64(params[:home_images][:skater_image].read())
+        goalie_image = Base64.strict_encode64(params[:home_images][:goalie_image].read())
+
+        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image #{skater_image}`)
+        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image #{goalie_image}`)
+
+        redirect_to enter_home_player_names_league_season_game_path(@season.league, @season, @game, skater_stats: @skater_stats, goalie_stats: @goalie_stats)
+    end
+
+    def process_away_image
+        skater_image = Base64.strict_encode64(params[:away_images][:skater_image].read())
+        goalie_image = Base64.strict_encode64(params[:away_images][:goalie_image].read())
+
+        @skater_stats = JSON.parse(`python ./lib/assets/python/skaterparser.py --image #{skater_image}`)
+        @goalie_stats = JSON.parse(`python ./lib/assets/python/goalieparser.py --image #{goalie_image}`)
+
+        redirect_to enter_away_player_names_league_season_game_path(@season.league, @season, @game, skater_stats: @skater_stats, goalie_stats: @goalie_stats)
+    end
+
+    def enter_home_player_names
+        @skater_names = params[:skater_stats].collect{|player| [player["name"]]}
+        @goalie_name = params[:goalie_stats].collect{|player| [player["name"]]}
+        @skater_stats = params[:skater_stats]
+        @goalie_stats = params[:goalie_stats]
+    end
+
+    def enter_away_player_names
+        @skater_names = params[:skater_stats].collect{|player| [player["name"]]}
+        @goalie_name = params[:goalie_stats].collect{|player| [player["name"]]}
+        @skater_stats = params[:skater_stats]
+        @goalie_stats = params[:goalie_stats]
+    end
+
+    def process_home_names
+        skater_stats = params[:names][:skater_stats].map{|s| JSON.parse(s)}
+        goalie_stats = JSON.parse(params[:names][:goalie_stats])
+        params[:names].each do |k, v|
+            if k[0] == ":"
+                if k[-1] != "m"
+                    skater_stats[k[-1].to_i]["player_id"] = v
+                    skater_stats[k[-1].to_i]["plus_minus"] = params[:names][":player_#{k[-1]}_pm"]
+                    skater_stats[k[-1].to_i]["position"] = params[:names][":player_#{k[-1]}_posm"]
+                end
+            end
+        end
+
+        goalie_stats["player_id"] = params[:names][:goalie]
+
+        skater_stats.each do |skater|
+            gp = GamePlayer.new
+            gp.game = @game
+            gp.player = User.find(skater["player_id"].to_i)
+            gp.position = skater["position"]
+            gp.team = @game.home_team
+            gp.save
+            sL = StatLine.new
+            sL.game = @game
+            sL.team = @game.home_team
+            sL.game_player_id = gp.id
+            sL.user_id = User.find(skater["player_id"].to_i).id
+            sL.position = skater["position"]
+            sL.plus_minus = skater["plus_minus"]
+            sL.shots = skater["shots"]
+            sL.goals = skater["g"]
+            sL.assists = skater["a"]
+            sL.pim = skater["pim"][0,2].to_i
+            sL.ppg = skater["ppg"]
+            sL.shg = skater["shg"]
+            sL.fow = skater["fow"]
+            sL.fot = skater["fot"]
+            sL.hits = skater["hits"]
+            sL.save
+        end
+
+        gp = GamePlayer.new
+        gp.game = @game
+        gp.player = User.find(goalie_stats["player_id"].to_i)
+        gp.position = "G"
+        gp.team = @game.home_team
+        gp.save
+        sL = StatLine.new
+        sL.game = @game
+        sL.team = @game.home_team
+        sL.game_player_id = gp.id
+        sL.user_id = User.find(goalie_stats["player_id"].to_i).id
+        sL.position = "G"
+        sL.shots_against = goalie_stats["sa"]
+        sL.goals_against = goalie_stats["ga"]
+        sL.assists = goalie_stats["a"]
+        sL.goals = goalie_stats["g"]
+        sL.save
+
+        redirect_to enter_away_image_league_season_game_path(@season.league, @season, @game)
+    end
+
+    def process_away_names
+        skater_stats = params[:names][:skater_stats].map{|s| JSON.parse(s)}
+        goalie_stats = JSON.parse(params[:names][:goalie_stats])
+        params[:names].each do |k, v|
+            if k[0] == ":"
+                if k[-1] != "m"
+                    skater_stats[k[-1].to_i]["player_id"] = v
+                    skater_stats[k[-1].to_i]["plus_minus"] = params[:names][":player_#{k[-1]}_pm"]
+                    skater_stats[k[-1].to_i]["position"] = params[:names][":player_#{k[-1]}_posm"]
+                end
+            end
+        end
+
+        goalie_stats["player_id"] = params[:names][:goalie]
+
+        skater_stats.each do |skater|
+            gp = GamePlayer.new
+            gp.game = @game
+            gp.player = User.find(skater["player_id"].to_i)
+            gp.position = skater["position"]
+            gp.team = @game.away_team
+            gp.save
+            sL = StatLine.new
+            sL.game = @game
+            sL.team = @game.away_team
+            sL.game_player_id = gp.id
+            sL.user_id = User.find(skater["player_id"].to_i).id
+            sL.position = skater["position"]
+            sL.plus_minus = skater["plus_minus"]
+            sL.shots = skater["shots"]
+            sL.goals = skater["g"]
+            sL.assists = skater["a"]
+            sL.pim = skater["pim"][0,2].to_i
+            sL.ppg = skater["ppg"]
+            sL.shg = skater["shg"]
+            sL.fow = skater["fow"]
+            sL.fot = skater["fot"]
+            sL.hits = skater["hits"]
+            sL.save
+        end
+
+        gp = GamePlayer.new
+        gp.game = @game
+        gp.player = User.find(goalie_stats["player_id"].to_i)
+        gp.position = "G"
+        gp.team = @game.away_team
+        gp.save
+        sL = StatLine.new
+        sL.game = @game
+        sL.team = @game.away_team
+        sL.game_player_id = gp.id
+        sL.user_id = User.find(goalie_stats["player_id"].to_i).id
+        sL.position = "G"
+        sL.shots_against = goalie_stats["sa"]
+        sL.goals_against = goalie_stats["ga"]
+        sL.assists = goalie_stats["a"]
+        sL.goals = goalie_stats["g"]
+        sL.save
+
+        redirect_to league_season_game_path(@season.league, @season, @game)
+    end
+
     private
 
     def create_notification (body, user, src)
