@@ -255,6 +255,8 @@ class GamesController < ApplicationController
     end
 
     def process_home_names
+        @game.stat_lines.destroy_all
+        @game.game_players.destroy_all
         skater_stats = params[:names][:skater_stats].map{|s| JSON.parse(s)}
         goalie_stats = JSON.parse(params[:names][:goalie_stats])
         params[:names].each do |k, v|
