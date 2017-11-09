@@ -20,23 +20,23 @@ class ProfilesController < ApplicationController
         @career_stats = []
         @leagues.each do |league|
             l = @sql_stats.select {|s| s[:league] == league.name }
-            games_played = l.inject(0){ |sum, e| sum + e["games_played"] }
-            goals = l.inject(0){ |sum, e| sum + e["goals"] }
-            assists = l.inject(0){ |sum, e| sum + e["assists"] }
-            points = l.inject(0){ |sum, e| sum + e["points"] }
-            plus_minus = l.inject(0){ |sum, e| sum + e["plus_minus"] }
-            shots = l.inject(0){ |sum, e| sum + e["shots"] }
-            pim = l.inject(0){ |sum, e| sum + e["pim"] }
-            ppg = l.inject(0){ |sum, e| sum + e["ppg"] }
-            shg = l.inject(0){ |sum, e| sum + e["shg"] }
+            games_played = l.inject(0){ |sum, e| sum + e["games_played"].to_i }
+            goals = l.inject(0){ |sum, e| sum + e["goals"].to_i }
+            assists = l.inject(0){ |sum, e| sum + e["assists"].to_i }
+            points = l.inject(0){ |sum, e| sum + e["points"].to_i }
+            plus_minus = l.inject(0){ |sum, e| sum + e["plus_minus"].to_i }
+            shots = l.inject(0){ |sum, e| sum + e["shots"].to_i }
+            pim = l.inject(0){ |sum, e| sum + e["pim"].to_i }
+            ppg = l.inject(0){ |sum, e| sum + e["ppg"].to_i }
+            shg = l.inject(0){ |sum, e| sum + e["shg"].to_i }
             shper = shots > 0 ? goals / shots.to_f * 100 : 0
             pper = games_played > 0 ? points / games_played.to_f : 0
-            fow = l.inject(0){ |sum, e| sum + e["fow"] }
-            fot = l.inject(0){ |sum, e| sum + e["fot"] }
-            shots_against = l.inject(0){ |sum, e| sum + e["sa"] }
-            goals_against = l.inject(0){ |sum, e| sum + e["ga"] }
+            fow = l.inject(0){ |sum, e| sum + e["fow"].to_i }
+            fot = l.inject(0){ |sum, e| sum + e["fot"].to_i }
+            shots_against = l.inject(0){ |sum, e| sum + e["sa"].to_i }
+            goals_against = l.inject(0){ |sum, e| sum + e["ga"].to_i }
             goalie_games = l.inject(0){ |sum, e| sum + e["goalie_games"].to_i }
-            shutouts = l.inject(0){ |sum, e| sum + e["so"] }
+            shutouts = l.inject(0){ |sum, e| sum + e["so"].to_i }
 
             @career_stats.push(
                 {
