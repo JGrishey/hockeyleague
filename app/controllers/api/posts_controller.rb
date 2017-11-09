@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class Api::PostsController < ApplicationController
 
     before_action :authenticate_user!
     before_action :get_post, only: [:show, :destroy, :like, :dislike]

@@ -1,4 +1,4 @@
-class LeaguesController < ApplicationController
+class Api::LeaguesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_league, except: [:new, :create, :index]
     before_action :set_games, except: [:new, :create, :index]

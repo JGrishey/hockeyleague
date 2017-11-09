@@ -1,4 +1,4 @@
-class TeamsController < ApplicationController
+class Api::TeamsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_team, only: [:show, :destroy, :schedule]
     before_action :set_season

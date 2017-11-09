@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class Api::ProfilesController < ApplicationController
 
     before_action :authenticate_user!
     before_action :set_user

@@ -1,4 +1,4 @@
-class GamesController < ApplicationController
+class Api::GamesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_season
     before_action :set_game, except: [:index, :new, :create]

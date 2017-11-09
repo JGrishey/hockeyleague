@@ -1,4 +1,4 @@
-class SubforumsController < ApplicationController
+class Api::SubforumsController < ApplicationController
 
     before_action :authenticate_user!
     before_action :set_subforum, only: [:edit, :update, :show, :destroy]
