@@ -42,6 +42,10 @@ class Game < ApplicationRecord
         self.away_stats.inject(0){|sum, e| sum + e.goals}
     end
 
+    def update_score
+        self.update_attributes(home_score: self.home_goals, away_score: self.away_goals)
+    end
+
     def home_stats
         self.stat_lines.where(team_id: self.home_team.id)
     end

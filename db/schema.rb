@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171025000600) do
+ActiveRecord::Schema.define(version: 20171110172603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 20171025000600) do
     t.integer "away_ppo", default: 0
     t.boolean "final", default: false
     t.boolean "overtime", default: false
+    t.integer "home_score"
+    t.integer "away_score"
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
