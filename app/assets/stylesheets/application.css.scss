@@ -62,6 +62,19 @@ body {
     background-color: #003459 !important;
 }
 
+.highlighted {
+    .nav-item {
+        border-bottom: 2px solid #fff;
+        opacity: 0.5;
+        transition: ease-in 0.2s;
+    }
+
+    .nav-active, .nav-item:hover {
+        opacity: 1.0;
+        font-weight: 800;
+    }
+}
+
 .chat-message {
     p {
         display: inline;

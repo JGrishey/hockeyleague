@@ -1,8 +1,11 @@
 class User < ApplicationRecord
+  # Include default devise modules.
+    devise :database_authenticatable, :registerable,
+          :recoverable, :rememberable, :trackable, :validatable,
+          :confirmable, :omniauthable
+    include DeviseTokenAuth::Concerns::User
     scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }
 
-    acts_as_voter
-    
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable,

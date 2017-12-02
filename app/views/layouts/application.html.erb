@@ -69,7 +69,12 @@
         </script>
     <% end %>
 
-    <%= yield %>
+    <div id="app" 
+        data-username='<%= user_signed_in? ? current_user.user_name : "" %>' 
+        data-notifications="<%= user_signed_in? ? current_user.notifications.where(read: false).count : "" %>">
+    </div>
+
+    <%= javascript_pack_tag 'home' %>
 </body>
 
 </html>
