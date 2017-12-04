@@ -1,7 +1,6 @@
 module V1
     class LeaguesController < ApplicationController
-        before_action :set_league, except: [:new, :create, :index]
-        before_action :set_games, except: [:new, :create, :index]
+        before_action :set_league, only: [:show, :update, :destroy]
 
         # GET /leagues	
         def index

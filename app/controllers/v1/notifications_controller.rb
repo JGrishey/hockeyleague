@@ -1,26 +1,44 @@
-class Api::NotificationsController < ApplicationController
-    def link_through
-        @notification = Notification.find(params[:id])
-        @notification.update(read: true)
-        redirect_to @notification.src, method: :get
-    end
+module V1
+    class NotificationsController < ApplicationController
+        before_action :set_notification
 
-    def clear
-        @notification = Notification.find(params[:id])
-        @notification.update(read: true)
-        respond_to do |format|
-            format.html {}
-            format.js
+        # GET /notifications
+        def index
+            @notifications = Notification.all.order('created_at DESC')
+            json_response(@notifications)
         end
-    end
 
-    def clear_all
-        current_user.notifications.where(read: false).each do |n|
-            n.update(read: true)
+        # GET /notifications/:id
+        def show
+            json_response(@notification)
         end
-        respond_to do |format|
-            format.html {}
-            format.js
+
+        # POST /notifications
+        def create
+            @notification = Notification.create!(notification_params)
+            json_response(@notification, :created)
+        end
+
+        # PUT /notifications/:id
+        def update
+            @notification.update(notification_params)
+            head :no_content
+        end
+
+        # DELETE /notifications/:id
+        def destroy
+            @notification.destroy
+            head :no_content
+        end
+
+        private
+
+        def set_notification
+            @notification = Notification.find(params[:id])
+        end
+
+        def notification_params
+            params.require(:notification).permit(:body, :user_id)
         end
     end
 end
