@@ -7,10 +7,13 @@ class User < ApplicationRecord
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     
-    
+    # Has email
     validates :email, presence: true
+
+    # Has user_name, min 3 characters, max 15 characters
     validates :user_name, presence: true, length: { minimum: 3, maximum: 15 }
 
+    
     has_many :posts, dependent: :destroy
     has_many :comments, dependent: :destroy
     has_many :messages, dependent: :destroy

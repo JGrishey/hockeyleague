@@ -1,3 +1,0 @@
-$('#like-button-comment-<%= @comment.id %>').attr("src", "<%= asset_path("feathericons/thumbs-up.svg") %>");
-
-$("#likes-comment-<%= @comment.id %>").html("<%= j (render partial: 'comments/likes', locals: { comment: @comment} ) %>");

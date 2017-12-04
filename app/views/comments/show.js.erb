@@ -1,7 +1,0 @@
-let comment = $('#comment_<%= j(@comment.id.to_s) %>')[0]
-
-comment.setAttribute("style", "display: none;")
-
-$("<%= j(render 'posts/commentform', post: @post, comment: @comment, subforum: @subforum) %></div>").insertAfter(comment)
-
-

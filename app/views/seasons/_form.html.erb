@@ -1,8 +1,0 @@
-<%= simple_form_for([league, league.seasons.build]) do |f| %>
-    <label class="title-label">
-        Title
-    </label>
-    <%= f.input_field :title, required: true, class: "title-input" %>
-
-    <%= f.button :submit, "Create season", class: "create-season-btn" %>
-<% end %>

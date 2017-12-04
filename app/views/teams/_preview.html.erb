@@ -1,8 +1,0 @@
-<div class="team-preview">
-    <div class="name">
-        <%= link_to team.name, league_season_team_path(season.league, season, team) %>
-    </div>
-    <div class="info">
-        <%= pluralize(team.players.count, "player") %>
-    </div>
-</div>

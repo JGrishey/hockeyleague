@@ -1,7 +1,0 @@
-<div class="posts-index-container">
-    <%= render 'chat_boxes/chatbox', chat_box: ChatBox.first(), message: Message.new %>
-
-    <% @posts.each do |post| %>
-        <%= render 'preview', post: post %>
-    <% end %>
-</div>

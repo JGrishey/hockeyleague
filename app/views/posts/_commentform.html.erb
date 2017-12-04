@@ -1,9 +1,0 @@
-<div class="edit-comment">
-    <%= simple_form_for([subforum, post, comment], remote: true) do |f| %>
-            <%= f.hidden_field :content %>
-            <%= f.button :submit, style: "display: none;", id: "real-comment-submit" %>
-    <% end %>
-    <div class="pell" id="pell">
-    </div>
-    <button class="submit" id="comment-submit">Submit</button>
-</div>
