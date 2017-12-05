@@ -56,3 +56,7 @@ gem 'devise_token_auth'
 
 # Omniauth
 gem 'omniauth'
+
+# CORS
+
+gem 'rack-cors', require: 'rack/cors'
