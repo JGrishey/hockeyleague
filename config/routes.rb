@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         resources :chat_boxes do
             resources :messages
         end
+        get '/home', to: 'pages#home', as: 'home'
     end
 
     resources :notifactions
